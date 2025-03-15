@@ -2,7 +2,7 @@
 Economics Virtually 
 This is a design space for developing teaching and learning tools.
 # Essay Analysis Program  
-This repository contains a standalone HTML page designed for analyzing economics essays. The tool evaluates various aspects of essay writing, such as chain length, use of technical vocabulary, balance, and argument progression.  
+This is a standalone HTML page witb an app designed for analyzing economics essays. The tool evaluates various aspects of essay writing, such as chain length, use of technical vocabulary, balance, and argument progression.  
 
 ## Features  
 - Categorizes essay content and highlights key components  
