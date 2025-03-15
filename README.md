@@ -1,6 +1,8 @@
 # EconMrLong
 Economics Virtually 
 This is a design space for developing teaching and learning tools.
+:sparkles: See what's new in the [
+Card Matching Game](flashmatch).
 <html lang="en">
 
 <a href="[https://www.example.com](https://github.com/mathemountai/EconMrLong/blob/FlashCards/Flash)">Visit Flash Card Exercise</a>
