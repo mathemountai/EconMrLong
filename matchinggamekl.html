@@ -94,7 +94,7 @@
 </head>
 <body>
     <h1>Economics Matching Game</h1>
-    <p>Match the definitions with their correct meanings!</p>
+    <p>Match the questions with their correct answers!</p>
     <div class="grid" id="grid"></div>
     <button class="reset-btn" onclick="resetGame()">Reset Game</button>
 
@@ -130,8 +130,14 @@
             // Randomly select 8 flashcards
             const selectedFlashcards = flashcards.slice(0, 8);
 
-            // Duplicate and shuffle the cards
-            const cards = [...selectedFlashcards, ...selectedFlashcards];
+            // Create pairs of questions and answers
+            const cards = [];
+            selectedFlashcards.forEach(card => {
+                cards.push({ type: 'question', content: card.question, match: card.answer });
+                cards.push({ type: 'answer', content: card.answer, match: card.question });
+            });
+
+            // Shuffle the cards
             shuffleArray(cards);
 
             // Create tiles
@@ -139,8 +145,8 @@
                 const tile = document.createElement('div');
                 tile.classList.add('tile');
                 tile.dataset.index = index;
-                tile.dataset.question = card.question;
-                tile.dataset.answer = card.answer;
+                tile.dataset.content = card.content;
+                tile.dataset.match = card.match;
 
                 const tileInner = document.createElement('div');
                 tileInner.classList.add('tile-inner');
@@ -151,7 +157,7 @@
 
                 const tileBack = document.createElement('div');
                 tileBack.classList.add('tile-back');
-                tileBack.textContent = card.question || card.answer;
+                tileBack.textContent = card.content;
 
                 tileInner.appendChild(tileFront);
                 tileInner.appendChild(tileBack);
@@ -178,8 +184,8 @@
             const [card1, card2] = selectedCards;
 
             if (
-                (card1.dataset.question === card2.dataset.answer && card1.dataset.answer === card2.dataset.question) ||
-                (card1.dataset.answer === card2.dataset.question && card1.dataset.question === card2.dataset.answer)
+                (card1.dataset.content === card2.dataset.match) &&
+                (card2.dataset.content === card1.dataset.match)
             ) {
                 card1.classList.add('matched');
                 card2.classList.add('matched');
