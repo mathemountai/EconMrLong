@@ -18,7 +18,7 @@ To use the program, simply open the HTML file in a browser.
 
 Check out the **Flash Match** page for more features:  
 
-[Go to Flashcard Matching Game](Flashmatch)  
+[Go to Flashcard Matching Game](matchinggamekl.html)  
 
 ---  
 
