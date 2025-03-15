@@ -23,10 +23,7 @@ Check out the **Flash** page for more features:
 ---
 
 ### Contributing  
-Feel free to submit issues or contribute by making pull requests.  
-
-### License  
-This project is open-source under the MIT License.  
+Feel free to submit issues or contribute by making pull requests.   
 
 <html lang="en">
 <head>
