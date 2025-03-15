@@ -16,7 +16,7 @@ To use the program, simply open the HTML file in a browser.
 
 ## Additional Tools  
 
-Check out the **Flash** page for more features:  
+Check out the **Flash Match** page for more features:  
 
 [Go to Flashcard Matching Game](Flashmatch)  
 
