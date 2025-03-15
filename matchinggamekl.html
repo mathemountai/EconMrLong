@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics Matching Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .tile {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .tile-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .tile.flipped .tile-inner {
+            transform: rotateY(180deg);
+        }
+        .tile-front,
+        .tile-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 12px; /* Smaller font size for better fit */
+            border-radius: 8px;
+            backface-visibility: hidden;
+            padding: 5px; /* Add padding for better readability */
+        }
+        .tile-front {
+            background-color: #3498db;
+            color: white;
+        }
+        .tile-back {
+            background-color: #2ecc71;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        .tile.matched .tile-back {
+            background-color: #27ae60;
+        }
+        .tile.matched::after {
+            content: "✔";
+            font-size: 20px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .reset-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Economics Matching Game</h1>
+    <p>Match the definitions with their correct meanings!</p>
+    <div class="grid" id="grid"></div>
+    <button class="reset-btn" onclick="resetGame()">Reset Game</button>
+
+    <script>
+        const flashcards = [
+            { question: "What is scarcity?", answer: "The fundamental economic problem where limited resources are insufficient to satisfy unlimited human wants, requiring choices to be made." },
+            { question: "Define opportunity cost.", answer: "The value of the next best alternative forgone when a decision is made, reflecting the trade-offs involved in allocating resources." },
+            { question: "What is the Production Possibility Frontier (PPF)?", answer: "A curve that shows the maximum possible output combinations of two goods or services that an economy can produce, given its resources and technology." },
+            { question: "What is allocative efficiency?", answer: "When resources are distributed in a way that maximizes consumer satisfaction, occurring where price equals marginal cost (P = MC)." },
+            { question: "What is productive efficiency?", answer: "When goods and services are produced at the lowest possible average cost, occurring at the minimum point of the average cost curve." },
+            { question: "What is Pareto efficiency?", answer: "A state where no reallocation of resources can make one individual better off without making another worse off, signifying an optimal allocation of resources." },
+            { question: "What is consumer surplus?", answer: "The difference between the maximum price a consumer is willing to pay for a good or service and the price they actually pay, representing the benefit consumers receive from market transactions." },
+            { question: "What is producer surplus?", answer: "The difference between the price a producer receives for a good or service and the minimum price they are willing to accept, reflecting their benefit from market participation." },
+            // Add more flashcards here...
+        ];
+
+        let selectedCards = [];
+        let matchedPairs = 0;
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Create the grid
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ''; // Clear the grid
+
+            // Randomly select 8 flashcards
+            const selectedFlashcards = flashcards.slice(0, 8);
+
+            // Duplicate and shuffle the cards
+            const cards = [...selectedFlashcards, ...selectedFlashcards];
+            shuffleArray(cards);
+
+            // Create tiles
+            cards.forEach((card, index) => {
+                const tile = document.createElement('div');
+                tile.classList.add('tile');
+                tile.dataset.index = index;
+                tile.dataset.question = card.question;
+                tile.dataset.answer = card.answer;
+
+                const tileInner = document.createElement('div');
+                tileInner.classList.add('tile-inner');
+
+                const tileFront = document.createElement('div');
+                tileFront.classList.add('tile-front');
+                tileFront.textContent = "Click to flip";
+
+                const tileBack = document.createElement('div');
+                tileBack.classList.add('tile-back');
+                tileBack.textContent = card.question || card.answer;
+
+                tileInner.appendChild(tileFront);
+                tileInner.appendChild(tileBack);
+                tile.appendChild(tileInner);
+                tile.addEventListener('click', flipTile);
+                grid.appendChild(tile);
+            });
+        }
+
+        // Flip tile function
+        function flipTile() {
+            if (selectedCards.length < 2 && !this.classList.contains('flipped')) {
+                this.classList.add('flipped');
+                selectedCards.push(this);
+
+                if (selectedCards.length === 2) {
+                    checkMatch();
+                }
+            }
+        }
+
+        // Check if the selected cards match
+        function checkMatch() {
+            const [card1, card2] = selectedCards;
+
+            if (
+                (card1.dataset.question === card2.dataset.answer && card1.dataset.answer === card2.dataset.question) ||
+                (card1.dataset.answer === card2.dataset.question && card1.dataset.question === card2.dataset.answer)
+            ) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+
+                if (matchedPairs === 8) {
+                    alert("Congratulations! You've matched all pairs!");
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                }, 1000);
+            }
+
+            selectedCards = [];
+        }
+
+        // Reset the game
+        function resetGame() {
+            matchedPairs = 0;
+            createGrid();
+        }
+
+        // Initialize the game
+        createGrid();
+    </script>
+</body>
+</html>
