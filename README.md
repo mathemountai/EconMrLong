@@ -67,7 +67,7 @@ This is a design space for developing teaching and learning tools.
         <button onclick="checkPassword()">Submit</button>
     </div>
     <div id="analyzer" style="display: none;">
-        <h1>Mr Long's Essay Analyser</h1>
+        <h1>Essay Analyser</h1>
         <textarea id="essayInput" placeholder="Paste your essay here..."></textarea>
         <br><br>
         <button onclick="analyzeEssay()">Analyse Essay</button>
@@ -76,7 +76,7 @@ This is a design space for developing teaching and learning tools.
 
     <script>
         // Password protection
-        const PASSWORD = "MrLong";
+        const PASSWORD = "Painsley";
 
         function checkPassword() {
             const passwordInput = document.getElementById("password").value;
