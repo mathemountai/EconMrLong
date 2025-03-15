@@ -1,6 +1,32 @@
 # EconMrLong
 Economics Virtually 
-This is a design space for developing teaching and learning tools.
+This is a design space for developing teaching and learning tools.# Essay Analysis Program  
+
+This repository contains a standalone HTML page designed for analyzing economics essays. The tool evaluates various aspects of essay writing, such as chain length, use of technical vocabulary, balance, and argument progression.  
+
+## Features  
+- Categorizes essay content and highlights key components  
+- Detects repeated points and evaluates argument depth  
+- Measures balance, complexity, and use of examples  
+- Provides improvement suggestions based on detected errors  
+
+## Getting Started  
+
+To use the program, simply open the HTML file in a browser.  
+
+## Additional Tools  
+
+Check out the **Flash** page for more features:  
+
+[Go to Flash](Flash)  
+
+---
+
+### Contributing  
+Feel free to submit issues or contribute by making pull requests.  
+
+### License  
+This project is open-source under the MIT License.  
 
 <html lang="en">
 <head>
