@@ -18,12 +18,9 @@ To use the program, simply open the HTML file in a browser.
 
 Check out the **Flash** page for more features:  
 
-[Go to Flash](Flash)  
+[Go to Flash](Flashmatch)  
 
----
-
-### Contributing  
-Feel free to submit issues or contribute by making pull requests.   
+---  
 
 <html lang="en">
 <head>
