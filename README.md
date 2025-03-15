@@ -15,7 +15,8 @@ This is a standalone HTML page witb an app designed for analyzing economics essa
 To use the program, simply open the HTML file in a browser.  
 
 ## Additional Tools  
-
+<span style="color:red">This text is red</span>
+<span style="color:blue">This text is blue</span>
 Check out the **Flash Match** page for more features:  
 
 [Go to Flashcard Matching Game](matchinggamekl.html)  
