@@ -12,12 +12,10 @@ This is a standalone HTML page witb an app designed for analyzing economics essa
 
 ## Getting Started  
 
-To use the program, simply open the HTML file in a browser.  
+To use thr Essay Analyser, simply <span style="color:blue"> enter the password</span> at the bottom if this page.  
 
 ## Additional Tools  
-<span style="color:red">This text is red</span>
-<span style="color:blue">This text is blue</span>
-Check out the **Flash Match** page for more features:  
+<span style="color:red">Check out the **Flash Match** page </span>
 
 [Go to Flashcard Matching Game](matchinggamekl.html)  
 
