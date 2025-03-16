@@ -41,6 +41,8 @@ An **interactive flashcard tool** to aid memory retention of key definitions.
 👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
 Open link in a new tab or browser window.
 
+[Go to Blankety Blank game](blanketyblank.html)
+
 ---
 
 💡 *These tools are evolving and are just part of my CPD interest in exploring the use of Python and AI as agents in economics learning!* 🚀  
