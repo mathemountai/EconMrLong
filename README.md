@@ -12,7 +12,7 @@ This is a standalone HTML page with an app designed for analysing economics essa
 To access the Essay Analyser simply click this link &<span style="color:blue"> enter the password</span>  >>
 [Go to the Essay Analyser ](dsanamycc20plus4.html)
 
-##2. Learning tool to improve recall of definitions:  
+# 2. Learning tool to improve recall of definitions:  
 <span style="color:red">Check out the **Flash Match** page </span>
 
 [Go to Flashcard Matching Game](matchinggamekl.html)  
