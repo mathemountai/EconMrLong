@@ -1,28 +1,45 @@
-# EconMrLong
-This is a design space for my development of teaching and learning tools.
-# 1. Essay Analysis Program  
-This is a standalone HTML page with an app designed for analysing economics essays. The tool evaluates various aspects of essay writing, such as chain length, use of technical vocabulary, balance, and argument progression.  
+# 📌 **EconMrLong: Teaching & Learning Tools**  
+Welcome to my development space for innovative teaching and learning tools, designed to enhance student engagement and understanding in economics.  
 
-## Features  
-- Categorises essay content and highlights keywords & connectives
-- Detects repeated points and evaluates argument depth  
-- Measures balance, complexity, and use of examples  
+---
 
-## Get Started:
-To access the **Essay Analyser** simply click this link &<span style="color:blue"> enter the password</span> >>
-[Go to the Essay Analyser ](dsanamycc20plus4.html)
+## 📝 **1. Essay Analysis Program**  
+A standalone **HTML-based** tool designed to analyze economics essays, evaluating:  
+✅ Chain length & argument progression  
+✅ Use of **technical vocabulary** & balance  
+✅ **Keyword detection**, highlighting **connectives**  
+✅ Identifying **repeated points** and assessing **depth** of analysis  
 
-# 2. Learning tool to improve recall of definitions:  
-<span style="color:red">Check out the **Flash Match Game** page </span>
+### 🚀 **Get Started**  
+🔹 Click below to access the **Essay Analyser**  
+🔹 **Enter the password when prompted**  
 
-[Go to Memory Matching Game](matchinggamekl.html)  
+👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
 
-# 3. Learning tool to improve recall of definitions:  
-<span style="color:red">Check out the **Flash Card Exercises** page </span> Open link in a new browser tab. Click on theme, then card for definition. Rate as Easy, OK or Hard. Progress is recorded with the nunber of cards found easy. When all cards in a theme are rated easy, the theme turns blue. 
-'Reset' clears your progress & restarts!
+---
 
-[Go to progress checker](Flashcardprogress8.html)
+## 🎯 **2. Flash Match Game** (Recall Definitions)  
+**A memory-based matching game** designed to improve retention of economics definitions!  
 
----  
+🔥 **Challenge yourself** with interactive exercises  
+🧠 **Boost recall** with spaced repetition  
 
+👉 **[Play the Flash Match Game](matchinggamekl.html)**  
+
+---
+
+## 🎓 **3. Flashcard Progress Tracker**  
+An **interactive flashcard tool** to aid memory retention of key definitions.  
+
+📌 **How it Works**  
+✔️ Click a **theme** & review flashcards  
+✔️ **Rate difficulty**: Easy, OK, Hard  
+✔️ **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
+✔️ **Reset anytime** to start fresh  
+
+👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**  
+
+---
+
+💡 *These tools are part of my ongoing effort to make economics learning more interactive and effective!* 🚀  
 
