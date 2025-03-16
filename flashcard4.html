@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thematic Spaced Repetition Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .theme-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .theme-buttons button {
+            padding: 10px 14px;
+            background-color: #34db6e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        .theme-buttons button:hover {
+            background-color: #DAF7A6;
+        }
+        .flashcard {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .flashcard:hover {
+            background-color: #f9f9f9;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .answer {
+            display: none;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #27ae60;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .flashcard.hard {
+            background-color: lightpink;
+        }
+        .flashcard.easy {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thematic Spaced Repetition Flashcards</h1>
+    <p>Choose a topic to revise:</p>
+    <div class="theme-buttons" id="theme-buttons">
+        <!-- Theme buttons will be dynamically inserted here -->
+    </div>
+    <div id="flashcard-container">
+        <!-- Flashcard will be dynamically inserted here -->
+    </div>
+    <div class="controls">
+        <button onclick="rateCard('again')">Again</button>
+        <button onclick="rateCard('hard')">Hard</button>
+        <button onclick="rateCard('good')">OK</button>
+        <button onclick="rateCard('easy')">Easy</button>
+    </div>
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <script>
+        const flashcardsByTheme = {
+            Elasticity: [
+                { question: "What is Price Elasticity of Demand (PED)?", answer: "A measure of how responsive quantity demanded is to a change in price, calculated as PED = %ΔQd / %ΔP.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Income Elasticity of Demand (YED)?", answer: "A measure of how responsive quantity demanded is to a change in income, calculated as YED = %ΔQd / %ΔY, distinguishing between normal and inferior goods.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Cross Elasticity of Demand (XED)?", answer: "A measure of how the demand for one good changes in response to a change in the price of another good, indicating whether goods are substitutes (positive XED) or complements (negative XED).", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Price Elasticity of Supply (PES)?", answer: "A measure of how responsive quantity supplied is to a change in price, calculated as PES = %ΔQs / %ΔP, with supply being more elastic in the long run.", interval: 1, repetitions: 0, rating: null },
+                { question: "What factors affect Price Elasticity of Demand (PED)?", answer: "Availability of substitutes, necessity vs. luxury, proportion of income spent, and time period.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the relationship between Price Elasticity of Demand (PED) and Total Revenue?", answer: "If demand is elastic (PED > 1), a price decrease increases total revenue. If demand is inelastic (PED < 1), a price decrease reduces total revenue.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Market Structures": [
+                { question: "What is Perfect Competition?", answer: "A theoretical market structure characterized by many firms, homogenous products, perfect information, and no barriers to entry, leading to firms being price takers.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Monopolistic Competition?", answer: "A market structure with many firms selling differentiated products, leading to some degree of price-setting power and non-price competition.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is an Oligopoly?", answer: "A market structure where a few large firms dominate, often engaging in strategic behavior, price rigidity, and non-price competition.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Monopoly?", answer: "A market dominated by a single firm (over 25% market share in UK competition law), leading to potential market failure due to restricted output and higher prices.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Natural Monopoly?", answer: "A situation where one firm can supply the entire market at a lower cost than multiple firms due to high fixed costs and economies of scale (e.g., utility companies).", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Contestability?", answer: "The degree to which a market is open to new entrants, influenced by barriers to entry such as sunk costs and economies of scale.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Price Discrimination?", answer: "A pricing strategy where firms charge different prices to different consumers for the same product based on willingness to pay, requiring market segmentation.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Government Policies": [
+                { question: "What is Fiscal Policy?", answer: "The use of government spending and taxation to influence the economy, often used to manage aggregate demand.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Monetary Policy?", answer: "The process by which a central bank controls the supply of money and interest rates to achieve macroeconomic objectives like controlling inflation or unemployment.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Quantitative Easing (QE)?", answer: "A monetary policy tool where a central bank purchases long-term securities to increase the money supply and lower interest rates.", interval: 1, repetitions: 0, rating: null },
+                { question: "What are Indirect Taxes?", answer: "Taxes imposed on goods and services that increase production costs and consumer prices, often used to correct negative externalities (e.g., excise duties on cigarettes).", interval: 1, repetitions: 0, rating: null },
+                { question: "What are Subsidies?", answer: "Financial support from the government to encourage the production or consumption of goods and services that generate positive externalities (e.g., renewable energy subsidies).", interval: 1, repetitions: 0, rating: null },
+                { question: "What are Price Controls?", answer: "Government-imposed limits on prices, such as price ceilings (maximum prices) to prevent excessive costs for consumers, and price floors (minimum prices) to ensure fair wages or incomes.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Pigouvian Tax?", answer: "A tax imposed on activities that generate negative externalities, like pollution.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Labour Markets": [
+                { question: "What is the Labour Market?", answer: "The interaction between workers (supply) and employers (demand), determining wages and employment levels.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Monopsony Power?", answer: "When a single employer has significant market power in hiring, leading to lower wages and employment levels than in a competitive market.", interval: 1, repetitions: 0, rating: null },
+                { question: "What are Trade Unions?", answer: "Organisations representing workers that negotiate wages, conditions, and rights with employers, influencing wage determination.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the National Minimum Wage (NMW)?", answer: "A legally enforced wage floor to prevent worker exploitation and poverty pay.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Gini Coefficient?", answer: "A statistical measure of income inequality ranging from 0 (perfect equality) to 1 (maximum inequality).", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Lorenz Curve?", answer: "A graphical representation of income distribution, illustrating the degree of inequality within an economy.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Hysteresis in Unemployment?", answer: "The tendency for high unemployment to persist due to skill loss and discouragement effects.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "International Trade": [
+                { question: "What is Comparative Advantage?", answer: "A country can produce a good at a lower opportunity cost than another.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Protectionism?", answer: "Government policies restricting imports to protect domestic industries.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Current Account (BoP)?", answer: "Records trade balance, investment income, and transfers in a country’s balance of payments.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Marshall-Lerner Condition?", answer: "States that a currency depreciation improves the trade balance if export and import elasticities sum to more than one.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the J-Curve Effect?", answer: "A depreciation initially worsens the trade balance before improving as contracts adjust.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Dutch Disease?", answer: "When a resource boom strengthens a currency, making manufacturing less competitive.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Purchasing Power Parity (PPP)?", answer: "The theory that exchange rates adjust to equalize the price of goods across countries.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Economic Growth and Development": [
+                { question: "What is Economic Growth?", answer: "An increase in a country's production of goods and services over time, often measured by GDP.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Sustainable Development?", answer: "Economic development that meets the needs of the present without compromising the ability of future generations to meet their own needs.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Human Development Index (HDI)?", answer: "A composite index measuring average achievement in three basic dimensions of human development: life expectancy, education, and per capita income.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Endogenous Growth Theory?", answer: "Emphasizes innovation, technology, and human capital as key drivers of long-term growth.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Hysteresis Effect?", answer: "When a temporary shock has permanent effects on an economy’s productive capacity.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Secular Stagnation?", answer: "A prolonged period of low economic growth due to weak demand and investment.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Solow-Swan Growth Model?", answer: "A neoclassical economic model that explains long-term economic growth by considering capital accumulation, labor or population growth, and increases in productivity.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Inflation and Unemployment": [
+                { question: "What is Inflation?", answer: "A sustained increase in the general price level of goods and services in an economy over time.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Phillips Curve?", answer: "Illustrates the inverse relationship between inflation and unemployment in the short run.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is NAIRU (Non-Accelerating Inflation Rate of Unemployment)?", answer: "The level of unemployment where inflation remains stable.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Stagflation?", answer: "A period of stagnant economic growth with simultaneous high inflation and high unemployment.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Hyperinflation?", answer: "An extremely high and typically accelerating inflation rate, often exceeding 50% per month.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Deflation?", answer: "A decrease in the general price level of goods and services, often associated with reduced economic activity.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Fisher Equation?", answer: "Nominal interest rate = Real interest rate + Expected inflation.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Financial Markets": [
+                { question: "What is the Stock Market?", answer: "A market where shares of publicly traded companies are issued and traded.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Bond?", answer: "A fixed-income instrument representing a loan made by an investor to a borrower, typically corporate or governmental.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Foreign Exchange Market?", answer: "A global marketplace for exchanging national currencies against one another.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Derivative?", answer: "A financial instrument whose value is derived from the value of an underlying asset, such as stocks, bonds, or commodities.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is a Hedge Fund?", answer: "An investment fund that uses a range of strategies, including leverage and derivatives, to generate high returns for its investors.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Efficient Market Hypothesis (EMH)?", answer: "A theory stating that asset prices fully reflect all available information, making it impossible to consistently achieve higher returns than the market average.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Black-Scholes Model?", answer: "A mathematical model used to calculate the theoretical price of options, considering factors like the underlying asset's price, strike price, time to expiration, and volatility.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Behavioral Economics": [
+                { question: "What is Behavioral Economics?", answer: "A field of economics that challenges the assumption of perfect rationality, incorporating insights from psychology to explain consumer behavior, including biases and heuristics.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Endowment Effect?", answer: "The tendency for people to value an item more highly simply because they own it.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Loss Aversion?", answer: "The tendency for people to prefer avoiding losses over acquiring equivalent gains.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Anchoring?", answer: "A cognitive bias where individuals rely too heavily on the first piece of information they receive (the 'anchor') when making decisions.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Availability Heuristic?", answer: "A mental shortcut where individuals make judgments based on the ease with which examples come to mind.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Framing Effect?", answer: "A cognitive bias where people react differently to a particular choice depending on how it is presented.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Prospect Theory?", answer: "A behavioral economic theory that describes how people choose between probabilistic alternatives and evaluate potential losses and gains.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Environmental Economics": [
+                { question: "What is a Pigouvian Tax?", answer: "A tax imposed on activities that generate negative externalities, like pollution.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Tragedy of the Commons?", answer: "A situation where individuals, acting in their own self-interest, deplete a shared resource, leading to its collapse.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Carbon Trading?", answer: "A market-based approach to controlling pollution by providing economic incentives for reducing emissions.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Kyoto Protocol?", answer: "An international treaty that commits countries to reduce greenhouse gas emissions, based on the principle of common but differentiated responsibilities.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Paris Agreement?", answer: "An international treaty on climate change that aims to limit global warming to well below 2°C above pre-industrial levels.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Green Paradox?", answer: "The idea that environmental policies aimed at reducing fossil fuel consumption may actually increase emissions in the short term by encouraging producers to extract and sell resources more quickly.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is the Environmental Kuznets Curve?", answer: "A hypothesis that environmental degradation increases with economic growth up to a certain point, after which it decreases as societies become wealthier and more environmentally conscious.", interval: 1, repetitions: 0, rating: null },
+            ],
+        };
+
+        let currentTheme = null;
+        let currentCardIndex = 0;
+        let progress = 0;
+        const progressBar = document.getElementById('progress');
+        const themeButtonsContainer = document.getElementById('theme-buttons');
+        const flashcardContainer = document.getElementById('flashcard-container');
+
+        // Initialize theme buttons
+        function initThemeButtons() {
+            for (const theme in flashcardsByTheme) {
+                const button = document.createElement('button');
+                button.textContent = theme;
+                button.addEventListener('click', () => selectTheme(theme));
+                themeButtonsContainer.appendChild(button);
+            }
+        }
+
+        // Select a theme
+        function selectTheme(theme) {
+            currentTheme = theme;
+            currentCardIndex = 0;
+            progress = 0;
+            progressBar.style.width = '0%';
+            showCard();
+        }
+
+        // Show the current card
+        function showCard() {
+            flashcardContainer.innerHTML = '';
+            if (!currentTheme) return;
+
+            const card = flashcardsByTheme[currentTheme][currentCardIndex];
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('flashcard');
+
+            // Add color feedback based on rating
+            if (card.rating === 'hard') {
+                cardElement.classList.add('hard');
+            } else if (card.rating === 'easy') {
+                cardElement.classList.add('easy');
+            }
+
+            cardElement.innerHTML = `
+                <div class="question">${card.question}</div>
+                <div class="answer">${card.answer}</div>
+            `;
+
+            cardElement.addEventListener('click', toggleAnswer);
+            flashcardContainer.appendChild(cardElement);
+        }
+
+        // Toggle answer visibility
+        function toggleAnswer() {
+            const answer = this.querySelector('.answer');
+            answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Rate the current card
+        function rateCard(rating) {
+            if (!currentTheme) return;
+
+            const card = flashcardsByTheme[currentTheme][currentCardIndex];
+
+            // Update card difficulty based on rating
+            switch (rating) {
+                case 'again':
+                    card.interval = 1; // Show again immediately
+                    card.repetitions = 0; // Reset repetitions
+                    break;
+                case 'hard':
+                    card.interval *= 1.2; // Increase interval slightly
+                    card.repetitions += 1;
+                    card.rating = 'hard'; // Set rating
+                    break;
+                case 'good':
+                    card.interval *= 1.5; // Increase interval moderately
+                    card.repetitions += 1;
+                    card.rating = null; // Reset rating
+                    break;
+                case 'easy':
+                    card.interval *= 2; // Increase interval significantly
+                    card.repetitions += 1;
+                    card.rating = 'easy'; // Set rating
+                    break;
+            }
+
+            // Move to the next card
+            currentCardIndex = getNextCardIndex();
+            showCard();
+
+            // Update progress
+            progress += 1;
+            progressBar.style.width = `${(progress / flashcardsByTheme[currentTheme].length) * 100}%`;
+
+            // Reset progress if all cards are reviewed
+            if (progress >= flashcardsByTheme[currentTheme].length) {
+                progress = 0;
+                progressBar.style.width = '0%';
+            }
+        }
+
+        // Get the next card index based on intervals
+        function getNextCardIndex() {
+            let nextCardIndex = 0;
+            let smallestInterval = flashcardsByTheme[currentTheme][0].interval;
+
+            flashcardsByTheme[currentTheme].forEach((card, index) => {
+                if (card.interval < smallestInterval) {
+                    smallestInterval = card.interval;
+                    nextCardIndex = index;
+                }
+            });
+
+            return nextCardIndex;
+        }
+
+        // Initialize the theme buttons
+        initThemeButtons();
+    </script>
+</body>
+</html>
