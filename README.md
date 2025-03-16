@@ -21,5 +21,9 @@ To access the **Essay Analyser** simply click this link &<span style="color:blue
 <span style="color:red">Check out the **Flash Card Exercises** page </span>
 
 [Go to Flashcard By Theme Exercise](flashcard4.html) 
----  
+
 [Go to progress checker](Flashcardprogress8.html)
+
+---  
+
+
