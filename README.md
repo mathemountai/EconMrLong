@@ -20,7 +20,7 @@ To access the **Essay Analyser** simply click this link &<span style="color:blue
 # 3. Learning tool to improve recall of definitions:  
 <span style="color:red">Check out the **Flash Card Exercises** page </span>
 
-[Go to Flashcard By Theme Exercise]([Go to progress checker](Flashcardprogress8.html)) 
+[Go to Flashcard By Theme Exercise](flashcard4.html) 
 
 [Go to progress checker](Flashcardprogress8.html)
 
