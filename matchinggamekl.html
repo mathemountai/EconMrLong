@@ -14,21 +14,27 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
         }
         h1 {
             color: #2c3e50;
+            margin-bottom: 10px;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 100px);
-            grid-template-rows: repeat(4, 100px);
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
             gap: 10px;
-            margin-top: 20px;
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            margin: 0 auto;
         }
         .tile {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 100%;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -51,10 +57,11 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 12px; /* Smaller font size for better fit */
+            font-size: 14px; /* Adjust font size for better fit */
             border-radius: 8px;
             backface-visibility: hidden;
-            padding: 5px; /* Add padding for better readability */
+            padding: 10px; /* Add padding for better readability */
+            box-sizing: border-box;
         }
         .tile-front {
             background-color: #3498db;
@@ -94,7 +101,7 @@
 </head>
 <body>
     <h1>Economics Matching Game</h1>
-    <p>Match the questions with their correct answers!</p>
+    <p>Match the definitions with their correct answers!</p>
     <div class="grid" id="grid"></div>
     <button class="reset-btn" onclick="resetGame()">Reset Game</button>
 
@@ -132,9 +139,9 @@
 
             // Create pairs of questions and answers
             const cards = [];
-            selectedFlashcards.forEach(card => {
-                cards.push({ type: 'question', content: card.question, match: card.answer });
-                cards.push({ type: 'answer', content: card.answer, match: card.question });
+            selectedFlashcards.forEach((card) => {
+                cards.push({ type: "question", content: card.question, match: card.answer });
+                cards.push({ type: "answer", content: card.answer, match: card.question });
             });
 
             // Shuffle the cards
@@ -157,7 +164,7 @@
 
                 const tileBack = document.createElement('div');
                 tileBack.classList.add('tile-back');
-                tileBack.textContent = card.content;
+                tileBack.textContent = card.content; // Show the question or answer
 
                 tileInner.appendChild(tileFront);
                 tileInner.appendChild(tileBack);
@@ -183,10 +190,7 @@
         function checkMatch() {
             const [card1, card2] = selectedCards;
 
-            if (
-                (card1.dataset.content === card2.dataset.match) &&
-                (card2.dataset.content === card1.dataset.match)
-            ) {
+            if (card1.dataset.match === card2.dataset.content && card2.dataset.match === card1.dataset.content) {
                 card1.classList.add('matched');
                 card2.classList.add('matched');
                 matchedPairs++;
