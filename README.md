@@ -18,7 +18,8 @@ To access the **Essay Analyser** simply click this link &<span style="color:blue
 [Go to Memory Matching Game](matchinggamekl.html)  
 
 # 3. Learning tool to improve recall of definitions:  
-<span style="color:red">Check out the **Flash Card Exercises** page </span>
+<span style="color:red">Check out the **Flash Card Exercises** page </span> Open link in a new browser tab. Click on theme, then card for definition. Rate as Easy, OK or Hard. Progress is recorded with the nunber of cards found easy. When all cards in a theme are rated easy, the theme turns blue. 
+'Reset' clears your progress & restarts!
 
 [Go to progress checker](Flashcardprogress8.html)
 
