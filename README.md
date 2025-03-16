@@ -25,7 +25,7 @@ A standalone **HTML-based** tool designed to analyze economics essays, evaluatin
 🧠 **Boost recall** with spaced repetition  
 
 👉 **[Play the Flash Match Game](matchinggamekl.html)**  
-Open link in a new browser window. Cards adjust with screen size- best viewed on ipad or pc
+Open link in a new tab or browser window. Cards adjust with screen size- best viewed on i-pad or PC.
 
 ---
 
@@ -39,7 +39,7 @@ An **interactive flashcard tool** to aid memory retention of key definitions.
 ✔️ **Reset anytime** to start fresh  
 
 👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
-Open link in a new browser window.
+Open link in a new tab or browser window.
 
 ---
 
