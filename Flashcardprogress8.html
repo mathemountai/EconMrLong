@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thematic Spaced Repetition Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .theme-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .theme-buttons button {
+            padding: 10px 14px;
+            background-color: #34db6e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        .theme-buttons button.completed {
+            background-color: #3498db; /* Blue color for completed themes */
+        }
+        .theme-buttons button:hover {
+            background-color: #DAF7A6;
+        }
+        .flashcard {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .flashcard:hover {
+            background-color: #f9f9f9;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .answer {
+            display: none;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #27ae60;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .flashcard.hard {
+            background-color: lightpink;
+        }
+        .flashcard.easy {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thematic Spaced Repetition Flashcards</h1>
+    <p>Choose a topic to revise:</p>
+    <div class="theme-buttons" id="theme-buttons">
+        <!-- Theme buttons will be dynamically inserted here -->
+    </div>
+    <div id="flashcard-container">
+        <!-- Flashcard will be dynamically inserted here -->
+    </div>
+    <div class="controls">
+        <button onclick="rateCard('again')">Again</button>
+        <button onclick="rateCard('hard')">Hard</button>
+        <button onclick="rateCard('good')">OK</button>
+        <button onclick="rateCard('easy')">Easy</button>
+    </div>
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <script>
+        const flashcardsByTheme = {
+            Elasticity: [
+                { question: "What is Price Elasticity of Demand (PED)?", answer: "A measure of how responsive quantity demanded is to a change in price, calculated as PED = %ΔQd / %ΔP.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Income Elasticity of Demand (YED)?", answer: "A measure of how responsive quantity demanded is to a change in income, calculated as YED = %ΔQd / %ΔY, distinguishing between normal and inferior goods.", interval: 1, repetitions: 0, rating: null },
+            ],
+            "Market Structures": [
+                { question: "What is Perfect Competition?", answer: "A theoretical market structure characterized by many firms, homogenous products, perfect information, and no barriers to entry, leading to firms being price takers.", interval: 1, repetitions: 0, rating: null },
+                { question: "What is Monopolistic Competition?", answer: "A market structure with many firms selling differentiated products, leading to some degree of price-setting power and non-price competition.", interval: 1, repetitions: 0, rating: null },
+            ],
+        };
+
+        let currentTheme = null;
+        let currentCardIndex = 0;
+        let progress = 0;
+        const progressBar = document.getElementById('progress');
+        const themeButtonsContainer = document.getElementById('theme-buttons');
+        const flashcardContainer = document.getElementById('flashcard-container');
+
+        // Load completed themes from local storage
+        const completedThemes = JSON.parse(localStorage.getItem('completedThemes')) || [];
+
+        // Initialize theme buttons
+        function initThemeButtons() {
+            for (const theme in flashcardsByTheme) {
+                const button = document.createElement('button');
+                button.textContent = `${theme}: 0/${flashcardsByTheme[theme].length}`;
+                button.addEventListener('click', () => selectTheme(theme));
+                themeButtonsContainer.appendChild(button);
+
+                // Mark completed themes
+                if (completedThemes.includes(theme)) {
+                    button.textContent = `${theme}: Completed`;
+                    button.classList.add('completed');
+                }
+            }
+        }
+
+        // Select a theme
+        function selectTheme(theme) {
+            currentTheme = theme;
+            currentCardIndex = 0;
+            progress = 0;
+            progressBar.style.width = '0%';
+            showCard();
+        }
+
+        // Show the current card
+        function showCard() {
+            flashcardContainer.innerHTML = '';
+            if (!currentTheme) return;
+
+            const card = flashcardsByTheme[currentTheme][currentCardIndex];
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('flashcard');
+
+            // Add color feedback based on rating
+            if (card.rating === 'hard') {
+                cardElement.classList.add('hard');
+            } else if (card.rating === 'easy') {
+                cardElement.classList.add('easy');
+            }
+
+            cardElement.innerHTML = `
+                <div class="question">${card.question}</div>
+                <div class="answer">${card.answer}</div>
+            `;
+
+            cardElement.addEventListener('click', toggleAnswer);
+            flashcardContainer.appendChild(cardElement);
+        }
+
+        // Toggle answer visibility
+        function toggleAnswer() {
+            const answer = this.querySelector('.answer');
+            answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Rate the current card
+        function rateCard(rating) {
+            if (!currentTheme) return;
+
+            const card = flashcardsByTheme[currentTheme][currentCardIndex];
+
+            // Update card difficulty based on rating
+            switch (rating) {
+                case 'again':
+                    card.interval = 1; // Show again immediately
+                    card.repetitions = 0; // Reset repetitions
+                    break;
+                case 'hard':
+                    card.interval *= 1.2; // Increase interval slightly
+                    card.repetitions += 1;
+                    card.rating = 'hard'; // Set rating
+                    break;
+                case 'good':
+                    card.interval *= 1.5; // Increase interval moderately
+                    card.repetitions += 1;
+                    card.rating = null; // Reset rating
+                    break;
+                case 'easy':
+                    card.interval *= 2; // Increase interval significantly
+                    card.repetitions += 1;
+                    card.rating = 'easy'; // Set rating
+                    break;
+            }
+
+            // Immediately update the card's visual state
+            showCard();
+
+            // Move to the next card
+            currentCardIndex = getNextCardIndex();
+
+            // Update progress
+            progress += 1;
+            progressBar.style.width = `${(progress / flashcardsByTheme[currentTheme].length) * 100}%`;
+
+            // Update the theme button to show progress
+            updateThemeButtonProgress();
+
+            // Check if all cards in the theme are marked as "easy"
+            checkIfThemeCompleted();
+
+            // Reset progress if all cards are reviewed
+            if (progress >= flashcardsByTheme[currentTheme].length) {
+                progress = 0;
+                progressBar.style.width = '0%';
+            }
+        }
+
+        // Update the theme button to show progress
+        function updateThemeButtonProgress() {
+            const themeButtons = document.querySelectorAll('.theme-buttons button');
+            themeButtons.forEach(button => {
+                if (button.textContent.startsWith(currentTheme)) {
+                    const completedCards = flashcardsByTheme[currentTheme].filter(card => card.rating === 'easy').length;
+                    const totalCards = flashcardsByTheme[currentTheme].length;
+                    button.textContent = `${currentTheme}: ${completedCards}/${totalCards}`;
+                }
+            });
+        }
+
+        // Check if all cards in the current theme are marked as "easy"
+        function checkIfThemeCompleted() {
+            const cards = flashcardsByTheme[currentTheme];
+            const allEasy = cards.every(card => card.rating === 'easy');
+
+            if (allEasy) {
+                // Change the theme button color to blue and mark as completed
+                const themeButtons = document.querySelectorAll('.theme-buttons button');
+                themeButtons.forEach(button => {
+                    if (button.textContent.startsWith(currentTheme)) {
+                        button.textContent = `${currentTheme}: Completed`;
+                        button.classList.add('completed');
+                    }
+                });
+
+                // Save the completed theme to local storage
+                if (!completedThemes.includes(currentTheme)) {
+                    completedThemes.push(currentTheme);
+                    localStorage.setItem('completedThemes', JSON.stringify(completedThemes));
+                }
+            }
+        }
+
+        // Get the next card index based on intervals
+        function getNextCardIndex() {
+            const cards = flashcardsByTheme[currentTheme];
+
+            // Find the card with the smallest interval that hasn't been rated as "easy"
+            let nextCardIndex = 0;
+            let smallestInterval = Infinity;
+
+            cards.forEach((card, index) => {
+                if (card.interval < smallestInterval && card.rating !== 'easy') {
+                    smallestInterval = card.interval;
+                    nextCardIndex = index;
+                }
+            });
+
+            // If all cards are rated as "easy," reset their ratings and intervals
+            if (smallestInterval === Infinity) {
+                cards.forEach(card => {
+                    card.interval = 1;
+                    card.rating = null;
+                });
+                nextCardIndex = 0;
+            }
+
+            return nextCardIndex;
+        }
+
+        // Initialize the theme buttons
+        initThemeButtons();
+    </script>
+</body>
+</html>
