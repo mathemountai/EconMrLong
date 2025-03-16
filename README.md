@@ -1,5 +1,5 @@
-# 📌 **EconMrLong: Teaching & Learning Tools**  
-Welcome to my development space for innovative teaching and learning tools, designed to enhance student engagement and understanding in economics.  
+# 📌 ** E-Learning Tools**  
+Welcome to my development space to design and share study tools to enhance Y13 students attainment in AQA A-Level economics.  
 
 ---
 
@@ -19,12 +19,13 @@ A standalone **HTML-based** tool designed to analyze economics essays, evaluatin
 ---
 
 ## 🎯 **2. Flash Match Game** (Recall Definitions)  
-**A memory-based matching game** designed to improve retention of economics definitions!  
+**A memory-based matching game** designed to improve retention of sone key economic definitions. 
 
 🔥 **Challenge yourself** with interactive exercises  
 🧠 **Boost recall** with spaced repetition  
 
 👉 **[Play the Flash Match Game](matchinggamekl.html)**  
+Open link in a new browser window. Cards adjust with screen size- best viewed on ipad or pc
 
 ---
 
@@ -32,14 +33,15 @@ A standalone **HTML-based** tool designed to analyze economics essays, evaluatin
 An **interactive flashcard tool** to aid memory retention of key definitions.  
 
 📌 **How it Works**  
-✔️ Click a **theme** & review flashcards  
+✔️  Click a **theme** & review flashcards  
 ✔️ **Rate difficulty**: Easy, OK, Hard  
 ✔️ **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
 ✔️ **Reset anytime** to start fresh  
 
-👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**  
+👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
+Open link in a new browser window.
 
 ---
 
-💡 *These tools are part of my CPD to exore the use of Python and AI agents in economics learning!* 🚀  
+💡 *These tools are evolving and are just part of my CPD interest in exploring the use of Python and AI as agents in economics learning!* 🚀  
 
