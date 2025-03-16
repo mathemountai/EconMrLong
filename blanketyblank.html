@@ -58,6 +58,7 @@
   <h1>AQA Economics Fill-in-the-Blanks Quiz</h1>
   <div id="quiz-container">
     <div id="question"></div>
+    <input type="text" id="answer" placeholder="Type your answer here...">
     <div id="feedback"></div>
     <button id="submit">Submit Answer</button>
     <button id="next" style="display: none;">Next Question</button>
@@ -121,15 +122,12 @@
     ];
 
     let currentQuestion;
-    let inputElement; // Declare inputElement globally
 
     // Display a random question
     function getRandomQuestion() {
       currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-      inputElement = document.createElement("input"); // Create a new input element
-      inputElement.type = "text";
-      inputElement.placeholder = "Type your answer here...";
-      document.getElementById("question").innerHTML = currentQuestion.sentence.replace("_________", inputElement.outerHTML);
+      document.getElementById("question").textContent = currentQuestion.sentence.replace("_________", "_________");
+      document.getElementById("answer").value = ""; // Clear the input field
       document.getElementById("feedback").textContent = "";
       document.getElementById("submit").style.display = "block";
       document.getElementById("next").style.display = "none";
@@ -137,7 +135,7 @@
 
     // Check the user's answer (case-insensitive)
     function checkAnswer() {
-      const userAnswer = inputElement.value.trim().toLowerCase(); // Get the value of the input element
+      const userAnswer = document.getElementById("answer").value.trim().toLowerCase(); // Get the user's answer
       const correctAnswer = currentQuestion.answer.toLowerCase(); // Convert correct answer to lowercase
 
       if (userAnswer === correctAnswer) {
