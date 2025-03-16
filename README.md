@@ -12,7 +12,8 @@ This is a standalone HTML page witb an app designed for analyzing economics essa
 
 ## Getting Started  
 
-To use thr Essay Analyser, simply <span style="color:blue"> enter the password</span> at the bottom if this page.  
+To use the Essay Analyser, simply <span style="color:blue"> enter the password</span> in this page : 
+[Go to the Essay Analyser ](dsanamycc20plus4.html)
 
 ## Additional Tools  
 <span style="color:red">Check out the **Flash Match** page </span>
