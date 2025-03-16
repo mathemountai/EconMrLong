@@ -15,7 +15,7 @@ To access the Essay Analyser simply click this link &<span style="color:blue"> e
 # 2. Learning tool to improve recall of definitions:  
 <span style="color:red">Check out the **Flash Match Game** page </span>
 
-[Go to Memiry Matching Game](matchinggamekl.html)  
+[Go to Memory Matching Game](matchinggamekl.html)  
 
 # 3. Learning tool to improve recall of definitions:  
 <span style="color:red">Check out the **Flash Card Exercises** page </span>
