@@ -41,5 +41,5 @@ An **interactive flashcard tool** to aid memory retention of key definitions.
 
 ---
 
-💡 *These tools are part of my ongoing effort to make economics learning more interactive and effective!* 🚀  
+💡 *These tools are part of my CPD to exore the use of Python and AI agents in economics learning!* 🚀  
 
