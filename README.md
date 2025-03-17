@@ -6,12 +6,12 @@ Welcome to my development space to design and share study tools to enhance Y13 s
 ## 📝 **1. Essay Analysis Program**  
 A page designed to analyse 25 marker essays in economics, evaluating:  
   ✅ efficiency in writing  
-  ✅ Use of **tech vocab** & balance  
-  ✅ **Keyword detection**, highlighting **connectives**  
-  ✅ Identifying **chains** of analysis and **repetition** 
+  ✅ use of **tech vocab** & balance  
+  ✅ **keyword detection**, highlighting **connectives**  
+  ✅ identifying **chains** of analysis and **repetition** 
 
 ### 🚀 **Get Started**  
-[How to Convert a Handwritten Essay to Text](Handwriting/convert_handwriting.html)
+[How to convert a handwritten essay to text](Handwriting/convert_handwriting.html)
 
 🔹 Click below to access the **Essay Analyser**  
 🔹 **Enter the password when prompted**  
