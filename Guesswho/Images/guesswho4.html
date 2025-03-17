@@ -61,7 +61,8 @@
         #economistImage {
             display: none;
             margin-top: 20px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 300px;
             border-radius: 10px;
         }
     </style>
@@ -75,139 +76,84 @@
         <button onclick="checkGuess()">Submit Guess</button>
         <button onclick="showNextClue()">Get Next Clue</button>
         <button id="restart" onclick="restartGame()">Restart</button>
+        <br>
         <img id="economistImage" src="" alt="Economist Image">
     </div>
 
     <script>
         const economists = [
-            { 
-                name: 'Smith', 
-                clues: [
-                    'Known for pioneering work on capitalism and the "invisible hand."',
-                    'Wrote "The Wealth of Nations."',
-                    'Believed in laissez-faire economics.',
-                    'Argued that individuals acting in self-interest benefit society.',
-                    'Was a Scottish philosopher.',
-                    'Discussed division of labor as a way to increase productivity.',
-                    'Influenced free-market economic policies.',
-                    'Lived during the 18th century.',
-                    'Believed government should only protect property rights and national defense.',
-                    'His ideas laid the foundation for modern economics.'
-                ],
-                image: 'IMG0540.jpg'
-            },
-            { 
-                name: 'Ricardo', 
-                clues: [
-                    'Best known for the theory of comparative advantage.',
-                    'Wrote "Principles of Political Economy and Taxation."',
-                    'Explained why free trade benefits all nations.',
-                    'Believed in the labor theory of value.',
-                    'Developed the theory of rent.',
-                    'Was a member of the British Parliament.',
-                    'Criticized protectionist policies like the Corn Laws.',
-                    'Argued that wages tend to a subsistence level over time.',
-                    'Influenced classical economics alongside Adam Smith.',
-                    'His theories supported global economic liberalization.'
-                ],
-                image: 'IMG0541.jpg'
-            },
-            { 
-                name: 'Pareto', 
-                clues: [
-                    'Known for concept of efficiency in economics.',
-                    'Developed the Pareto principle (80/20 rule).',
-                    'Studied income distribution and wealth inequality.',
-                    'Was an Italian economist and sociologist.',
-                    'Influenced welfare economics.',
-                    'Explored social and political elites.',
-                    'His work contributed to modern microeconomics.',
-                    'Analyzed consumer choice and utility maximization.',
-                    'Believed in a power-law distribution of wealth.',
-                    'His principles are applied in business, economics, and sociology.'
-                ],
-                image: 'IMG0545.jpg'
-            },
-            { 
-                name: 'Akerlof', 
-                clues: [
-                    'Best known for work on asymmetric information in markets.',
-                    'Wrote "The Market for Lemons."',
-                    'Explained why bad quality products can drive out good ones.',
-                    'Won the Nobel Prize in 2001.',
-                    'Explored efficiency wages and unemployment.',
-                    'Was married to Janet Yellen.',
-                    'Contributed to behavioral economics.',
-                    'Studied the role of norms and identity in economic decisions.',
-                    'Criticized excessive reliance on mathematical models in economics.',
-                    'His work influenced government policies on regulation and transparency.'
-                ],
-                image: 'IMG0544.jpg'
-            },
-            { 
-                name: 'Baumol', 
-                clues: [
-                    'Known for " Cost Disease," explaining rising costs in services.',
-                    'Studied the economics of innovation and entrepreneurship.',
-                    'Developed a model of contestable markets.',
-                    'Explored why healthcare and education become more expensive over time.',
-                    'Argued that productivity differences affect price structures.',
-                    'Analyzed the role of firms in economic growth.',
-                    'Contributed to cultural economics.',
-                    'Worked extensively on the economics of the arts.',
-                    'Showed how innovation drives long-run economic growth.',
-                    'His theories are widely used in policy discussions.'
-                ],
-                image: 'IMG0543.jpg'
-            },
-            { 
-                name: 'Friedman', 
-                clues: [
-                    'A major figure in the Chicago School of Economics.',
-                    'Advocated for monetarism and free markets.',
-                    'Wrote "Capitalism and Freedom."',
-                    'Opposed Keynesian economic policies.',
-                    'Argued for school vouchers and deregulation.',
-                    'Won the Nobel Prize in Economics in 1976.',
-                    'Developed the permanent income hypothesis.',
-                    'Supported floating exchange rates.',
-                    'Advised U.S. Presidents on economic policy.',
-                    'Strongly opposed government intervention in the economy.'
-                ],
-                image: 'IMG0539.jpg'
-            },
-            { 
-                name: 'Keynes', 
-                clues: [
-                    'Revolutionized economics with ideas on government intervention.',
-                    'Wrote "The General Theory of Employment, Interest, and Money."',
-                    'Advocated for fiscal stimulus during recessions.',
-                    'Believed in active government policies to combat unemployment.',
-                    'Developed theories during the Great Depression.',
-                    'Influenced the creation of macroeconomics.',
-                    'His ideas led to a new approach in economics.',
-                    'Supported deficit spending to boost demand.',
-                    'Criticized classical economics for failing to address recessions.',
-                    'His theories shaped modern economic policies.'
-                ],
-                image: 'IMG0538.jpg'
-            },
-            { 
-                name: 'Hayek', 
-                clues: [
-                    'A leader of the Austrian School of Economics.',
-                    'Wrote "The Road to Serfdom."',
-                    'Opposed government control over markets.',
-                    'Warned against central planning and socialism.',
-                    'Believed in spontaneous order in economies.',
-                    'Argued that free markets provide the best information.',
-                    'Won the Nobel Prize in Economics in 1974.',
-                    'Had debates with Keynes over economic policy.',
-                    'Strongly opposed monetary expansionism.',
-                    'His ideas influenced neoliberal policies.'
-                ],
-                image: 'IMG0547.jpg'
-            }
+            { name: 'Smith', image: '/guesswho/Images/IMG0540.jpeg', clues: [
+                'Known for pioneering work on capitalism and the "invisible hand."',
+                'The most famous book is "The Wealth of Nations" (1776).',
+                'Father of modern economics and classical liberalism.',
+                'Advocated for limited government intervention.',
+                'Pioneered ideas of specialization and trade benefits.',
+                'Also wrote "The Theory of Moral Sentiments."',
+                'Influenced economic systems in the U.S. and Great Britain.',
+                'Worked alongside David Hume in the Scottish Enlightenment.',
+                'Emphasized self-interest in market efficiency.',
+                'Studied division of labor to improve productivity.'
+            ]},
+            { name: 'Ricardo', image: '/guesswho/Images/IMG0541.jpeg', clues: [
+                'Best known for the theory of comparative advantage.',
+                'Wrote "On the Principles of Political Economy and Taxation" (1817).',
+                'Argued trade benefits nations when they specialize.',
+                'Introduced the concept of economic rent.',
+                'Criticized Britain’s "Corn Laws" and supported free trade.',
+                'Influenced later economists like Marx and Keynes.',
+                'Developed the "Ricardian Model" of wages.',
+                'Applied mathematical analysis to economics.',
+                'Shaped modern trade and labor theories.',
+                'Made his fortune in bond trading before turning to economics.'
+            ]},
+            { name: 'Keynes', image: '/guesswho/Images/IMG0538.jpeg', clues: [
+                'Revolutionized economics with ideas on government intervention in recessions.',
+                'His key book, "The General Theory of Employment, Interest, and Money" (1936), transformed macroeconomics.',
+                'Played a major role in establishing the IMF and World Bank.',
+                'His ideas led to Keynesian economics, which dominated post-war policies.',
+                'Believed that demand, not just supply, drives economic activity.',
+                'Famous for saying, "In the long run, we are all dead."',
+                'Challenged classical economics, leading to modern macroeconomic policies.',
+                'Helped design post-World War II economic recovery strategies.',
+                'Advocated deficit spending to counter recessions.',
+                'Argued that government spending boosts demand.'
+            ]},
+            { name: 'Friedman', image: '/guesswho/Images/IMG0539.jpeg', clues: [
+                'A major figure in the Chicago School of Economics, advocating free-market capitalism.',
+                'Wrote "Capitalism and Freedom" (1962), a defense of minimal government intervention.',
+                'Argued that controlling the money supply is key to managing inflation.',
+                'Won the Nobel Prize in Economics in 1976.',
+                'Famously said, "Inflation is always and everywhere a monetary phenomenon."',
+                'Advocated for school choice and the use of school vouchers.',
+                'Developed the permanent income hypothesis.',
+                'Theories influenced deregulation movements in the 1980s and 1990s.',
+                'Advised U.S. President Ronald Reagan on economic policies.',
+                'Strongly opposed Keynesian economic policies.'
+            ]},
+            { name: 'Ostrom', image: '/guesswho/Images/IMG0542.jpeg', clues: [
+                'First woman to win the Nobel Prize in Economics, awarded in 2009.',
+                'Studied how communities manage shared resources without government intervention.',
+                'Wrote "Governing the Commons" (1990), a landmark work on collective resource management.',
+                'Developed principles for successful community resource management.',
+                'Work influenced environmental economics and policy-making.',
+                'Showed that local communities often create their own successful governance systems.',
+                'Proved that decentralized decision-making can be more effective than state control.',
+                'Studied the role of institutions in resource sustainability.',
+                'Research had applications in fisheries, forests, and water management.',
+                'Challenged the traditional "Tragedy of the Commons" theory.'
+            ]},
+            { name: 'Hayek', image: '/guesswho/Images/IMG0547.jpeg', clues: [
+                'A leader of the Austrian School of Economics and defender of free markets.',
+                'Wrote "The Road to Serfdom" (1944), warning against central economic planning.',
+                'Believed that free markets best allocate resources efficiently.',
+                'Developed the theory of spontaneous order in markets.',
+                'Criticized socialism as a threat to individual freedom.',
+                'Won the Nobel Prize in Economics in 1974.',
+                'Famous for saying, "The more the state plans, the more difficult planning becomes for the individual."',
+                'Influenced leaders like Margaret Thatcher and Ronald Reagan.',
+                'Argued that economies are too complex for central planning to succeed.',
+                'Advocated for economic and political freedom as interdependent.'
+            ]}
         ];
 
         let selectedEconomist, clueIndex;
@@ -217,32 +163,30 @@
             clueIndex = 0;
             document.getElementById("clues").innerHTML = "";
             document.getElementById("guess").value = "";
-            document.getElementById("economistImage").style.display = "none"; // Hide image initially
+            document.getElementById("economistImage").style.display = "none";
             showNextClue();
         }
 
         function showNextClue() {
             if (clueIndex < selectedEconomist.clues.length) {
-                document.getElementById("clues").innerHTML += `<div class="clue">${selectedEconomist.clues[clueIndex]}</div>`;
+                const clueDiv = document.createElement("div");
+                clueDiv.className = "clue";
+                clueDiv.innerText = selectedEconomist.clues[clueIndex];
+                document.getElementById("clues").appendChild(clueDiv);
                 clueIndex++;
+            } else {
+                alert("No more clues! Make your guess.");
             }
         }
 
         function checkGuess() {
-            const guess = document.getElementById("guess").value.toLowerCase();
-            if (guess === selectedEconomist.name.toLowerCase()) {
-                alert("Correct!");
-                // Display the economist's image
-                const imageElement = document.getElementById("economistImage");
-                imageElement.src = selectedEconomist.image;
-                imageElement.style.display = "block";
+            if (document.getElementById("guess").value.trim().toLowerCase() === selectedEconomist.name.toLowerCase()) {
+                document.getElementById("economistImage").src = selectedEconomist.image;
+                document.getElementById("economistImage").style.display = "block";
+                alert("Correct! You guessed the economist.");
             } else {
-                alert("Incorrect. Try again!");
+                alert("Incorrect, try again.");
             }
-        }
-
-        function restartGame() {
-            startGame();
         }
 
         startGame();
