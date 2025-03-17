@@ -174,11 +174,29 @@
     ];
 
     let currentQuestion;
+    let usedQuestions = []; // Track used questions
 
     // Display a random question
     function getRandomQuestion() {
-      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-      document.getElementById("question").textContent = currentQuestion.sentence; // Directly set the sentence
+      if (usedQuestions.length === questions.length) {
+        // If all questions have been used, reset the usedQuestions array
+        usedQuestions = [];
+      }
+
+      // Filter out questions that have already been used
+      const availableQuestions = questions.filter(
+        (question) => !usedQuestions.includes(question)
+      );
+
+      // Select a random question from the available questions
+      currentQuestion =
+        availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+
+      // Add the selected question to the usedQuestions array
+      usedQuestions.push(currentQuestion);
+
+      // Display the question
+      document.getElementById("question").textContent = currentQuestion.sentence;
       document.getElementById("answer").value = ""; // Clear the input field
       document.getElementById("feedback").textContent = "";
       document.getElementById("submit").style.display = "block";
