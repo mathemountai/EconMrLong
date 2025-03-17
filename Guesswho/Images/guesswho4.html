@@ -217,6 +217,7 @@
             clueIndex = 0;
             document.getElementById("clues").innerHTML = "";
             document.getElementById("guess").value = "";
+            document.getElementById("economistImage").style.display = "none"; // Hide image initially
             showNextClue();
         }
 
@@ -228,9 +229,20 @@
         }
 
         function checkGuess() {
-            if (document.getElementById("guess").value.toLowerCase() === selectedEconomist.name.toLowerCase()) {
+            const guess = document.getElementById("guess").value.toLowerCase();
+            if (guess === selectedEconomist.name.toLowerCase()) {
                 alert("Correct!");
+                // Display the economist's image
+                const imageElement = document.getElementById("economistImage");
+                imageElement.src = selectedEconomist.image;
+                imageElement.style.display = "block";
+            } else {
+                alert("Incorrect. Try again!");
             }
+        }
+
+        function restartGame() {
+            startGame();
         }
 
         startGame();
