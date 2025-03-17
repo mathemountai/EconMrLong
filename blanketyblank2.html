@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQA Economics Fill-in-the-Blanks Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    #quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 5px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #feedback {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>AQA Economics Fill-in-the-Blanks Quiz</h1>
+  <div id="quiz-container">
+    <div id="question"></div>
+    <input type="text" id="answer" placeholder="Type your answer here...">
+    <div id="feedback"></div>
+    <button id="submit">Submit Answer</button>
+    <button id="next" style="display: none;">Next Question</button>
+  </div>
+
+  <script>
+    // List of AQA Economics terms with fill-in-the-blank sentences
+    const questions = [
+      {
+        sentence: "_________ is the total demand for goods and services in an economy at a given price level and in a given time period.",
+        answer: "aggregate demand"
+      },
+      {
+        sentence: "_________ is the total amount of goods and services that producers in an economy are willing and able to supply at a given price level in a given time period.",
+        answer: "aggregate supply"
+      },
+      {
+        sentence: "_________ occurs when resources are allocated to produce the combination of goods and services that maximises society's welfare.",
+        answer: "allocative efficiency"
+      },
+      {
+        sentence: "_________ occurs when one party in an economic transaction has more information than the other, leading to market failure.",
+        answer: "asymmetric information"
+      },
+      {
+        sentence: "_________ are obstacles that make it difficult for new firms to enter a market, such as high start-up costs or legal restrictions.",
+        answer: "barriers to entry"
+      },
+      {
+        sentence: "_________ is the difference between what consumers are willing to pay for a good or service and what they actually pay.",
+        answer: "consumer surplus"
+      },
+      {
+        sentence: "_________ is inflation caused by an increase in the cost of production, such as higher wages or raw material costs.",
+        answer: "cost push inflation"
+      },
+      {
+        sentence: "_________ is inflation caused by an increase in aggregate demand exceeding aggregate supply.",
+        answer: "demand pull inflation"
+      },
+      {
+        sentence: "_________ is a measure of how responsive the quantity demanded of a good or service is to a change in its price.",
+        answer: "elasticity of demand"
+      },
+      {
+        sentence: "_________ is a cost or benefit that affects a third party not directly involved in an economic transaction.",
+        answer: "externality"
+      },
+      {
+        sentence: "_________ is the use of government spending and taxation to influence the economy.",
+        answer: "fiscal policy"
+      },
+      {
+        sentence: "_________ is the use of interest rates and the money supply to influence the economy.",
+        answer: "monetary policy"
+      },
+      {
+        sentence: "_________ is the value of the next best alternative foregone when making a choice.",
+        answer: "opportunity cost"
+      },
+      {
+        sentence: "_________ is a statistical measure of income inequality ranging from 0 (perfect equality) to 1 (maximum inequality).",
+        answer: "gini coefficient"
+      },
+      {
+        sentence: "_________ is a graphical representation of income distribution, illustrating the degree of inequality within an economy.",
+        answer: "lorenz curve"
+      },
+      {
+        sentence: "_________ is the tendency for high unemployment to persist due to skill loss and discouragement effects.",
+        answer: "hysteresis"
+      },
+      {
+        sentence: "______________ is when a country can produce a good at a lower opportunity cost than another.",
+        answer: "comparative advantage"
+      },
+      {
+        sentence: "_________ refers to government policies restricting imports to protect domestic industries.",
+        answer: "protectionism"
+      },
+      {
+        sentence: "The ________________ is the record of all financial transactions between a country and the rest of the world, including trade, investment, and transfers.",
+        answer: "balance of payments"
+      },
+      {
+        sentence: "The ______________ records the inflow and outflow of goods, services, investment incomes and transfer payments.",
+        answer: "current account"
+      },
+      {
+        sentence: "________________ occurs when interest rates are so low that monetary policy becomes ineffective in stimulating the economy.",
+        answer: "liquidity trap"
+      },
+      {
+        sentence: "___________ is the demand for a factor of production arising from the demand for the goods and services it helps to produce.",
+        answer: "derived demand"
+      },
+      {
+        sentence: "_________ is a reduction in the rate of inflation, where the general price level continues to rise but at a slower rate.",
+        answer: "disinflation"
+      },
+      {
+        sentence: "The _________ income account is the part of the current account that records income flows from investments abroad and payments made to foreign investors.",
+        answer: "primary"
+      },
+      {
+        sentence: "The _________ income account is the part of the current account that records transfers such as foreign aid, pensions, and remittances.",
+        answer: "secondary "
+      },
+      {
+        sentence: "_________ refers to a situation where the quantity demanded of a good or service is relatively unresponsive to changes in price.",
+        answer: "inelastic"
+      },
+    ];
+
+    let currentQuestion;
+
+    // Display a random question
+    function getRandomQuestion() {
+      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+      document.getElementById("question").textContent = currentQuestion.sentence; // Directly set the sentence
+      document.getElementById("answer").value = ""; // Clear the input field
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("submit").style.display = "block";
+      document.getElementById("next").style.display = "none";
+    }
+
+    // Check the user's answer (case-insensitive)
+    function checkAnswer() {
+      const userAnswer = document.getElementById("answer").value.trim().toLowerCase(); // Get the user's answer
+      const correctAnswer = currentQuestion.answer.toLowerCase(); // Convert correct answer to lowercase
+
+      if (userAnswer === correctAnswer) {
+        document.getElementById("feedback").textContent = "Correct! Well done!";
+      } else {
+        document.getElementById("feedback").textContent = `Incorrect. The correct answer is: ${currentQuestion.answer}`;
+      }
+
+      document.getElementById("submit").style.display = "none";
+      document.getElementById("next").style.display = "block";
+    }
+
+    // Event listeners
+    document.getElementById("submit").addEventListener("click", checkAnswer);
+    document.getElementById("next").addEventListener("click", getRandomQuestion);
+
+    // Start the quiz
+    getRandomQuestion();
+  </script>
+</body>
+</html>
