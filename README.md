@@ -49,6 +49,14 @@ A bank of **missing word questions**. Can you master all 26?
 Fill in the blank word/s and build your recall of key definitions.  
 👉 **[Go to Blankety Blank game](blanketyblank2.html)**
 
+ ## 🚧Work in progress 🚧 ##  
+ 
+## 5. Guess Who ##
+
+6. [Guess Who](guesswho/guesswho2.html)
+ 
+
+
 ---
 
 💡 *These tools are evolving and are just part of my CPD interest in exploring the use of Python and AI as agents in economics learning!* 🚀  
