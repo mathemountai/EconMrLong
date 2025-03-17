@@ -45,7 +45,7 @@ Open link in a new tab or browser window.
 
 ## 🎓 **4. Blankety Blank **  
 An **interactive flashcard tool** to Build your recall of key definitions.  
-[Go to Blankety Blank game](blanketyblank.html)
+[Go to Blankety Blank game](blanketyblank2.html)
 
 ---
 
