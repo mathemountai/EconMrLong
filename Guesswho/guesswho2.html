@@ -3,16 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess Who I Am Game</title>
+    <title>Guess Who I Am: Economist Edition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        #clue {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        #guess {
+            margin-top: 10px;
+        }
+        #feedback {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Guess Who I Am - Economist Edition</h1>
-    <div id="clue"></div>
-    <input type="text" id="guessInput" placeholder="Enter your guess">
-    <button onclick="checkGuess()">Guess</button>
-    <div id="message"></div>
-    <div id="guessesLeft"></div>
+    <h1>Guess Who I Am: Economist Edition</h1>
+    <p>Guess the economist based on the clues. You have 5 guesses!</p>
 
-    <script src="Guesswho/game.js"></script>
+    <div id="game-container">
+        <div id="clue">Click "Start Game" to begin.</div>
+        <input type="text" id="guess-input" placeholder="Type your guess here..." />
+        <button id="guess-btn">Guess</button>
+        <button id="start-btn">Start Game</button>
+        <div id="feedback"></div>
+    </div>
+
+    <script src="game.js"></script>
 </body>
 </html>
