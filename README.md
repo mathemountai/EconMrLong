@@ -53,8 +53,8 @@ Fill in the blank word/s and build your recall of key definitions.
  
 ## 5. Guess Who ##
 
-6. [Guess Who](guesswho/guesswho2.html)
- 
+ [Guess Who](Guesswho/guesswho2.html)
+
 
 
 ---
