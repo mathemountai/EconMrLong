@@ -3,128 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess Who I Am: Economist Edition</title>
+    <title>Guess Who I Am - Economists</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
             text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
-        #clue {
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        #clues {
+            margin: 20px 0;
             font-size: 18px;
-            margin-bottom: 10px;
+            text-align: left;
+        }
+        .clue {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e3e3e3;
+            border-radius: 5px;
         }
         input, button {
-            margin-top: 10px;
-            padding: 10px;
             font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            width: 80%;
+            max-width: 400px;
         }
-        #feedback {
-            margin-top: 15px;
-            font-weight: bold;
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #restart {
+            margin-top: 30px;
+            background: #dc3545;
+        }
+        #restart:hover {
+            background: #b32d3a;
         }
     </style>
 </head>
 <body>
-    <h1>Guess Who I Am: Economist Edition</h1>
-    <p>Guess the economist based on the clues. You have 5 guesses!</p>
-
-    <div id="game-container">
-        <div id="clue">Click "Start Game" to begin.</div>
-        <input type="text" id="guess-input" placeholder="Type your guess here..." />
-        <button onclick="checkGuess()">Guess</button>
-        <button onclick="startGame()">Start Game</button>
-        <div id="feedback"></div>
+    <div class="container">
+        <h1>Guess Who I Am</h1>
+        <p>I am an economist. Can you guess who?</p>
+        <div id="clues"></div>
+        <input type="text" id="guess" placeholder="Enter economist's name">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <button onclick="showNextClue()">Get Next Clue</button>
+        <button id="restart" onclick="restartGame()">Restart</button>
     </div>
 
     <script>
         const economists = [
+            { name: 'Smith', clues: [
+                'Known for pioneering work on capitalism and the "invisible hand."',
+                'The most famous book is "The Wealth of Nations" (1776).',
+                'Argued that individuals acting in self-interest benefit society.',
+                'Father of modern economics and classical liberalism.',
+                'Believed free markets regulate themselves through competition.',
+                'Also wrote "The Theory of Moral Sentiments."',
+                'Influenced the economic systems of the U.S. and Great Britain.',
+                'Advocated for limited government intervention.',
+                'Pioneered ideas of specialization and trade benefits.',
+                'Worked alongside David Hume in the Scottish Enlightenment.'
+            ]},
+            { name: 'Ricardo', clues: [
+                'Best known for the theory of comparative advantage.',
+                'Wrote "On the Principles of Political Economy and Taxation" (1817).',
+                'Argued trade benefits nations when they specialize.',
+                'Developed the "Ricardian Model" of wages.',
+                'Applied mathematical analysis to economics.',
+                'Introduced the concept of economic rent.',
+                'Criticized Britain’s "Corn Laws" and supported free trade.',
+                'Influenced later economists like Marx and Keynes.',
+                'Work shaped modern trade and labor theories.',
+                'Made his fortune in bond trading before turning to economics.'
+            ]}
+            
+            
             {
-                name: 'Adam Smith',
-                clues: [
-                    'Pioneered ideas on capitalism and the "invisible hand".',
-                    'Believed free markets regulate themselves through competition.',
-                    'Argued that individuals acting in self-interest benefit society.',
-                    'His most famous book is "The Wealth of Nations" (1776).',
-                    'Also wrote about morality in "The Theory of Moral Sentiments".'
-                ]
-            },
-            {
-                name: 'David Ricardo',
-                clues: [
-                    'Known for the theory of comparative advantage in trade.',
-                    'Argued that free trade benefits all nations.',
-                    'Analyzed land rent and its effects on income distribution.',
-                    'Famous work: "On the Principles of Political Economy and Taxation" (1817).',
-                    'Criticized the "Corn Laws" and supported free trade policies.'
-                ]
-            },
-            {
-                name: 'Maynard Keynes',
-                clues: [
-                    'Father of macroeconomics and government intervention theories.',
-                    'Advocated for public spending to boost demand in recessions.',
-                    'Criticized classical economics for ignoring unemployment.',
-                    'Wrote "The General Theory of Employment, Interest, and Money" (1936).',
-                    'Influenced modern monetary and fiscal policies worldwide.'
-                ]
-            },
-            {
-                name: 'Milton Friedman',
-                clues: [
-                    'Strong advocate of free markets and limited government.',
-                    'Developed monetarism, focusing on controlling money supply.',
-                    'Criticized Keynesian economics and government intervention.',
-                    'Wrote "Capitalism and Freedom" and "A Monetary History of the United States".',
-                    'Influenced policies like deregulation and privatization.'
-                ]
-            }
+    name: 'Pareto',
+    clues: [
+        'Known for the concept of Pareto efficiency in economics.',
+        'Developed the 80/20 rule, which suggests that 80% of outcomes come from 20% of causes.',
+        'Studied income distribution and observed that wealth is often concentrated among a small percentage of the population.',
+        'Made significant contributions to welfare economics and general equilibrium theory.',
+        'His name is associated with the Pareto optimality concept in resource allocation.',
+        'Argued that some changes in economic policies benefit some people without making others worse off.',
+        'Initially an engineer before turning to economics and sociology.',
+        'Studied social elites and the circulation of power in society.',
+        'His work influenced later economists, particularly in microeconomics and game theory.',
+        'Developed a mathematical approach to analyzing economic systems.'
+    ]
+},
+{
+    name: 'Akerlof',
+    clues: [
+        'Best known for work on asymmetric information in markets.',
+        'Wrote the famous paper "The Market for Lemons" (1970), explaining how bad-quality goods can dominate markets.',
+        'Showed how sellers with more information than buyers can cause market failure.',
+        'Won the Nobel Prize in Economics in 2001 for research on information asymmetry.',
+        'His work laid the foundation for modern behavioral and information economics.',
+        'Introduced concepts like "adverse selection" and "moral hazard" in economics.',
+        'Also studied the role of social norms in economic decision-making.',
+        'Argued that government intervention is sometimes necessary to correct market failures caused by information gaps.',
+        'His research impacted financial markets, insurance, and labor economics.',
+        'Married to economist Janet Yellen, former Chair of the Federal Reserve.'
+    ]
+},
+{
+    name: 'Baumol',
+    clues: [
+        'Known for "Baumol’s Cost Disease," explaining why costs rise in service industries like education and healthcare.',
+        'Argued that wages in labor-intensive industries rise even if productivity does not improve.',
+        'His work explains why prices in certain sectors, such as the arts, education, and healthcare, increase faster than in others.',
+        'Developed the "contestable markets" theory, which challenges traditional monopoly models.',
+        'Contributed significantly to entrepreneurship research in economics.',
+        'Studied the role of innovation and how it drives economic growth.',
+        'Wrote "The Free-Market Innovation Machine," exploring how capitalism fosters technological progress.',
+        'Work has influenced policies on regulation and competition.',
+        'Also contributed to monetary policy and corporate finance theories.',
+        'Had a strong focus on the economics of creativity and culture.'
+    ]
+},
+{
+    name: 'Friedman',
+    clues: [
+        'A major figure in the Chicago School of Economics, advocating free-market capitalism.',
+        'Wrote "Capitalism and Freedom" (1962), a defense of minimal government intervention.',
+        'Argued that controlling the money supply is the key to managing inflation.',
+        'Believed that economic freedom was essential for political freedom.',
+        'Famously said, "Inflation is always and everywhere a monetary phenomenon."',
+        'Won the Nobel Prize in Economics in 1976 for work on consumption analysis and monetary policy.',
+        'Advised U.S. President Ronald Reagan on economic policies.',
+        'Advocated for school choice and the use of school vouchers.',
+        'Theories influenced deregulation movements in the 1980s and 1990s.',
+        'Developed the permanent income hypothesis, explaining how people plan spending over their lifetime.'
+    ]
+},
+{
+    name: 'Keynes',
+    clues: [
+        'Revolutionized economics with ideas on government intervention in recessions.',
+        'His key book, "The General Theory of Employment, Interest, and Money" (1936), transformed macroeconomics.',
+        'Argued that government spending can help during economic downturns.',
+        'Played a major role in establishing the IMF and World Bank.',
+        'His ideas led to Keynesian economics, which dominated post-war policies.',
+        'Believed that demand, not just supply, drives economic activity.',
+        'Famous for saying, "In the long run, we are all dead."',
+        'Was part of the Bloomsbury Group, an influential cultural circle.',
+        'Challenged classical economics, leading to modern macroeconomic policies.',
+        'Helped design post-World War II economic recovery strategies.'
+    ]
+},
+{
+    name: 'Hayek',
+    clues: [
+        'A leader of the Austrian School of Economics and defender of free markets.',
+        'Wrote "The Road to Serfdom" (1944), warning against central economic planning.',
+        'Argued that economies are too complex for central planning to succeed.',
+        'Developed the theory of spontaneous order in markets.',
+        'Believed that free markets best allocate resources efficiently.',
+        'Won the Nobel Prize in Economics in 1974.',
+        'Famous for saying, "The more the state plans, the more difficult planning becomes for the individual."',
+        'Criticized socialism as a threat to individual freedom.',
+        'Influenced leaders like Margaret Thatcher and Ronald Reagan.',
+        'Advocated for economic and political freedom as interdependent.'
+    ]
+},
+{
+    name: 'Ostrom',
+    clues: [
+        'First woman to win the Nobel Prize in Economics, awarded in 2009.',
+        'Studied how communities manage shared resources without government intervention.',
+        'Wrote "Governing the Commons" (1990), a landmark work on collective resource management.',
+        'Challenged the idea that common resources always lead to overuse and depletion.',
+        'Developed principles for successful community resource management.',
+        'Work influenced environmental economics and policy-making.',
+        'Proved that decentralized decision-making can be more effective than state control.',
+        'Showed that local communities often create their own successful governance systems.',
+        'Contributed significantly to institutional economics and political economy.',
+        'Research had applications in managing fisheries, forests, and water resources sustainably.'
+    ]
+},
+{
+    name: 'Kahneman',
+    clues: [
+        'A psychologist who won the Nobel Prize in Economics for work on behavioral economics.',
+        'Co-developed prospect theory, explaining how people weigh gains and losses.',
+        'Wrote "Thinking, Fast and Slow" (2011), explaining two modes of human thinking.',
+        'Challenged the idea that humans always make rational economic decisions.',
+        'Work showed how cognitive biases affect economic and financial choices.',
+        'Introduced the concept of "loss aversion," explaining why losses feel worse than equivalent gains feel good.',
+        'His work influenced policies in finance, healthcare, and risk management.',
+        'Explored the "availability heuristic," where people judge probabilities based on recent events.',
+        'Studied how framing effects change decision-making outcomes.',
+        'First psychologist to win the Nobel Prize in Economics (2002).'
+    ]
+}
+            
+            
         ];
 
-        let currentEconomist;
-        let currentClueIndex = 0;
-        let guessesLeft = 5;
+        let selectedEconomist, clueIndex;
 
         function startGame() {
-            // Pick a random economist
-            currentEconomist = economists[Math.floor(Math.random() * economists.length)];
-            currentClueIndex = 0;
-            guessesLeft = 5;
+            selectedEconomist = economists[Math.floor(Math.random() * economists.length)];
+            clueIndex = 0;
+            document.getElementById("clues").innerHTML = "";
+            document.getElementById("guess").value = "";
+            showNextClue();
+        }
 
-            document.getElementById('clue').innerText = currentEconomist.clues[currentClueIndex];
-            document.getElementById('feedback').innerText = '';
-            document.getElementById('guess-input').value = '';
+        function showNextClue() {
+            if (clueIndex < selectedEconomist.clues.length) {
+                const clueDiv = document.createElement("div");
+                clueDiv.className = "clue";
+                clueDiv.innerText = selectedEconomist.clues[clueIndex];
+                document.getElementById("clues").appendChild(clueDiv);
+                clueIndex++;
+            } else {
+                alert("No more clues! Make your guess.");
+            }
         }
 
         function checkGuess() {
-            const guess = document.getElementById('guess-input').value.trim().toLowerCase();
-            const feedback = document.getElementById('feedback');
-
-            if (!currentEconomist) {
-                feedback.innerText = 'Click "Start Game" first!';
-                feedback.style.color = 'red';
-                return;
-            }
-
-            if (guess === currentEconomist.name.toLowerCase()) {
-                feedback.innerText = `Correct! The economist is ${currentEconomist.name}.`;
-                feedback.style.color = 'green';
+            const guess = document.getElementById("guess").value.trim().toLowerCase();
+            if (guess === selectedEconomist.name.toLowerCase()) {
+                alert("Correct! You guessed the economist.");
             } else {
-                guessesLeft--;
-                if (guessesLeft > 0) {
-                    currentClueIndex++;
-                    document.getElementById('clue').innerText = currentEconomist.clues[currentClueIndex];
-                    feedback.innerText = `Incorrect! You have ${guessesLeft} guesses left.`;
-                    feedback.style.color = 'red';
-                } else {
-                    feedback.innerText = `Game over! The correct answer was ${currentEconomist.name}.`;
-                    feedback.style.color = 'red';
-                }
+                alert("Incorrect, try again.");
             }
-
-            document.getElementById('guess-input').value = '';
         }
+
+        function restartGame() {
+            startGame();
+        }
+
+        startGame(); // Start the game when the page loads
     </script>
 </body>
 </html>
