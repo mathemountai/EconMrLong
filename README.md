@@ -49,9 +49,11 @@ A bank of **missing word questions**. Can you master all 26?
 Fill in the blank word/s and build your recall of key definitions.  
 👉 **[Go to Blankety Blank game](blanketyblank2.html)**
 
- ## 🚧Work in progress 🚧 ##  
+---
+
+## 🚧Work in progress 🚧 ##  
  
-## 5. Guess Who ##
+## 5. Guess Who  ##
 
  [Guess Who](Guesswho/guesswho2.html)
 
