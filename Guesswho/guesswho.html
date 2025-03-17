@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Who I Am: Economist Edition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        #clue {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess Who I Am: Economist Edition</h1>
+    <p>Guess the economist based on the clues. You have 5 guesses!</p>
 
+    <div id="game-container">
+        <div id="clue">Click "Start Game" to begin.</div>
+        <input type="text" id="guess-input" placeholder="Type your guess here..." />
+        <button onclick="checkGuess()">Guess</button>
+        <button onclick="startGame()">Start Game</button>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        const economists = [
+            {
+                name: 'Adam Smith',
+                clues: [
+                    'Pioneered ideas on capitalism and the "invisible hand".',
+                    'Believed free markets regulate themselves through competition.',
+                    'Argued that individuals acting in self-interest benefit society.',
+                    'His most famous book is "The Wealth of Nations" (1776).',
+                    'Also wrote about morality in "The Theory of Moral Sentiments".'
+                ]
+            },
+            {
+                name: 'David Ricardo',
+                clues: [
+                    'Known for the theory of comparative advantage in trade.',
+                    'Argued that free trade benefits all nations.',
+                    'Analyzed land rent and its effects on income distribution.',
+                    'Famous work: "On the Principles of Political Economy and Taxation" (1817).',
+                    'Criticized the "Corn Laws" and supported free trade policies.'
+                ]
+            },
+            {
+                name: 'Maynard Keynes',
+                clues: [
+                    'Father of macroeconomics and government intervention theories.',
+                    'Advocated for public spending to boost demand in recessions.',
+                    'Criticized classical economics for ignoring unemployment.',
+                    'Wrote "The General Theory of Employment, Interest, and Money" (1936).',
+                    'Influenced modern monetary and fiscal policies worldwide.'
+                ]
+            },
+            {
+                name: 'Milton Friedman',
+                clues: [
+                    'Strong advocate of free markets and limited government.',
+                    'Developed monetarism, focusing on controlling money supply.',
+                    'Criticized Keynesian economics and government intervention.',
+                    'Wrote "Capitalism and Freedom" and "A Monetary History of the United States".',
+                    'Influenced policies like deregulation and privatization.'
+                ]
+            }
+        ];
+
+        let currentEconomist;
+        let currentClueIndex = 0;
+        let guessesLeft = 5;
+
+        function startGame() {
+            // Pick a random economist
+            currentEconomist = economists[Math.floor(Math.random() * economists.length)];
+            currentClueIndex = 0;
+            guessesLeft = 5;
+
+            document.getElementById('clue').innerText = currentEconomist.clues[currentClueIndex];
+            document.getElementById('feedback').innerText = '';
+            document.getElementById('guess-input').value = '';
+        }
+
+        function checkGuess() {
+            const guess = document.getElementById('guess-input').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback');
+
+            if (!currentEconomist) {
+                feedback.innerText = 'Click "Start Game" first!';
+                feedback.style.color = 'red';
+                return;
+            }
+
+            if (guess === currentEconomist.name.toLowerCase()) {
+                feedback.innerText = `Correct! The economist is ${currentEconomist.name}.`;
+                feedback.style.color = 'green';
+            } else {
+                guessesLeft--;
+                if (guessesLeft > 0) {
+                    currentClueIndex++;
+                    document.getElementById('clue').innerText = currentEconomist.clues[currentClueIndex];
+                    feedback.innerText = `Incorrect! You have ${guessesLeft} guesses left.`;
+                    feedback.style.color = 'red';
+                } else {
+                    feedback.innerText = `Game over! The correct answer was ${currentEconomist.name}.`;
+                    feedback.style.color = 'red';
+                }
+            }
+
+            document.getElementById('guess-input').value = '';
+        }
+    </script>
+</body>
+</html>
