@@ -5,10 +5,10 @@ Welcome to my development space to design and share study tools to enhance Y13 s
 
 ## 📝 **1. Essay Analysis Program**  
 A page designed to analyse 25 marker essays in economics, evaluating:  
-✅ efficiency in writing  
-✅ Use of **tech vocab** & balance  
-✅ **Keyword detection**, highlighting **connectives**  
-✅ Identifying **chains** of analysis and **repetition** 
+  ✅ efficiency in writing  
+  ✅ Use of **tech vocab** & balance  
+  ✅ **Keyword detection**, highlighting **connectives**  
+  ✅ Identifying **chains** of analysis and **repetition** 
 
 ### 🚀 **Get Started**  
 [Open Convert Handwriting Guide](Handwriting/convert_handwriting.html)
@@ -19,7 +19,7 @@ A page designed to analyse 25 marker essays in economics, evaluating:
 👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
 
 ---
-## 🎯 **Knowledge Building Games**
+# 🎯 **Knowledge Building Games**
 🔥 **Challenge yourself** with these interactive exercises  
 🧠 **Boost recall** with spaced repetition 
 
@@ -47,7 +47,7 @@ Open link in a new tab or browser
 A bank of **missing word questions**. Can you master all 26?
 
 Fill in the blank word/s and build your recall of key definitions.  
-👉 **[Go to Blankety Blank game]**(blanketyblank2.html)
+👉 **[Go to Blankety Blank game](blanketyblank2.html)**
 
 ---
 
