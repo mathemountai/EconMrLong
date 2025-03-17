@@ -4,11 +4,11 @@ Welcome to my development space to design and share study tools to enhance Y13 s
 ---
 
 ## 📝 **1. Essay Analysis Program**  
-A page designed to analyse economics essays, evaluating:  
-✅ Efficiency in writing  
+A page designed to analyse 25 marker essays in economics, evaluating:  
+✅ efficiency in writing  
 ✅ Use of **tech vocab** & balance  
 ✅ **Keyword detection**, highlighting **connectives**  
-✅ Identifying **repitition** and **chains** of analysis  
+✅ Identifying **chains** of analysis and **repetition** 
 
 ### 🚀 **Get Started**  
 [Open Convert Handwriting Guide](Handwriting/convert_handwriting.html)
@@ -23,29 +23,31 @@ A page designed to analyse economics essays, evaluating:
 🔥 **Challenge yourself** with these interactive exercises  
 🧠 **Boost recall** with spaced repetition 
 
-# 🎯 **2. Flash Match Game** (Recall Definitions)  
-**A memory-based matching game** designed to improve retention of sone key economic definitions.  
+## 🎯 **2. Flash Match Game** (Recall Definitions)  
+**A memory-based matching game** improve your recall of selected key economic definitions.  
 
 👉 **[Play the Flash Match Game](matchinggamekl.html)**  
 Open link in a new tab or browser window. Cards adjust with screen size- best viewed on i-pad or PC.
 
 ---
 
-# 🎓 **3. Flashcard Progress Tracker**  
-An **interactive flashcard tool** to aid in memorising economic definitions.  
+## 🎓 **3. Flashcard Progress Tracker**  
+An **interactive flashcard tool** to aid in memorising economic definitions across different topics.
 
-📌 **How it Works**  
+ **How it Works**  
 ✔️  Click a **theme** & review its flashcards  
 ✔️ **Rate difficulty**: Easy, OK, Hard  
 ✔️ **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
 ✔️ **Reset anytime** to start fresh  
 
 👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
-Open link in a new tab or browser window.
+Open link in a new tab or browser 
 
-## 🎓 **4. Blankety Blank **  
-An **interactive flashcard tool** to Fill in the blank word/s and build your recall of key definitions.  
-[Go to Blankety Blank game](blanketyblank2.html)
+## 🎓🔥 **4. Blankety Blank **  
+A bank of **missing word questions**. Can you master all 26?
+
+Fill in the blank word/s and build your recall of key definitions.  
+👉 **[Go to Blankety Blank game]**(blanketyblank2.html)
 
 ---
 
