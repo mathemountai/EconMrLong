@@ -4,11 +4,11 @@ Welcome to my development space to design and share study tools to enhance Y13 s
 ---
 
 ## 📝 **1. Essay Analysis Program**  
-A standalone **HTML-based** tool designed to analyze economics essays, evaluating:  
-✅ Chain length & argument progression  
-✅ Use of **technical vocabulary** & balance  
+A page designed to analyse economics essays, evaluating:  
+✅ Efficiency in writing  
+✅ Use of **tech vocab** & balance  
 ✅ **Keyword detection**, highlighting **connectives**  
-✅ Identifying **repeated points** and assessing **depth** of analysis  
+✅ Identifying **repitition** and **chains** of analysis  
 
 ### 🚀 **Get Started**  
 [Open Convert Handwriting Guide](Handwriting/convert_handwriting.html)
@@ -19,23 +19,23 @@ A standalone **HTML-based** tool designed to analyze economics essays, evaluatin
 👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
 
 ---
+## 🎯 **Knowledge Building Games**
+🔥 **Challenge yourself** with these interactive exercises  
+🧠 **Boost recall** with spaced repetition 
 
-## 🎯 **2. Flash Match Game** (Recall Definitions)  
-**A memory-based matching game** designed to improve retention of sone key economic definitions. 
-
-🔥 **Challenge yourself** with interactive exercises  
-🧠 **Boost recall** with spaced repetition  
+# 🎯 **2. Flash Match Game** (Recall Definitions)  
+**A memory-based matching game** designed to improve retention of sone key economic definitions.  
 
 👉 **[Play the Flash Match Game](matchinggamekl.html)**  
 Open link in a new tab or browser window. Cards adjust with screen size- best viewed on i-pad or PC.
 
 ---
 
-## 🎓 **3. Flashcard Progress Tracker**  
-An **interactive flashcard tool** to aid memory retention of key definitions.  
+# 🎓 **3. Flashcard Progress Tracker**  
+An **interactive flashcard tool** to aid in memorising economic definitions.  
 
 📌 **How it Works**  
-✔️  Click a **theme** & review flashcards  
+✔️  Click a **theme** & review its flashcards  
 ✔️ **Rate difficulty**: Easy, OK, Hard  
 ✔️ **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
 ✔️ **Reset anytime** to start fresh  
@@ -44,7 +44,7 @@ An **interactive flashcard tool** to aid memory retention of key definitions.
 Open link in a new tab or browser window.
 
 ## 🎓 **4. Blankety Blank **  
-An **interactive flashcard tool** to Build your recall of key definitions.  
+An **interactive flashcard tool** to Fill in the blank word/s and build your recall of key definitions.  
 [Go to Blankety Blank game](blanketyblank2.html)
 
 ---
