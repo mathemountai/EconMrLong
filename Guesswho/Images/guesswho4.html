@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Who I Am - Famous Economists</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        #clues {
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        .clue {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e3e3e3;
+            border-radius: 5px;
+        }
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #restart {
+            margin-top: 30px;
+            background: #dc3545;
+        }
+        #restart:hover {
+            background: #b32d3a;
+        }
+        #economistImage {
+            display: none;
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess Who I Am</h1>
+        <p>I am an economist. Can you guess my surname?</p>
+        <div id="clues"></div>
+        <input type="text" id="guess" placeholder="Enter economist's name">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <button onclick="showNextClue()">Get Next Clue</button>
+        <button id="restart" onclick="restartGame()">Restart</button>
+        <img id="economistImage" src="" alt="Economist Image">
+    </div>
+
+    <script>
+        const economists = [
+            { 
+                name: 'Smith', 
+                clues: [
+                    'Known for pioneering work on capitalism and the "invisible hand."',
+                    'Wrote "The Wealth of Nations."',
+                    'Believed in laissez-faire economics.',
+                    'Argued that individuals acting in self-interest benefit society.',
+                    'Was a Scottish philosopher.',
+                    'Discussed division of labor as a way to increase productivity.',
+                    'Influenced free-market economic policies.',
+                    'Lived during the 18th century.',
+                    'Believed government should only protect property rights and national defense.',
+                    'His ideas laid the foundation for modern economics.'
+                ],
+                image: 'IMG0540.jpeg'
+            },
+            { 
+                name: 'Ricardo', 
+                clues: [
+                    'Best known for the theory of comparative advantage.',
+                    'Wrote "Principles of Political Economy and Taxation."',
+                    'Explained why free trade benefits all nations.',
+                    'Believed in the labor theory of value.',
+                    'Developed the theory of rent.',
+                    'Was a member of the British Parliament.',
+                    'Criticized protectionist policies like the Corn Laws.',
+                    'Argued that wages tend to a subsistence level over time.',
+                    'Influenced classical economics alongside Adam Smith.',
+                    'His theories supported global economic liberalization.'
+                ],
+                image: 'IMG0541.jpeg'
+            },
+            { 
+                name: 'Pareto', 
+                clues: [
+                    'Known for the concept of Pareto efficiency in economics.',
+                    'Developed the Pareto principle (80/20 rule).',
+                    'Studied income distribution and wealth inequality.',
+                    'Was an Italian economist and sociologist.',
+                    'Influenced welfare economics.',
+                    'Explored social and political elites.',
+                    'His work contributed to modern microeconomics.',
+                    'Analyzed consumer choice and utility maximization.',
+                    'Believed in a power-law distribution of wealth.',
+                    'His principles are applied in business, economics, and sociology.'
+                ],
+                image: 'IMG0545.jpeg'
+            },
+            { 
+                name: 'Akerlof', 
+                clues: [
+                    'Best known for work on asymmetric information in markets.',
+                    'Wrote "The Market for Lemons."',
+                    'Explained why bad quality products can drive out good ones.',
+                    'Won the Nobel Prize in 2001.',
+                    'Explored efficiency wages and unemployment.',
+                    'Was married to Janet Yellen.',
+                    'Contributed to behavioral economics.',
+                    'Studied the role of norms and identity in economic decisions.',
+                    'Criticized excessive reliance on mathematical models in economics.',
+                    'His work influenced government policies on regulation and transparency.'
+                ],
+                image: 'IMG0544.jpeg'
+            },
+            { 
+                name: 'Baumol', 
+                clues: [
+                    'Known for "Baumol’s Cost Disease," explaining rising costs in services.',
+                    'Studied the economics of innovation and entrepreneurship.',
+                    'Developed a model of contestable markets.',
+                    'Explored why healthcare and education become more expensive over time.',
+                    'Argued that productivity differences affect price structures.',
+                    'Analyzed the role of firms in economic growth.',
+                    'Contributed to cultural economics.',
+                    'Worked extensively on the economics of the arts.',
+                    'Showed how innovation drives long-run economic growth.',
+                    'His theories are widely used in policy discussions.'
+                ],
+                image: 'IMG0543.jpeg'
+            },
+            { 
+                name: 'Friedman', 
+                clues: [
+                    'A major figure in the Chicago School of Economics.',
+                    'Advocated for monetarism and free markets.',
+                    'Wrote "Capitalism and Freedom."',
+                    'Opposed Keynesian economic policies.',
+                    'Argued for school vouchers and deregulation.',
+                    'Won the Nobel Prize in Economics in 1976.',
+                    'Developed the permanent income hypothesis.',
+                    'Supported floating exchange rates.',
+                    'Advised U.S. Presidents on economic policy.',
+                    'Strongly opposed government intervention in the economy.'
+                ],
+                image: 'IMG0539.jpeg'
+            },
+            { 
+                name: 'Keynes', 
+                clues: [
+                    'Revolutionized economics with ideas on government intervention.',
+                    'Wrote "The General Theory of Employment, Interest, and Money."',
+                    'Advocated for fiscal stimulus during recessions.',
+                    'Believed in active government policies to combat unemployment.',
+                    'Developed theories during the Great Depression.',
+                    'Influenced the creation of macroeconomics.',
+                    'His ideas led to Keynesian economics.',
+                    'Supported deficit spending to boost demand.',
+                    'Criticized classical economics for failing to address recessions.',
+                    'His theories shaped modern economic policies.'
+                ],
+                image: 'IMG0538.jpeg'
+            },
+            { 
+                name: 'Hayek', 
+                clues: [
+                    'A leader of the Austrian School of Economics.',
+                    'Wrote "The Road to Serfdom."',
+                    'Opposed government control over markets.',
+                    'Warned against central planning and socialism.',
+                    'Believed in spontaneous order in economies.',
+                    'Argued that free markets provide the best information.',
+                    'Won the Nobel Prize in Economics in 1974.',
+                    'Had debates with Keynes over economic policy.',
+                    'Strongly opposed monetary expansionism.',
+                    'His ideas influenced neoliberal policies.'
+                ],
+                image: 'IMG0547.jpeg'
+            }
+        ];
+
+        let selectedEconomist, clueIndex;
+
+        function startGame() {
+            selectedEconomist = economists[Math.floor(Math.random() * economists.length)];
+            clueIndex = 0;
+            document.getElementById("clues").innerHTML = "";
+            document.getElementById("guess").value = "";
+            showNextClue();
+        }
+
+        function showNextClue() {
+            if (clueIndex < selectedEconomist.clues.length) {
+                document.getElementById("clues").innerHTML += `<div class="clue">${selectedEconomist.clues[clueIndex]}</div>`;
+                clueIndex++;
+            }
+        }
+
+        function checkGuess() {
+            if (document.getElementById("guess").value.toLowerCase() === selectedEconomist.name.toLowerCase()) {
+                alert("Correct!");
+            }
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
