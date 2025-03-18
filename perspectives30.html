@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Perspectives Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .statement {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .statement p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .options {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .correct {
+            color: #28a745;
+        }
+        .incorrect {
+            color: #dc3545;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .score {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Economic Perspectives Quiz</h1>
+        <p>For each statement, select whether it reflects a Keynesian, Monetarist, or both perspectives.</p>
+
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <!-- Statements 1-10 for Page 1 -->
+            <div class="statement" id="statement1">
+                <p>1. Central banks should prioritize controlling inflation over stabilizing output fluctuations.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian1"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist1"> Monetarist</label>
+                    <label><input type="checkbox" id="both1"> Both</label>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="statement" id="statement2">
+                <p>2. Fiscal policy is more effective than monetary policy in addressing prolonged economic downturns.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian2"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist2"> Monetarist</label>
+                    <label><input type="checkbox" id="both2"> Both</label>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="statement" id="statement3">
+                <p>3. The natural rate of unemployment is largely unaffected by monetary policy in the long run.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian3"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist3"> Monetarist</label>
+                    <label><input type="checkbox" id="both3"> Both</label>
+                </div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="statement" id="statement4">
+                <p>4. Expectations of future policy actions play a critical role in determining current economic outcomes.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian4"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist4"> Monetarist</label>
+                    <label><input type="checkbox" id="both4"> Both</label>
+                </div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="statement" id="statement5">
+                <p>5. The Phillips curve trade-off between inflation and unemployment is stable in the long run.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian5"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist5"> Monetarist</label>
+                    <label><input type="checkbox" id="both5"> Both</label>
+                </div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+
+            <div class="statement" id="statement6">
+                <p>6. Monetary policy should focus on maintaining a stable growth rate of the money supply.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian6"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist6"> Monetarist</label>
+                    <label><input type="checkbox" id="both6"> Both</label>
+                </div>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+
+            <div class="statement" id="statement7">
+                <p>7. Government deficits are necessary to stimulate demand during economic recessions.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian7"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist7"> Monetarist</label>
+                    <label><input type="checkbox" id="both7"> Both</label>
+                </div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <div class="statement" id="statement8">
+                <p>8. Central banks should adopt a rules-based approach to monetary policy rather than discretionary actions.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian8"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist8"> Monetarist</label>
+                    <label><input type="checkbox" id="both8"> Both</label>
+                </div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+
+            <div class="statement" id="statement9">
+                <p>9. The effectiveness of fiscal policy is limited by the crowding-out effect on private investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian9"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist9"> Monetarist</label>
+                    <label><input type="checkbox" id="both9"> Both</label>
+                </div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <div class="statement" id="statement10">
+                <p>10. Inflation is primarily a result of excessive growth in aggregate demand relative to supply.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian10"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist10"> Monetarist</label>
+                    <label><input type="checkbox" id="both10"> Both</label>
+                </div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <!-- Navigation for Page 1 -->
+            <div class="navigation">
+                <button disabled>Previous</button>
+                <button onclick="showPage(2)">Next</button>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <!-- Statements 11-20 for Page 2 -->
+            <div class="statement" id="statement11">
+                <p>11. The economy is inherently unstable and requires active government intervention to stabilize it.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian11"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist11"> Monetarist</label>
+                    <label><input type="checkbox" id="both11"> Both</label>
+                </div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+
+            <div class="statement" id="statement12">
+                <p>12. Monetary policy is more effective than fiscal policy in stabilizing the economy in the short run.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian12"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist12"> Monetarist</label>
+                    <label><input type="checkbox" id="both12"> Both</label>
+                </div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <div class="statement" id="statement13">
+                <p>13. The velocity of money is stable and predictable, making monetary policy more effective than fiscal policy.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian13"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist13"> Monetarist</label>
+                    <label><input type="checkbox" id="both13"> Both</label>
+                </div>
+                <div class="feedback" id="feedback13"></div>
+            </div>
+
+            <div class="statement" id="statement14">
+                <p>14. Inflation targeting is the most effective way for central banks to achieve economic stability.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian14"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist14"> Monetarist</label>
+                    <label><input type="checkbox" id="both14"> Both</label>
+                </div>
+                <div class="feedback" id="feedback14"></div>
+            </div>
+
+            <div class="statement" id="statement15">
+                <p>15. The economy is self-correcting in the long run, and government intervention often does more harm than good.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian15"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist15"> Monetarist</label>
+                    <label><input type="checkbox" id="both15"> Both</label>
+                </div>
+                <div class="feedback" id="feedback15"></div>
+            </div>
+
+            <div class="statement" id="statement16">
+                <p>16. Expectations play a significant role in determining the effectiveness of economic policies.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian16"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist16"> Monetarist</label>
+                    <label><input type="checkbox" id="both16"> Both</label>
+                </div>
+                <div class="feedback" id="feedback16"></div>
+            </div>
+
+            <div class="statement" id="statement17">
+                <p>17. Long-term economic growth is primarily driven by supply-side factors, such as productivity and technological innovation.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian17"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist17"> Monetarist</label>
+                    <label><input type="checkbox" id="both17"> Both</label>
+                </div>
+                <div class="feedback" id="feedback17"></div>
+            </div>
+
+            <div class="statement" id="statement18">
+                <p>18. Interest rates should be kept low during a recession to encourage borrowing and investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian18"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist18"> Monetarist</label>
+                    <label><input type="checkbox" id="both18"> Both</label>
+                </div>
+                <div class="feedback" id="feedback18"></div>
+            </div>
+
+            <div class="statement" id="statement19">
+                <p>19. Inflation is caused by excessive demand in the economy, and controlling aggregate demand is key to maintaining price stability.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian19"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist19"> Monetarist</label>
+                    <label><input type="checkbox" id="both19"> Both</label>
+                </div>
+                <div class="feedback" id="feedback19"></div>
+            </div>
+
+            <div class="statement" id="statement20">
+                <p>20. The velocity of money is relatively stable, and changes in the money supply have predictable effects on nominal GDP.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian20"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist20"> Monetarist</label>
+                    <label><input type="checkbox" id="both20"> Both</label>
+                </div>
+                <div class="feedback" id="feedback20"></div>
+            </div>
+
+            <!-- Navigation for Page 2 -->
+            <div class="navigation">
+                <button onclick="showPage(1)">Previous</button>
+                <button onclick="showPage(3)">Next</button>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <!-- Statements 21-30 for Page 3 -->
+            <div class="statement" id="statement21">
+                <p>21. Fiscal policy is ineffective in the long run because it crowds out private investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian21"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist21"> Monetarist</label>
+                    <label><input type="checkbox" id="both21"> Both</label>
+                </div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+
+            <div class="statement" id="statement22">
+                <p>22. During a liquidity trap, monetary policy becomes ineffective, and fiscal policy is the only way to stimulate the economy.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian22"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist22"> Monetarist</label>
+                    <label><input type="checkbox" id="both22"> Both</label>
+                </div>
+                <div class="feedback" id="feedback22"></div>
+            </div>
+
+            <div class="statement" id="statement23">
+                <p>23. Inflation targeting is the most effective way for central banks to achieve economic stability.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian23"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist23"> Monetarist</label>
+                    <label><input type="checkbox" id="both23"> Both</label>
+                </div>
+                <div class="feedback" id="feedback23"></div>
+            </div>
+
+            <div class="statement" id="statement24">
+                <p>24. The economy is self-correcting in the long run, and government intervention often does more harm than good.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian24"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist24"> Monetarist</label>
+                    <label><input type="checkbox" id="both24"> Both</label>
+                </div>
+                <div class="feedback" id="feedback24"></div>
+            </div>
+
+            <div class="statement" id="statement25">
+                <p>25. Expectations play a significant role in determining the effectiveness of economic policies.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian25"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist25"> Monetarist</label>
+                    <label><input type="checkbox" id="both25"> Both</label>
+                </div>
+                <div class="feedback" id="feedback25"></div>
+            </div>
+
+            <div class="statement" id="statement26">
+                <p>26. Long-term economic growth is primarily driven by supply-side factors, such as productivity and technological innovation.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian26"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist26"> Monetarist</label>
+                    <label><input type="checkbox" id="both26"> Both</label>
+                </div>
+                <div class="feedback" id="feedback26"></div>
+            </div>
+
+            <div class="statement" id="statement27">
+                <p>27. Interest rates should be kept low during a recession to encourage borrowing and investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian27"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist27"> Monetarist</label>
+                    <label><input type="checkbox" id="both27"> Both</label>
+                </div>
+                <div class="feedback" id="feedback27"></div>
+            </div>
+
+            <div class="statement" id="statement28">
+                <p>28. Inflation is caused by excessive demand in the economy, and controlling aggregate demand is key to maintaining price stability.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian28"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist28"> Monetarist</label>
+                    <label><input type="checkbox" id="both28"> Both</label>
+                </div>
+                <div class="feedback" id="feedback28"></div>
+            </div>
+
+            <div class="statement" id="statement29">
+                <p>29. The velocity of money is relatively stable, and changes in the money supply have predictable effects on nominal GDP.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian29"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist29"> Monetarist</label>
+                    <label><input type="checkbox" id="both29"> Both</label>
+                </div>
+                <div class="feedback" id="feedback29"></div>
+            </div>
+
+            <div class="statement" id="statement30">
+                <p>30. Fiscal policy is more effective than monetary policy in managing economic cycles.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian30"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist30"> Monetarist</label>
+                    <label><input type="checkbox" id="both30"> Both</label>
+                </div>
+                <div class="feedback" id="feedback30"></div>
+            </div>
+
+            <!-- Navigation for Page 3 -->
+            <div class="navigation">
+                <button onclick="showPage(2)">Previous</button>
+                <button onclick="checkAnswers()">Submit Answers</button>
+            </div>
+        </div>
+
+        <!-- Score Display -->
+        <div class="score" id="scoreDisplay"></div>
+    </div>
+
+    <script>
+        // Correct answers for all statements
+        const correctAnswers = {
+            statement1: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement2: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement3: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement4: { keynesian: true, monetarist: true, both: true }, // Both
+            statement5: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement6: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement7: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement8: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement9: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement10: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement11: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement12: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement13: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement14: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement15: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement16: { keynesian: true, monetarist: true, both: true }, // Both
+            statement17: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement18: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement19: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement20: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement21: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement22: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement23: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement24: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement25: { keynesian: true, monetarist: true, both: true }, // Both
+            statement26: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement27: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement28: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement29: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement30: { keynesian: true, monetarist: false, both: false } // Keynesian
+        };
+
+        // Function to show a specific page
+        function showPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`page${pageNumber}`).classList.add('active');
+        }
+
+        // Function to check answers and calculate score
+        function checkAnswers() {
+            let score = 0;
+            for (let i = 1; i <= 30; i++) {
+                const keynesian = document.getElementById(`keynesian${i}`)?.checked || false;
+                const monetarist = document.getElementById(`monetarist${i}`)?.checked || false;
+                const both = document.getElementById(`both${i}`)?.checked || false;
+                const feedback = document.getElementById(`feedback${i}`);
+
+                if (feedback) {
+                    const isCorrect = keynesian === correctAnswers[`statement${i}`]?.keynesian &&
+                                       monetarist === correctAnswers[`statement${i}`]?.monetarist &&
+                                       both === correctAnswers[`statement${i}`]?.both;
+
+                    if (isCorrect) {
+                        feedback.textContent = "Correct!";
+                        feedback.className = "feedback correct";
+                        score++;
+                    } else {
+                        feedback.textContent = "Incorrect. Review the statement and try again.";
+                        feedback.className = "feedback incorrect";
+                    }
+                }
+            }
+            // Display the score
+            document.getElementById('scoreDisplay').textContent = `Your score: ${score} out of 30`;
+        }
+    </script>
+</body>
+</html>
