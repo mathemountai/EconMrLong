@@ -19,7 +19,7 @@ A page designed to analyse 25 marker essays in economics, evaluating:
 👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
 
 ---
- ## **Knowledge Building Games**
+ ## **Knowledge Building Games** ##
 🔥 **Challenge yourself** with these interactive exercises  
 🧠 **Boost recall** with spaced repetition 
 
