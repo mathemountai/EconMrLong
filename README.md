@@ -60,8 +60,11 @@ Fill in the blank word/s and build your recall of key definitions.
 ## 6. Macro Perspectives ##
 👉[Perspectives Monetarist v Keynesian](perspectives30.html)
 
+## 7. Keynes v Hayek Policy Game ##
 
+👉[Manage the Macroeconomy by choosing appropriate policy](keynesvhayek.html)
 
+Can you achieve a stable economy and score AD AS above 100 Econ bucks?? Good luck!
 
 ---
 
