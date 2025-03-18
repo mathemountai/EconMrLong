@@ -57,8 +57,6 @@ Fill in the blank word/s and build your recall of key definitions.
 
 [Guess Who](Guesswho/guesswho.html) 
 
-[Guess Who 4](Guesswho/Images/guesswho4.html)
-
 ## 6. Macro Perspectives ##
 [Perspectives Monetarist v Keynesian](perspectives30.html)
 
