@@ -19,7 +19,7 @@ A page designed to analyse 25 marker essays in economics, evaluating:
 👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
 
 ---
-# 🎯 **Knowledge Building Games**
+ ## **Knowledge Building Games**
 🔥 **Challenge yourself** with these interactive exercises  
 🧠 **Boost recall** with spaced repetition 
 
@@ -43,7 +43,7 @@ An **interactive flashcard tool** to aid in memorising economic definitions acro
 👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
 Open link in a new tab or browser 
 
-## 🎓 **4. Blankety Blank **  
+## 🎓 **4. Blankety Blank**  
 A bank of **missing word questions**. Can you master all 26?
 
 Fill in the blank word/s and build your recall of key definitions.  
