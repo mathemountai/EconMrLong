@@ -5,12 +5,12 @@ Welcome to my development space to design and share study tools to enhance Y13 s
 
 ## 📝 **1. Essay Analysis Program**  
 A page designed to analyse 25 marker essays in economics, evaluating:  
-  ✅ efficiency in writing  
-  ✅ use of **tech vocab** & balance  
-  ✅ **keyword detection**, highlighting **connectives**  
-  ✅ identifying **chains** of analysis and **repetition** 
+  🔹 efficiency in writing  
+  🔹 use of **tech vocab** & balance  
+  🔹 **keyword detection**, highlighting **connectives**  
+ 🔹  identifying **chains** of analysis and **repetition** 
 
-### 🚀 **Get Started**  
+###  **Get Started**  
 [How to convert a handwritten essay to text](Handwriting/convert_handwriting.html)
 
 🔹 Click below to access the **Essay Analyser**  
@@ -35,15 +35,15 @@ Open link in a new tab or browser window. Cards adjust with screen size- best vi
 An **interactive flashcard tool** to aid in memorising economic definitions across different topics.
 
  **How it Works**  
-✔️  Click a **theme** & review its flashcards  
-✔️ **Rate difficulty**: Easy, OK, Hard  
-✔️ **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
-✔️ **Reset anytime** to start fresh  
+🔹  Click a **theme** & review its flashcards  
+🔹 **Rate difficulty**: Easy, OK, Hard  
+🔹 **Track progress**: Themes turn **blue** when all cards are marked "Easy"  
+🔹 **Reset anytime** to start fresh  
 
 👉 **[Go to Flashcard Progress Tracker](Flashcardprogress8.html)**
 Open link in a new tab or browser 
 
-## 🎓🔥 **4. Blankety Blank **  
+## 🎓 **4. Blankety Blank **  
 A bank of **missing word questions**. Can you master all 26?
 
 Fill in the blank word/s and build your recall of key definitions.  
