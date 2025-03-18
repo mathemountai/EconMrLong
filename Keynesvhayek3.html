@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keynes vs Hayek: AD-AS Econ Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .game-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .player {
+      border: 2px solid #333;
+      padding: 10px;
+      width: 45%;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .economy-tracker {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .event-log {
+      margin-top: 20px;
+      border: 1px solid #333;
+      padding: 10px;
+      background-color: #fff;
+      height: 100px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .interventions {
+      margin-top: 20px;
+    }
+    .interventions button {
+      background-color: #e0e0e0;
+      border: 1px solid #333;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Keynes vs Hayek: AD-AS Econ Game</h1>
+  <div class="game-container">
+    <div class="player" id="keynes">
+      <h2>Team Keynes</h2>
+      <p>Econ Bucks: <span id="keynes-money">100</span></p>
+      <div class="interventions">
+        <button onclick="useIntervention('keynes', 'stimulus')">Stimulus Package</button>
+        <button onclick="useIntervention('keynes', 'tax_cut')">Tax Cut</button>
+        <button onclick="useIntervention('keynes', 'print_money')">Print Money</button>
+        <button onclick="useIntervention('keynes', 'infrastructure')">Infrastructure Spending</button>
+        <button onclick="useIntervention('keynes', 'unemployment')">Unemployment Benefits</button>
+        <button onclick="useIntervention('keynes', 'public_works')">Public Works Program</button>
+        <button onclick="useIntervention('keynes', 'interest_cut')">Interest Rate Cut</button>
+        <button onclick="useIntervention('keynes', 'subsidies')">Subsidies for Businesses</button>
+        <button onclick="useIntervention('keynes', 'stimulus_checks')">Consumer Stimulus Checks</button>
+        <button onclick="useIntervention('keynes', 'gov_salaries')">Increase Government Salaries</button>
+      </div>
+    </div>
+    <div class="player" id="hayek">
+      <h2>Team Hayek</h2>
+      <p>Econ Bucks: <span id="hayek-money">100</span></p>
+      <div class="interventions">
+        <button onclick="useIntervention('hayek', 'deregulate')">Deregulate</button>
+        <button onclick="useIntervention('hayek', 'tax_reform')">Tax Reform</button>
+        <button onclick="useIntervention('hayek', 'market_freedom')">Market Freedom</button>
+        <button onclick="useIntervention('hayek', 'privatize')">Privatize Industries</button>
+        <button onclick="useIntervention('hayek', 'reduce_trade')">Reduce Trade Barriers</button>
+        <button onclick="useIntervention('hayek', 'abolish_price')">Abolish Price Controls</button>
+        <button onclick="useIntervention('hayek', 'promote_innovation')">Promote Innovation</button>
+        <button onclick="useIntervention('hayek', 'cut_red_tape')">Cut Red Tape</button>
+        <button onclick="useIntervention('hayek', 'property_rights')">Strengthen Property Rights</button>
+      </div>
+    </div>
+  </div>
+  <div class="economy-tracker">
+    <p>Economy Health: <span id="economy-health">Stable</span></p>
+    <p>Aggregate Demand (AD): <span id="ad-level">100</span></p>
+    <p>Aggregate Supply (AS): <span id="as-level">100</span></p>
+  </div>
+  <div class="event-log">
+    <p><strong>Event Log:</strong></p>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    // Initial state
+    let keynesMoney = 100;
+    let hayekMoney = 100;
+    let economyHealth = "Stable";
+    let adLevel = 100; // Aggregate Demand
+    let asLevel = 100; // Aggregate Supply
+    const eventLog = document.getElementById("log");
+
+    // Economy states
+    const economyStates = ["Recession", "Boom", "Inflation", "Stagflation", "Bubble", "Crisis"];
+
+    // Update UI
+    function updateUI() {
+      document.getElementById("keynes-money").textContent = keynesMoney;
+      document.getElementById("hayek-money").textContent = hayekMoney;
+      document.getElementById("economy-health").textContent = economyHealth;
+      document.getElementById("ad-level").textContent = adLevel;
+      document.getElementById("as-level").textContent = asLevel;
+    }
+
+    // Random event generator
+    function randomEvent() {
+      const event = economyStates[Math.floor(Math.random() * economyStates.length)];
+      economyHealth = event;
+      logEvent(`The economy is now in a ${event}!`);
+    }
+
+    // Log events
+    function logEvent(message) {
+      const logEntry = document.createElement("p");
+      logEntry.textContent = message;
+      eventLog.appendChild(logEntry);
+      eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll
+    }
+
+    // Check equilibrium
+    function checkEquilibrium() {
+      if (adLevel > asLevel) {
+        logEvent("Demand-pull inflation! Prices are rising.");
+        keynesMoney -= 10;
+        hayekMoney -= 10;
+      } else if (adLevel < asLevel) {
+        logEvent("Deflationary gap! Unemployment rises.");
+        keynesMoney -= 10;
+        hayekMoney -= 10;
+      } else {
+        logEvent("Perfect equilibrium! The economy is stable.");
+        keynesMoney += 10;
+        hayekMoney += 10;
+      }
+    }
+
+    // Interventions
+    function useIntervention(team, intervention) {
+      if (team === "keynes") {
+        switch (intervention) {
+          case "stimulus":
+            adLevel += 30;
+            keynesMoney -= 20;
+            logEvent("Keynes uses a stimulus package! AD increases.");
+            break;
+          case "tax_cut":
+            adLevel += 20;
+            keynesMoney -= 15;
+            logEvent("Keynes cuts taxes! AD increases.");
+            break;
+          case "print_money":
+            adLevel += 40;
+            keynesMoney -= 25;
+            logEvent("Keynes prints money! AD skyrockets, but inflation looms.");
+            break;
+          case "infrastructure":
+            adLevel += 25;
+            keynesMoney -= 20;
+            logEvent("Keynes invests in infrastructure! AD rises as construction projects begin.");
+            break;
+          case "unemployment":
+            adLevel += 15;
+            keynesMoney -= 10;
+            logEvent("Keynes expands unemployment benefits! AD increases as consumer spending rises.");
+            break;
+          case "public_works":
+            adLevel += 35;
+            keynesMoney -= 30;
+            logEvent("Keynes launches a public works program! AD soars as jobs are created.");
+            break;
+          case "interest_cut":
+            adLevel += 20;
+            keynesMoney -= 15;
+            logEvent("Keynes cuts interest rates! AD rises as borrowing and spending increase.");
+            break;
+          case "subsidies":
+            adLevel += 25;
+            keynesMoney -= 20;
+            logEvent("Keynes provides subsidies to businesses! AD increases as firms avoid layoffs.");
+            break;
+          case "stimulus_checks":
+            adLevel += 40;
+            keynesMoney -= 30;
+            logEvent("Keynes sends out stimulus checks! AD skyrockets as consumers spend freely.");
+            break;
+          case "gov_salaries":
+            adLevel += 20;
+            keynesMoney -= 15;
+            logEvent("Keynes raises government salaries! AD rises as public sector workers spend more.");
+            break;
+        }
+      } else if (team === "hayek") {
+        switch (intervention) {
+          case "deregulate":
+            asLevel += 30;
+            hayekMoney -= 20;
+            logEvent("Hayek deregulates! AS increases.");
+            break;
+          case "tax_reform":
+            asLevel += 20;
+            hayekMoney -= 15;
+            logEvent("Hayek reforms taxes! AS increases.");
+            break;
+          case "market_freedom":
+            asLevel += 40;
+            hayekMoney -= 25;
+            logEvent("Hayek promotes market freedom! AS skyrockets.");
+            break;
+          case "privatize":
+            asLevel += 25;
+            hayekMoney -= 20;
+            logEvent("Hayek privatizes industries! AS increases as markets become efficient.");
+            break;
+          case "reduce_trade":
+            asLevel += 15;
+            hayekMoney -= 10;
+            logEvent("Hayek reduces trade barriers! AS rises as exports and imports flourish.");
+            break;
+          case "abolish_price":
+            asLevel += 20;
+            hayekMoney -= 15;
+            logEvent("Hayek abolishes price controls! AS improves as markets clear.");
+            break;
+          case "promote_innovation":
+            asLevel += 35;
+            hayekMoney -= 30;
+            logEvent("Hayek promotes innovation! AS soars as new technologies emerge.");
+            break;
+          case "cut_red_tape":
+            asLevel += 25;
+            hayekMoney -= 20;
+            logEvent("Hayek cuts red tape! AS grows as businesses thrive.");
+            break;
+          case "property_rights":
+            asLevel += 30;
+            hayekMoney -= 25;
+            logEvent("Hayek strengthens property rights! AS rises as investors feel secure.");
+            break;
+        }
+      }
+
+      // Check equilibrium
+      checkEquilibrium();
+
+      // Update UI
+      updateUI();
+
+      // Check for winner
+      if (keynesMoney <= 0 || hayekMoney <= 0) {
+        const winner = keynesMoney > hayekMoney ? "Keynes" : "Hayek";
+        logEvent(`Game over! ${winner} wins!`);
+        document.querySelectorAll("button").forEach(button => button.disabled = true);
+      }
+    }
+  </script>
+</body>
+</html>
