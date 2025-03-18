@@ -64,7 +64,7 @@ Fill in the blank word/s and build your recall of key definitions.
 
 👉[Manage the Macroeconomy by choosing appropriate policy](keynesvhayek3.html)
 
-Can you achieve a stable economy and score AD AS above 100 Econ bucks?? Good luck!
+Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibriun above 150 ?? Good luck! 
 
 ---
 
