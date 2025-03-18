@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Perspectives Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .statement {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .statement p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .options {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .correct {
+            color: #28a745;
+        }
+        .incorrect {
+            color: #dc3545;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .score {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Economic Perspectives Quiz</h1>
+        <p>For each statement, select whether it reflects a Keynesian, Monetarist, or both perspectives.</p>
+
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <!-- Statements 1-10 for Page 1 -->
+            <div class="statement" id="statement1">
+                <p>1. Central banks should prioritize controlling inflation over stabilizing output fluctuations.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian1"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist1"> Monetarist</label>
+                    <label><input type="checkbox" id="both1"> Both</label>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="statement" id="statement2">
+                <p>2. Fiscal policy is more effective than monetary policy in addressing prolonged economic downturns.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian2"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist2"> Monetarist</label>
+                    <label><input type="checkbox" id="both2"> Both</label>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <!-- Add statements 3-10 similarly -->
+            <!-- ... -->
+
+            <!-- Navigation for Page 1 -->
+            <div class="navigation">
+                <button disabled>Previous</button>
+                <button onclick="checkAnswers(1)">Submit Page 1</button>
+                <button onclick="showPage(2)">Next</button>
+            </div>
+            <div class="score" id="score1"></div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <!-- Statements 11-20 for Page 2 -->
+            <div class="statement" id="statement11">
+                <p>11. The economy is inherently unstable and requires active government intervention to stabilize it.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian11"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist11"> Monetarist</label>
+                    <label><input type="checkbox" id="both11"> Both</label>
+                </div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+
+            <div class="statement" id="statement12">
+                <p>12. Monetary policy is more effective than fiscal policy in stabilizing the economy in the short run.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian12"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist12"> Monetarist</label>
+                    <label><input type="checkbox" id="both12"> Both</label>
+                </div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <!-- Add statements 13-20 similarly -->
+            <!-- ... -->
+
+            <!-- Navigation for Page 2 -->
+            <div class="navigation">
+                <button onclick="showPage(1)">Previous</button>
+                <button onclick="checkAnswers(2)">Submit Page 2</button>
+                <button onclick="showPage(3)">Next</button>
+            </div>
+            <div class="score" id="score2"></div>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <!-- Statements 21-30 for Page 3 -->
+            <div class="statement" id="statement21">
+                <p>21. Fiscal policy is ineffective in the long run because it crowds out private investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian21"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist21"> Monetarist</label>
+                    <label><input type="checkbox" id="both21"> Both</label>
+                </div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+
+            <div class="statement" id="statement22">
+                <p>22. During a liquidity trap, monetary policy becomes ineffective, and fiscal policy is the only way to stimulate the economy.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian22"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist22"> Monetarist</label>
+                    <label><input type="checkbox" id="both22"> Both</label>
+                </div>
+                <div class="feedback" id="feedback22"></div>
+            </div>
+
+            <!-- Add statements 23-30 similarly -->
+            <!-- ... -->
+
+            <!-- Navigation for Page 3 -->
+            <div class="navigation">
+                <button onclick="showPage(2)">Previous</button>
+                <button onclick="checkAnswers(3)">Submit Page 3</button>
+            </div>
+            <div class="score" id="score3"></div>
+        </div>
+    </div>
+
+    <script>
+        // Correct answers for all statements
+        const correctAnswers = {
+            statement1: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement2: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement11: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement12: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement21: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement22: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            // Add correct answers for statements 3-10, 13-20, and 23-30
+        };
+
+        // Function to show a specific page
+        function showPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`page${pageNumber}`).classList.add('active');
+        }
+
+        // Function to check answers for a specific page
+        function checkAnswers(pageNumber) {
+            let score = 0;
+            const start = (pageNumber - 1) * 10 + 1;
+            const end = pageNumber * 10;
+
+            for (let i = start; i <= end; i++) {
+                const keynesian = document.getElementById(`keynesian${i}`)?.checked || false;
+                const monetarist = document.getElementById(`monetarist${i}`)?.checked || false;
+                const both = document.getElementById(`both${i}`)?.checked || false;
+                const feedback = document.getElementById(`feedback${i}`);
+
+                if (feedback) {
+                    const isCorrect = keynesian === correctAnswers[`statement${i}`]?.keynesian &&
+                                       monetarist === correctAnswers[`statement${i}`]?.monetarist &&
+                                       both === correctAnswers[`statement${i}`]?.both;
+
+                    if (isCorrect) {
+                        feedback.textContent = "Correct!";
+                        feedback.className = "feedback correct";
+                        score++;
+                    } else {
+                        feedback.textContent = "Incorrect. Review the statement and try again.";
+                        feedback.className = "feedback incorrect";
+                    }
+                }
+            }
+            // Display the score for the current page
+            document.getElementById(`score${pageNumber}`).textContent = `Your score for Page ${pageNumber}: ${score} out of 10`;
+        }
+    </script>
+</body>
+</html>
