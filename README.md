@@ -53,7 +53,7 @@ Fill in the blank word/s and build your recall of key definitions.
 
 ## 🚧Work in progress 🚧 ##  
  
-## 5. Guess Who## 
+## 5. Guess Who
 
 [Guess Who](Guesswho/guesswho.html) 
 
