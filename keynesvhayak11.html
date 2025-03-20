@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keynes vs Hayek: AD-AS Econ Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .game-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .player {
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 10px;
+      padding: 10px;
+      width: 45%;
+    }
+    .interventions {
+      margin-top: 10px;
+    }
+    .interventions button {
+      background-color: #e0e0e0;
+      border: 1px solid #333;
+      border-radius: 5px;
+      font-size: 14px;
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .economy-tracker {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .event-log {
+      margin-top: 20px;
+      border: 1px solid #333;
+      background-color: #fff;
+      padding: 10px;
+      height: 120px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .graph-container {
+      margin-top: 20px;
+      border: 1px solid #333;
+      background-color: #fff;
+      padding: 10px;
+      display: inline-block;
+    }
+    canvas {
+      width: 600px;
+      height: 400px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Keynes vs Hayek: AD-AS Econ Game</h1>
+  <div class="game-container">
+    <div class="player" id="keynes">
+      <h2>Team Keynes</h2>
+      <p>Econ Bucks: <span id="keynes-money">100</span></p>
+      <div class="interventions">
+        <button onclick="useIntervention('keynes', 'stimulus')">Stimulus Package</button>
+        <button onclick="useIntervention('keynes', 'tax_cut')">Tax Cut</button>
+        <button onclick="useIntervention('keynes', 'print_money')">Print Money</button>
+        <button onclick="useIntervention('keynes', 'infrastructure')">Infrastructure Investment</button>
+        <button onclick="useIntervention('keynes', 'min_wage')">Increase Minimum Wage</button>
+        <button onclick="useIntervention('keynes', 'income_tax')">Increase Income Tax</button>
+        <button onclick="useIntervention('keynes', 'vat')">Increase VAT</button>
+      </div>
+    </div>
+    <div class="player" id="hayek">
+      <h2>Team Hayek</h2>
+      <p>Econ Bucks: <span id="hayek-money">100</span></p>
+      <div class="interventions">
+        <button onclick="useIntervention('hayek', 'deregulate')">Deregulate</button>
+        <button onclick="useIntervention('hayek', 'tax_reform')">Tax Reform</button>
+        <button onclick="useIntervention('hayek', 'market_freedom')">Market Freedom</button>
+        <button onclick="useIntervention('hayek', 'privatize')">Privatize Industries</button>
+        <button onclick="useIntervention('hayek', 'reduce_trade')">Reduce Trade Barriers</button>
+        <button onclick="useIntervention('hayek', 'interest_rate')">Raise Interest Rate</button>
+        <button onclick="useIntervention('hayek', 'cut_corp_tax')">Cut Corporate Taxes</button>
+        <button onclick="useIntervention('hayek', 'labor_flex')">Labor Market Flexibility</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="economy-tracker">
+    <p>Economy Health: <span id="economy-health">Stable</span></p>
+    <p>Aggregate Demand (AD): <span id="ad-level">100</span></p>
+    <p>Short-Run AS (SRAS): <span id="sras-level">100</span></p>
+    <p>Long-Run AS (LRAS): <span id="lras-level">300</span></p>
+  </div>
+
+  <div class="graph-container">
+    <canvas id="ad-as-graph" width="600" height="400"></canvas>
+  </div>
+
+  <div class="event-log">
+    <p><strong>Event Log:</strong></p>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    // Initial state variables
+    let adLevel = 100;    // Determines vertical position for AD
+    let srasLevel = 100;  // Determines vertical drop of SRAS from the baseline (350)
+    let lrasLevel = 300;  // LRAS (potential output)
+    let srasXShift = 0;   // Horizontal shift for SRAS (used for minimum wage, VAT, etc.)
+
+    let keynesMoney = 100;
+    let hayekMoney = 100;
+    const threshold = 20; // Threshold for output gap signaling
+
+    const canvas = document.getElementById("ad-as-graph");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 600;
+    canvas.height = 400;
+
+    // Draw the AD-AS graph.
+    // AD: drawn as a downward sloping line from (50, 350 - adLevel) to (550, 350)
+    // SRAS: drawn from (50 - srasXShift, 350) to (550 - srasXShift, 350 - srasLevel)
+    function drawGraph() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      // Draw axes
+      ctx.beginPath();
+      ctx.moveTo(50, 50);
+      ctx.lineTo(50, 350);
+      ctx.lineTo(550, 350);
+      ctx.stroke();
+  
+      // Labels
+      ctx.fillText("Price Level", 10, 30);
+      ctx.fillText("Real GDP", 500, 370);
+  
+      // Draw AD curve (blue, downward sloping)
+      ctx.strokeStyle = "blue";
+      ctx.beginPath();
+      ctx.moveTo(50, 350 - adLevel);
+      ctx.lineTo(550, 350);
+      ctx.stroke();
+  
+      // Draw SRAS curve (red, upward sloping with horizontal shift)
+      ctx.strokeStyle = "red";
+      ctx.beginPath();
+      ctx.moveTo(50 - srasXShift, 350);
+      ctx.lineTo(550 - srasXShift, 350 - srasLevel);
+      ctx.stroke();
+  
+      // Draw LRAS curve (green, vertical line at lrasLevel)
+      ctx.strokeStyle = "green";
+      ctx.beginPath();
+      ctx.moveTo(lrasLevel, 50);
+      ctx.lineTo(lrasLevel, 350);
+      ctx.stroke();
+  
+      // Calculate equilibrium point as intersection of AD and SRAS.
+      // For simplicity, we use a linear interpolation approach.
+      let x_eq = 50 + (500 * adLevel - srasLevel * srasXShift) / (adLevel + srasLevel);
+      let y_eq = 350 - adLevel + (adLevel / 500) * (x_eq - 50);
+  
+      // Draw equilibrium point
+      ctx.fillStyle = "green";
+      ctx.beginPath();
+      ctx.arc(x_eq, y_eq, 5, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+  
+    // Update UI elements
+    function updateUI() {
+      document.getElementById("ad-level").textContent = adLevel;
+      document.getElementById("sras-level").textContent = srasLevel;
+      document.getElementById("lras-level").textContent = lrasLevel;
+      document.getElementById("keynes-money").textContent = keynesMoney;
+      document.getElementById("hayek-money").textContent = hayekMoney;
+      drawGraph();
+    }
+  
+    // Log event messages
+    function logEvent(message) {
+      const log = document.getElementById("log");
+      const entry = document.createElement("p");
+      entry.textContent = message;
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
+    }
+  
+    // Check equilibrium and flag output gap/inflation type
+    function checkEquilibrium() {
+      let diff = adLevel - srasLevel;
+      if (diff > threshold) {
+        logEvent("Positive output gap: Demand-pull inflation – Output exceeds capacity.");
+        keynesMoney -= 10;
+        hayekMoney -= 10;
+      } else if (diff < -threshold) {
+        logEvent("Negative output gap: Supply-side deflationary gap – High input costs lower output, raising prices.");
+        keynesMoney -= 10;
+        hayekMoney -= 10;
+      } else {
+        logEvent("Near equilibrium: Stable economic conditions.");
+        keynesMoney += 10;
+        hayekMoney += 10;
+      }
+    }
+  
+    // Interventions: Adjust AD, SRAS, LRAS according to policy decisions.
+    function useIntervention(team, intervention) {
+      if (team === "keynes") {
+        switch (intervention) {
+          case "stimulus":
+            adLevel += 30;
+            keynesMoney -= 20;
+            logEvent("Keynes applies a stimulus package: AD increases.");
+            break;
+          case "tax_cut":
+            adLevel += 20;
+            keynesMoney -= 15;
+            logEvent("Keynes cuts taxes: AD increases.");
+            break;
+          case "print_money":
+            adLevel += 40;
+            keynesMoney -= 25;
+            logEvent("Keynes prints money: AD skyrockets (risk of inflation).");
+            break;
+          case "infrastructure":
+            lrasLevel += 20;
+            keynesMoney -= 20;
+            logEvent("Keynes invests in infrastructure: LRAS shifts right (potential output increases).");
+            break;
+          case "subsidy":
+            srasLevel += 15;
+            keynesMoney -= 15;
+            logEvent("Keynes provides subsidies: SRAS shifts right as production costs fall.");
+            break;
+          case "min_wage":
+            // Increase in minimum wage raises production costs; shift SRAS left by increasing horizontal shift.
+            srasXShift += 15;
+            keynesMoney -= 10;
+            logEvent("Keynes raises minimum wage: For any given price, output is lower (SRAS shifts left).");
+            break;
+          case "income_tax":
+            adLevel -= 20;
+            keynesMoney -= 10;
+            logEvent("Keynes increases income tax: AD decreases (disposable income falls).");
+            break;
+          case "vat":
+            srasXShift += 10;
+            keynesMoney -= 10;
+            logEvent("Keynes increases VAT: SRAS shifts left (higher production costs).");
+            break;
+        }
+      } else if (team === "hayek") {
+        switch (intervention) {
+          case "deregulate":
+            lrasLevel += 20;
+            hayekMoney -= 20;
+            logEvent("Hayek deregulates markets: LRAS shifts right (improved efficiency).");
+            break;
+          case "tax_reform":
+            srasLevel += 20;
+            hayekMoney -= 15;
+            logEvent("Hayek reforms taxes: SRAS increases.");
+            break;
+          case "market_freedom":
+            srasLevel += 40;
+            hayekMoney -= 25;
+            logEvent("Hayek promotes market freedom: SRAS increases sharply.");
+            break;
+          case "privatize":
+            lrasLevel += 20;
+            hayekMoney -= 20;
+            logEvent("Hayek privatizes industries: LRAS shifts right (efficiency improves).");
+            break;
+          case "reduce_trade":
+            srasLevel += 15;
+            hayekMoney -= 10;
+            logEvent("Hayek reduces trade barriers: SRAS increases.");
+            break;
+          case "interest_rate":
+            // Raising interest rates should lower AD due to reduced borrowing.
+            adLevel -= 20;
+            hayekMoney -= 15;
+            logEvent("Hayek raises interest rates: AD decreases as borrowing declines.");
+            break;
+          case "cut_corp_tax":
+            srasLevel += 10;
+            hayekMoney -= 10;
+            logEvent("Hayek cuts corporate taxes: SRAS increases.");
+            break;
+          case "labor_flex":
+            lrasLevel += 15;
+            hayekMoney -= 10;
+            logEvent("Hayek promotes labor market flexibility: LRAS shifts right.");
+            break;
+        }
+      }
+  
+      checkEquilibrium();
+      updateUI();
+  
+      // Check win/loss condition
+      if (keynesMoney <= 0 || hayekMoney <= 0) {
+        const winner = keynesMoney > hayekMoney ? "Keynes" : "Hayek";
+        logEvent(`Game over! ${winner} wins!`);
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+      }
+    }
+  
+    // Expose useIntervention globally
+    window.useIntervention = useIntervention;
+  
+    // Initial draw and UI update
+    updateUI();
+  </script>
+</body>
+</html>
