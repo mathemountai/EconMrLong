@@ -62,7 +62,7 @@ Fill in the blank word/s and build your recall of key definitions.
 
 ## 7. Keynes v Hayek Policy Game ##
 
-👉[Manage the Macroeconomy by choosing appropriate policy](Keynesvhayek3.html)
+👉[Manage the Macroeconomy by choosing appropriate policy](Keynesvhayek11.html)
 
 Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibriun above 150 ?? Good luck! 
 
