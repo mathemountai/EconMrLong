@@ -49,19 +49,17 @@ A bank of **missing word questions**. Can you master all 26?
 Fill in the blank word/s and build your recall of key definitions.  
 👉 **[Go to Blankety Blank game](blanketyblank2.html)**
 
----
-
-## 🚧Work in progress 🚧 ##  
- 
+--- 
 ## 5. Guess Who
-
+Can yoy guess the famius Economist's surname based on the clues ... Some clues are dead giveaways! But in any case, there are plenty of facts available.  
 👉[Guess Who](Guesswho/guesswho.html) 
 
 ## 6. Macro Perspectives ##
+Being clear of the point of view is being clear on your essay - check if you can discern between the perspectives of Keynesians versus the neo- classical monetarists
 👉[Perspectives Monetarist v Keynesian](perspectives302.html)
 
 ## 7. Keynes v Hayek Policy Game ##
-
+A bit of fun: 
 👉[Manage the Macroeconomy by choosing appropriate policy](keynesvhayak112.html)
 
 Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibriun above 150 ?? Good luck! 
