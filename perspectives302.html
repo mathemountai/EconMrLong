@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Perspectives Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .difficulty-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .difficulty-buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .difficulty-buttons button:hover {
+            background-color: #0056b3;
+        }
+        .statement {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .statement p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .options {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .correct {
+            color: #28a745;
+        }
+        .incorrect {
+            color: #dc3545;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .score {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Economic Perspectives Quiz</h1>
+        <div class="difficulty-buttons">
+            <button onclick="showDifficulty('easy')">Easy</button>
+            <button onclick="showDifficulty('medium')">Medium</button>
+            <button onclick="showDifficulty('hard')">Hard</button>
+        </div>
+
+        <!-- Easy Questions -->
+        <div class="page" id="easy-page">
+            <p>For each statement, select whether it reflects a Keynesian, Monetarist, or both perspectives.</p>
+            <!-- Easy Questions 1-10 -->
+            <div class="statement" id="statement1">
+                <p>1. Central banks should prioritize controlling inflation over stabilizing output fluctuations.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian1"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist1"> Monetarist</label>
+                    <label><input type="checkbox" id="both1"> Both</label>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+            <!-- Add remaining easy questions (2-10) similarly -->
+            <div class="navigation">
+                <button disabled>Previous</button>
+                <button onclick="checkAnswers('easy')">Submit Answers</button>
+            </div>
+        </div>
+
+        <!-- Medium Questions -->
+        <div class="page" id="medium-page">
+            <p>For each statement, select whether it reflects a Keynesian, Monetarist, or both perspectives.</p>
+            <!-- Medium Questions 11-20 -->
+            <div class="statement" id="statement11">
+                <p>11. The economy is inherently unstable and requires active government intervention to stabilize it.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian11"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist11"> Monetarist</label>
+                    <label><input type="checkbox" id="both11"> Both</label>
+                </div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+            <!-- Add remaining medium questions (12-20) similarly -->
+            <div class="navigation">
+                <button disabled>Previous</button>
+                <button onclick="checkAnswers('medium')">Submit Answers</button>
+            </div>
+        </div>
+
+        <!-- Hard Questions -->
+        <div class="page" id="hard-page">
+            <p>For each statement, select whether it reflects a Keynesian, Monetarist, or both perspectives.</p>
+            <!-- Hard Questions 21-30 -->
+            <div class="statement" id="statement21">
+                <p>21. Fiscal policy is ineffective in the long run because it crowds out private investment.</p>
+                <div class="options">
+                    <label><input type="checkbox" id="keynesian21"> Keynesian</label>
+                    <label><input type="checkbox" id="monetarist21"> Monetarist</label>
+                    <label><input type="checkbox" id="both21"> Both</label>
+                </div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+            <!-- Add remaining hard questions (22-30) similarly -->
+            <div class="navigation">
+                <button disabled>Previous</button>
+                <button onclick="checkAnswers('hard')">Submit Answers</button>
+            </div>
+        </div>
+
+        <!-- Score Display -->
+        <div class="score" id="scoreDisplay"></div>
+    </div>
+
+    <script>
+        // Correct answers for all statements
+        const correctAnswers = {
+            statement1: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement2: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement3: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement4: { keynesian: true, monetarist: true, both: true }, // Both
+            statement5: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement6: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement7: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement8: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement9: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement10: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement11: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement12: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement13: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement14: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement15: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement16: { keynesian: true, monetarist: true, both: true }, // Both
+            statement17: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement18: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement19: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement20: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement21: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement22: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement23: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement24: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement25: { keynesian: true, monetarist: true, both: true }, // Both
+            statement26: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement27: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement28: { keynesian: true, monetarist: false, both: false }, // Keynesian
+            statement29: { keynesian: false, monetarist: true, both: false }, // Monetarist
+            statement30: { keynesian: true, monetarist: false, both: false } // Keynesian
+        };
+
+        // Function to show a specific difficulty level
+        function showDifficulty(difficulty) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`${difficulty}-page`).classList.add('active');
+        }
+
+        // Function to check answers and calculate score
+        function checkAnswers(difficulty) {
+            let score = 0;
+            let start, end;
+
+            // Determine the range of questions based on difficulty
+            if (difficulty === 'easy') {
+                start = 1;
+                end = 10;
+            } else if (difficulty === 'medium') {
+                start = 11;
+                end = 20;
+            } else if (difficulty === 'hard') {
+                start = 21;
+                end = 30;
+            }
+
+            for (let i = start; i <= end; i++) {
+                const keynesian = document.getElementById(`keynesian${i}`)?.checked || false;
+                const monetarist = document.getElementById(`monetarist${i}`)?.checked || false;
+                const both = document.getElementById(`both${i}`)?.checked || false;
+                const feedback = document.getElementById(`feedback${i}`);
+
+                if (feedback) {
+                    const isCorrect = keynesian === correctAnswers[`statement${i}`]?.keynesian &&
+                                       monetarist === correctAnswers[`statement${i}`]?.monetarist &&
+                                       both === correctAnswers[`statement${i}`]?.both;
+
+                    if (isCorrect) {
+                        feedback.textContent = "Correct!";
+                        feedback.className = "feedback correct";
+                        score++;
+                    } else {
+                        feedback.textContent = "Incorrect. Review the statement and try again.";
+                        feedback.className = "feedback incorrect";
+                    }
+                }
+            }
+            // Display the score
+            document.getElementById('scoreDisplay').textContent = `Your score: ${score} out of ${end - start + 1}`;
+        }
+    </script>
+</body>
+</html>
