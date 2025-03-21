@@ -58,7 +58,7 @@ Fill in the blank word/s and build your recall of key definitions.
 👉[Guess Who](Guesswho/guesswho.html) 
 
 ## 6. Macro Perspectives ##
-👉[Perspectives Monetarist v Keynesian](perspectives303.html)
+👉[Perspectives Monetarist v Keynesian](perspectives302.html)
 
 ## 7. Keynes v Hayek Policy Game ##
 
