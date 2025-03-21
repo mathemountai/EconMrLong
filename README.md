@@ -58,11 +58,11 @@ Fill in the blank word/s and build your recall of key definitions.
 👉[Guess Who](Guesswho/guesswho.html) 
 
 ## 6. Macro Perspectives ##
-👉[Perspectives Monetarist v Keynesian](perspectives302.html)
+👉[Perspectives Monetarist v Keynesian](perspectives303.html)
 
 ## 7. Keynes v Hayek Policy Game ##
 
-👉[Manage the Macroeconomy by choosing appropriate policy](keynesvhayak11.html)
+👉[Manage the Macroeconomy by choosing appropriate policy](keynesvhayak112.html)
 
 Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibriun above 150 ?? Good luck! 
 
