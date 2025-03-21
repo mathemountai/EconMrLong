@@ -169,8 +169,8 @@
     // Random Economic Events
     function triggerRandomEvent() {
       const events = [
-        { message: "Oil prices spike, increasing production costs (SRAS shifts left).", effect: () => srasXShift += 20 },
-        { message: "Consumer confidence drops, reducing AD.", effect: () => adLevel -= 30 },
+        { message: "Oil prices spike, increasing production costs- cost push inflation  (SRAS shifts left).", effect: () => srasXShift += 20 },
+        { message: "Consumer confidence drops, negative multiplier effect reducing AD.", effect: () => adLevel -= 30 },
         { message: "Technological breakthrough increases LRAS.", effect: () => lrasLevel += 20 }
       ];
 
@@ -280,7 +280,7 @@
           case "min_wage":
             srasXShift += 15;
             keynesMoney -= 10;
-            logEvent("Keynes raises minimum wage: For any given price, output is lower (SRAS shifts left).");
+            logEvent("Keynes raises minimum wage: Cost push inflation. For any given price, output is lower - (SRAS shifts left).");
             break;
           case "income_tax":
             adLevel -= 20;
