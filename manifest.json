@@ -1,6 +1,6 @@
 {
-  "name": "My GitHub Pages PWA",
-  "short_name": "MyPWA",
+  "name": "EconMrLong",
+  "short_name": "Econ",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
