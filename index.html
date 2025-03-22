@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning Tools for AQA A-Level Economics</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ul, ol {
+      margin-left: 20px;
+    }
+    code {
+      background-color: #f6f8fa;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    pre {
+      background-color: #f6f8fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: #ddd;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>📌 E-Learning Tools</h1>
+  <p>Welcome to my development space to design and share study tools to enhance Y13 students' attainment in AQA A-Level economics.</p>
+  <hr>
+
+  <p>#Check out the app: <a href="app.html">Launch App</a></p>
+  <hr>
+
+  <h2>📝 1. Essay Analysis Program</h2>
+  <p>A page designed to analyse 25-marker essays in economics, evaluating:</p>
+  <ul>
+    <li>🔹 efficiency in writing</li>
+    <li>🔹 use of <strong>tech vocab</strong> & balance</li>
+    <li>🔹 <strong>keyword detection</strong>, highlighting <strong>connectives</strong></li>
+    <li>🔹 identifying <strong>chains</strong> of analysis and <strong>repetition</strong></li>
+  </ul>
+
+  <h3>Get Started</h3>
+  <p><a href="Handwriting/convert_handwriting.html">How to convert a handwritten essay to text</a></p>
+  <ul>
+    <li>🔹 Click below to access the <strong>Essay Analyser</strong></li>
+    <li>🔹 <strong>Enter the password when prompted</strong></li>
+  </ul>
+  <p>👉 <a href="dsanamycc20plus4.html">Go to the Essay Analyser</a></p>
+  <hr>
+
+  <h2>Knowledge Building Games</h2>
+  <p>🔥 <strong>Challenge yourself</strong> with these interactive exercises</p>
+  <p>🧠 <strong>Boost recall</strong> with spaced repetition</p>
+
+  <h3>🎯 2. Flash Match Game (Recall Definitions)</h3>
+  <p><strong>A memory-based matching game</strong> to improve your recall of selected key economic definitions.</p>
+  <p>👉 <a href="matchinggamekl.html">Play the Flash Match Game</a></p>
+  <p>Open link in a new tab or browser window. Cards adjust with screen size—best viewed on iPad or PC.</p>
+  <hr>
+
+  <h3>🎓 3. Flashcard Progress Tracker</h3>
+  <p>An <strong>interactive flashcard tool</strong> to aid in memorising economic definitions across different topics.</p>
+  <h4>How it Works</h4>
+  <ul>
+    <li>🔹 Click a <strong>theme</strong> & review its flashcards</li>
+    <li>🔹 <strong>Rate difficulty</strong>: Easy, OK, Hard</li>
+    <li>🔹 <strong>Track progress</strong>: Themes turn <strong>blue</strong> when all cards are marked "Easy"</li>
+    <li>🔹 <strong>Reset anytime</strong> to start fresh</li>
+  </ul>
+  <p>👉 <a href="Flashcardprogress8.html">Go to Flashcard Progress Tracker</a></p>
+  <p>Open link in a new tab or browser.</p>
+  <hr>
+
+  <h3>🎓 4. Blankety Blank</h3>
+  <p>A bank of <strong>missing word questions</strong>. Can you master all 26?</p>
+  <p>Fill in the blank word/s and build your recall of key definitions.</p>
+  <p>👉 <a href="blanketyblank2.html">Go to Blankety Blank game</a></p>
+  <hr>
+
+  <h3>5. Guess Who</h3>
+  <p>Can you guess the famous economist's surname based on the clues? Some clues are dead giveaways! But in any case, there are plenty of facts available.</p>
+  <p>👉 <a href="Guesswho/guesswho.html">Guess Who</a></p>
+  <hr>
+
+  <h3>6. Macro Perspectives</h3>
+  <p>Being clear on the point of view is being clear on your essay—check if you can discern between the perspectives of Keynesians versus the neo-classical monetarists.</p>
+  <p>👉 <a href="perspectives302.html">Perspectives Monetarist v Keynesian</a></p>
+  <hr>
+
+  <h3>7. Keynes v Hayek Policy Game</h3>
+  <p>A bit of fun:</p>
+  <p>👉 <a href="keynesvhayak112.html">Manage the Macroeconomy by choosing appropriate policy</a></p>
+  <p>Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibrium above 150? Good luck!</p>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
+</body>
+</html>
