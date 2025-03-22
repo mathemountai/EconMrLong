@@ -68,109 +68,241 @@
     // List of AQA Economics terms with fill-in-the-blank sentences
     const questions = [
       {
-        sentence: "_________ is the total demand for goods and services in an economy at a given price level and in a given time period.",
-        answer: "aggregate demand"
-      },
-      {
-        sentence: "_________ is the total amount of goods and services that producers in an economy are willing and able to supply at a given price level in a given time period.",
-        answer: "aggregate supply"
-      },
-      {
-        sentence: "_________ occurs when resources are allocated to produce the combination of goods and services that maximises society's welfare.",
-        answer: "allocative efficiency"
-      },
-      {
-        sentence: "_________ occurs when one party in an economic transaction has more information than the other, leading to market failure.",
-        answer: "asymmetric information"
-      },
-      {
-        sentence: "_________ are obstacles that make it difficult for new firms to enter a market, such as high start-up costs or legal restrictions.",
-        answer: "barriers to entry"
-      },
-      {
-        sentence: "_________ is the difference between what consumers are willing to pay for a good or service and what they actually pay.",
-        answer: "consumer surplus"
-      },
-      {
-        sentence: "_________ is inflation caused by an increase in the cost of production, such as higher wages or raw material costs.",
-        answer: "cost push inflation"
-      },
-      {
-        sentence: "_________ is inflation caused by an increase in aggregate demand exceeding aggregate supply.",
-        answer: "demand pull inflation"
-      },
-      {
-        sentence: "_________ is a measure of how responsive the quantity demanded of a good or service is to a change in its price.",
-        answer: "elasticity of demand"
-      },
-      {
-        sentence: "_________ is a cost or benefit that affects a third party not directly involved in an economic transaction.",
-        answer: "externality"
-      },
-      {
-        sentence: "_________ is the use of government spending and taxation to influence the economy.",
-        answer: "fiscal policy"
-      },
-      {
-        sentence: "_________ is the use of interest rates and the money supply to influence the economy.",
-        answer: "monetary policy"
-      },
-      {
-        sentence: "_________ is the value of the next best alternative foregone when making a choice.",
-        answer: "opportunity cost"
-      },
-      {
-        sentence: "_________ is a statistical measure of income inequality ranging from 0 (perfect equality) to 1 (maximum inequality).",
-        answer: "gini coefficient"
-      },
-      {
-        sentence: "_________ is a graphical representation of income distribution, illustrating the degree of inequality within an economy.",
-        answer: "lorenz curve"
-      },
-      {
-        sentence: "_________ is the tendency for high unemployment to persist due to skill loss and discouragement effects.",
-        answer: "hysteresis"
-      },
-      {
-        sentence: "______________ is when a country can produce a good at a lower opportunity cost than another.",
-        answer: "comparative advantage"
-      },
-      {
-        sentence: "_________ refers to government policies restricting imports to protect domestic industries.",
-        answer: "protectionism"
-      },
-      {
-        sentence: "The ________________ is the record of all financial transactions between a country and the rest of the world, including trade, investment, and transfers.",
-        answer: "balance of payments"
-      },
-      {
-        sentence: "The ______________ records the inflow and outflow of goods, services, investment incomes and transfer payments.",
-        answer: "current account"
-      },
-      {
-        sentence: "________________ occurs when interest rates are so low that monetary policy becomes ineffective in stimulating the economy.",
-        answer: "liquidity trap"
-      },
-      {
-        sentence: "___________ is the demand for a factor of production arising from the demand for the goods and services it helps to produce.",
-        answer: "derived demand"
-      },
-      {
-        sentence: "_________ is a reduction in the rate of inflation, where the general price level continues to rise but at a slower rate.",
-        answer: "disinflation"
-      },
-      {
-        sentence: "The _________ income account is the part of the current account that records income flows from investments abroad and payments made to foreign investors.",
-        answer: "primary"
-      },
-      {
-        sentence: "The _________ income account is the part of the current account that records transfers such as foreign aid, pensions, and remittances.",
-        answer: "secondary "
-      },
-      {
-        sentence: "_________ refers to a situation where the quantity demanded of a good or service is relatively unresponsive to changes in price.",
-        answer: "inelastic"
-      },
+  sentence: "_________ is the total demand for goods and services in an economy at a given price level and in a given time period.",
+  answer: "aggregate demand"
+},
+{
+  sentence: "_________ is the total amount of goods and services that producers in an economy are willing and able to supply at a given price level in a given time period.",
+  answer: "aggregate supply"
+},
+{
+  sentence: "_________ occurs when resources are allocated to produce the combination of goods and services that maximises society's welfare.",
+  answer: "allocative efficiency"
+},
+{
+  sentence: "_________ occurs when one party in an economic transaction has more information than the other, leading to market failure.",
+  answer: "asymmetric information"
+},
+{
+  sentence: "_________ are obstacles that make it difficult for new firms to enter a market, such as high start-up costs or legal restrictions.",
+  answer: "barriers to entry"
+},
+{
+  sentence: "_________ is the difference between what consumers are willing to pay for a good or service and what they actually pay.",
+  answer: "consumer surplus"
+},
+{
+  sentence: "_________ is inflation caused by an increase in the cost of production, such as higher wages or raw material costs.",
+  answer: "cost push inflation"
+},
+{
+  sentence: "_________ is inflation caused by an increase in aggregate demand exceeding aggregate supply.",
+  answer: "demand pull inflation"
+},
+{
+  sentence: "_________ is a measure of how responsive the quantity demanded of a good or service is to a change in its price.",
+  answer: "elasticity of demand"
+},
+{
+  sentence: "_________ is a cost or benefit that affects a third party not directly involved in an economic transaction.",
+  answer: "externality"
+},
+{
+  sentence: "_________ is the use of government spending and taxation to influence the economy.",
+  answer: "fiscal policy"
+},
+{
+  sentence: "_________ is the use of interest rates and the money supply to influence the economy.",
+  answer: "monetary policy"
+},
+{
+  sentence: "_________ is the value of the next best alternative foregone when making a choice.",
+  answer: "opportunity cost"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service is highly responsive to changes in price.",
+  answer: "elastic demand"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service is not very responsive to changes in price.",
+  answer: "inelastic demand"
+},
+{
+  sentence: "_________ is the situation where the quantity demanded of a good or service changes proportionally more than the change in price.",
+  answer: "price elastic demand"
+},
+{
+  sentence: "_________ is the situation where the quantity demanded of a good or service changes proportionally less than the change in price.",
+  answer: "price inelastic demand"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service is perfectly unresponsive to changes in price.",
+  answer: "perfectly inelastic demand"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service is infinitely responsive to changes in price.",
+  answer: "perfectly elastic demand"
+},
+{
+  sentence: "_________ is the situation where the supply of a good or service is highly responsive to changes in price.",
+  answer: "elastic supply"
+},
+{
+  sentence: "_________ is the situation where the supply of a good or service is not very responsive to changes in price.",
+  answer: "inelastic supply"
+},
+{
+  sentence: "_________ is the situation where the quantity supplied of a good or service changes proportionally more than the change in price.",
+  answer: "price elastic supply"
+},
+{
+  sentence: "_________ is the situation where the quantity supplied of a good or service changes proportionally less than the change in price.",
+  answer: "price inelastic supply"
+},
+{
+  sentence: "_________ is the situation where the supply of a good or service is perfectly unresponsive to changes in price.",
+  answer: "perfectly inelastic supply"
+},
+{
+  sentence: "_________ is the situation where the supply of a good or service is infinitely responsive to changes in price.",
+  answer: "perfectly elastic supply"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service increases as consumer income increases.",
+  answer: "normal good"
+},
+{
+  sentence: "_________ is the situation where the demand for a good or service decreases as consumer income increases.",
+  answer: "inferior good"
+},
+{
+  sentence: "_________ is the situation where the demand for one good increases as the price of another good increases, because they are substitutes.",
+  answer: "substitute goods"
+},
+{
+  sentence: "_________ is the situation where the demand for one good decreases as the price of another good increases, because they are complements.",
+  answer: "complementary goods"
+},
+{
+  sentence: "_________ is the situation where a firm is the only seller of a good or service with no close substitutes.",
+  answer: "monopoly"
+},
+{
+  sentence: "_________ is the situation where a firm has significant control over the market price of a good or service due to a lack of competition.",
+  answer: "market power"
+},
+{
+  sentence: "_________ is the situation where a firm produces at the level of output where marginal cost equals marginal revenue.",
+  answer: "profit maximisation"
+},
+{
+  sentence: "_________ is the situation where a firm produces at the level of output where average total cost is minimised.",
+  answer: "productive efficiency"
+},
+{
+  sentence: "_________ is the total amount of money earned by individuals and businesses in an economy before taxes and deductions.",
+  answer: "national income"
+},
+{
+  sentence: "_________ is the situation where the government's revenue exceeds its spending in a given time period.",
+  answer: "budget surplus"
+},
+{
+  sentence: "_________ is the rate at which the central bank lends money to commercial banks in the short term.",
+  answer: "base rate"
+},
+{
+  sentence: "_________ is the situation where the economy experiences a period of declining economic activity, such as falling GDP and rising unemployment.",
+  answer: "recession"
+},
+{
+  sentence: "_________ is the situation where the economy experiences a period of slow economic growth, high unemployment, and high inflation simultaneously.",
+  answer: "stagflation"
+},
+{
+  sentence: "_________ is the situation where the economy reaches its maximum sustainable level of output.",
+  answer: "productive potential"
+},
+{
+  sentence: "_________ is the situation where the economy is operating below its full capacity, leading to unused resources.",
+  answer: "negative output gap"
+},
+{
+  sentence: "_________ is the situation where the economy is operating above its full capacity, leading to inflationary pressures.",
+  answer: "positive output gap"
+},
+{
+  sentence: "_________ is the situation where a country imports more goods and services than it exports.",
+  answer: "trade deficit"
+},
+{
+  sentence: "_________ is the situation where a country exports more goods and services than it imports.",
+  answer: "trade surplus"
+},
+{
+  sentence: "_________ is the measure of the average change in prices of a basket of goods and services over time.",
+  answer: "consumer price index (CPI)"
+},
+{
+  sentence: "_________ is the measure of the total value of goods and services produced by a country's residents, regardless of location.",
+  answer: "gross national product (GNP)"
+},
+{
+  sentence: "_________ is the situation where the central bank buys or sells government bonds to influence the money supply and interest rates.",
+  answer: "open market operations"
+},
+{
+  sentence: "_________ is the situation where workers are willing and able to work at current wage rates but cannot find employment.",
+  answer: "unemployment"
+},
+{
+  sentence: "_________ is the situation where workers are unemployed because their skills do not match the requirements of available jobs.",
+  answer: "structural unemployment"
+},
+{
+  sentence: "_________ is the situation where workers are unemployed due to a downturn in the economic cycle.",
+  answer: "cyclical unemployment"
+},
+{
+  sentence: "_________ is the situation where workers are temporarily unemployed while transitioning between jobs.",
+  answer: "frictional unemployment"
+},
+{
+  sentence: "_________ is the situation where workers are unemployed due to seasonal changes in demand for labor.",
+  answer: "seasonal unemployment"
+},
+{
+  sentence: "_________ is the loss of economic efficiency that can occur when equilibrium for a good or service is not achieved.",
+  answer: "deadweight loss"
+},
+{
+  sentence: "_________ is the situation where a few firms dominate the market for a good or service.",
+  answer: "oligopoly"
+},
+{
+  sentence: "_________ is the situation where there are many buyers and sellers in a market, none of whom can influence the price.",
+  answer: "perfect competition"
+},
+{
+  sentence: "_________ is the additional benefit gained from consuming one more unit of a good or service.",
+  answer: "marginal benefit"
+},
+{
+  sentence: "_________ is the additional cost incurred from producing one more unit of a good or service.",
+  answer: "marginal cost"
+},
+{
+  sentence: "_________ is the situation where the allocation of resources leads to maximum social welfare.",
+  answer: "Pareto efficiency"
+},
+{
+  sentence: "_________ is the situation where a market fails to allocate resources efficiently, leading to a loss of social welfare.",
+  answer: "market failure"
+},
+{
+  sentence: "_________ is the situation where individuals or firms consume a good or service without paying for it.",
+  answer: "free rider problem"
+}
     ];
 
     let currentQuestion;
