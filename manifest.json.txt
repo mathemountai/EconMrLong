@@ -1,0 +1,8 @@
+{
+  "name": "EconMrLong",
+  "theme_color": "#000000",
+  "background_color": "#6487e5",
+  "short_name": "EconMrLong",
+  "id": "EconMrLong",
+  "description": "A tool for revising Economics in preparation for assessment -designed for my Y13  students completing an AQA A-level in Economics."
+}
