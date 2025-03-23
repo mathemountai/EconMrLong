@@ -165,13 +165,16 @@
   <p>Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibrium above 150? Good luck!</p>
 
   <script>
-    if ('serviceworker' in navigator) {
-      navigator.serviceworker.register('/EconMrLong/service-worker.js')
-        .then(() => 
-          console.log('Service Worker registered siccessfully.'))
-        .catch((error) => 
-          console.error('Service Worker registration failed:', error);
-        }
+   if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/EconMrLong/service-worker.js')
+    .then(() => {
+      console.log('Service Worker registered successfully.');
+    })
+    .catch((error) => {
+      console.error('Service Worker registration failed:', error);
+    });
+}
+
   </script>
 </body>
 </html>
