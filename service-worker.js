@@ -1,11 +1,11 @@
 const CACHE_NAME = "econmrlong-cache-v1";
 const urlsToCache = [
-  "/EconMrLong/",
-  "/EconMrLong/index.html",
-  "/EconMrLong/manifest.json",
-  "/EconMrLong/service-worker.js",
-  "/EconMrLong/icons/icon-192x192.png",
-  "/EconMrLong/icons/icon-512x512.png"
+  "./", // Relative path to root
+  "./index.html",
+  "./manifest.json",
+  "./service-worker.js",
+  "./Icons/icon-192x192.png", // Correct path to icons
+  "./Icons/icon-512x512.png"  // Correct path to icons
 ];
 
 // Install service worker and cache assets
@@ -22,9 +22,12 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      return response || fetch(event.request).catch(() => {
-        return caches.match("/EconMrLong/index.html");
-      });
+      return (
+        response ||
+        fetch(event.request).catch(() => {
+          return caches.match("./index.html");
+        })
+      );
     })
   );
 });
