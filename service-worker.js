@@ -8,31 +8,33 @@ const urlsToCache = [
   "./Icons/icon-512x512.png"  // Correct path to icons
 ];
 
-// Install service worker and cache assets
+// ✅ Install service worker and cache assets
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching files...");
+      console.log("Caching files:", urlsToCache);
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Fetch and serve files from cache when offline
+// ✅ Fetch and serve files from cache when offline
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      return (
-        response ||
-        fetch(event.request).catch(() => {
-          return caches.match("./index.html");
-        })
-      );
+      // Serve from cache if available
+      if (response) {
+        return response;
+      }
+      // Fetch from network if not available, fallback to index.html when offline
+      return fetch(event.request).catch(() => {
+        return caches.match("./index.html");
+      });
     })
   );
 });
 
-// Clear old caches when a new version is available
+// ✅ Clear old caches when a new version is available
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
