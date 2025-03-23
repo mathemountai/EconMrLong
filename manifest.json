@@ -1,6 +1,20 @@
 {
   "name": "EconMrLong",
+  "short_name": "Econ",
+  "start_url": "https://mathemountai.github.io/EconMrLong/",
+  "display": "standalone",
+  "background_color": "#6487e5",
   "theme_color": "#000000",
-  "background_color": "#000000",
-  "short_name": "EconMrLong"
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
