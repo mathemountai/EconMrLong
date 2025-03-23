@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" 
-    content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EconMrLong</title>
   <link rel="manifest" href="/manifest.json">
-      <title>EconMrLong</title>
   <!-- Apple Touch Icons -->
   <link rel="apple-touch-icon" href="/icon-192x192.png">
   <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png">
@@ -15,16 +13,29 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="EconMrLong">
-    
   <style>
+    /* General Styles */
     body {
       font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
+      line-height: 1.4;
+      margin: 10px;
       color: #333;
     }
     h1, h2, h3 {
       color: #2c3e50;
+      margin: 10px 0;
+    }
+    h1 {
+      font-size: 22px;
+    }
+    h2 {
+      font-size: 18px;
+    }
+    h3 {
+      font-size: 16px;
+    }
+    p {
+      margin: 8px 0;
     }
     a {
       color: #0366d6;
@@ -34,29 +45,51 @@
       text-decoration: underline;
     }
     ul, ol {
-      margin-left: 20px;
-    }
-    code {
-      background-color: #f6f8fa;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-    pre {
-      background-color: #f6f8fa;
-      padding: 10px;
-      border-radius: 4px;
-      overflow-x: auto;
+      margin: 8px 0;
+      padding-left: 20px;
     }
     hr {
       border: 0;
       height: 1px;
       background: #ddd;
-      margin: 20px 0;
+      margin: 15px 0;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    .logo {
+      width: 30px; /* Smaller logo for mobile */
+      height: 30px;
+      margin-right: 8px; /* Reduced spacing */
+    }
+
+    /* Compact List Styles */
+    ul li, ol li {
+      margin: 4px 0; /* Tighter list item spacing */
+    }
+
+    /* Links with Icons */
+    .link-icon {
+      display: inline-block;
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <!-- Add the logo -->
+    <img src="icon-192x192.png" alt="EconMrLong Logo" class="logo">
+    <!-- Add the title -->
+    <h1>EconMrLong</h1>
+  </header>
+
   <h1>📌 E-Learning Tools</h1>
   <p>Welcome to my development space to design and share study tools to enhance Y13 students' attainment in AQA A-Level economics.</p>
   <hr>
