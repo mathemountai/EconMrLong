@@ -278,17 +278,17 @@
                     </tr>
                     <tr>
                         <td>Tech Vocabulary</td>
-                        <td class="${analysis.totalAdvancedVocab < 13 ? 'red-text' : ''}">${analysis.totalAdvancedVocab} words</td>
+                        <td class="${analysis.totalAdvancedVocab < 5 ? 'red-text' : ''}">${analysis.totalAdvancedVocab} words</td>
                         <td class="small-text">Number of unique tech vocab words. </td>
                     </tr>
                     <tr>
                         <td>Total Words</td>
-                        <td class="${analysis.totalWords > 900 ? 'red-text' : ''}">${analysis.totalWords}</td>
+                        <td class="${analysis.totalWords > 990 ? 'red-text' : ''}">${analysis.totalWords}</td>
                         <td class="small-text">Total number of words in the essay.</td>
                     </tr>
                     <tr>
                         <td>Reasoning Steps</td>
-                        <td class="${analysis.reasoningSteps < 15 ? 'red-text' : ''}">${analysis.reasoningSteps}</td>
+                        <td class="${analysis.reasoningSteps < 8 ? 'red-text' : ''}">${analysis.reasoningSteps}</td>
                         <td class="small-text">Number of reasoning steps (e.g., transitions between ideas).</td>
                     </tr>
                     <tr>
@@ -313,7 +313,7 @@
                     </tr>
                     <tr>
                         <td>Avg. Connectives per Paragraph</td>
-                        <td class="${analysis.averageConnectivesPerParagraph < 4 ? 'red-text' : ''}">${analysis.averageConnectivesPerParagraph.toFixed(2)}</td>
+                        <td class="${analysis.averageConnectivesPerParagraph < 3 ? 'red-text' : ''}">${analysis.averageConnectivesPerParagraph.toFixed(2)}</td>
                         <td class="small-text">Average number of connectives per paragraph (efficiency guide 4).</td>
                     </tr>
                 </table>
