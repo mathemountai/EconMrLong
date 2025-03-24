@@ -107,7 +107,7 @@
             "gross domestic product", "quantitative easing", "balance of payments", "RPI", "retail price index", "OECD", "current account", 
             "tariffs", "quotas", "regressive", "progressive", "subsidies", "expenditure-switching", "protectionism", "IMF", "international monetary fund", "WTO", 
             "world trade organization", "FDI", "foreign direct investment", "PPP", "PED", "YED", "XED", "AD", "SRAS", "LRAS", "MRPL", 
-            "MC", "MR", "AR", "ATC", "BOE", "CPI", "MPS", "MPC", "GDP", "GNP", "PPF", "CPI", "BOP", "BoP", "balance of payments", "hysterisis", "Current Account", "FX", "QE", "deficit", "WTO", "LDC", "derived demand", "terms of trade", "twin deficts", "budget deficit", "national debt", "financial account", "primary income", "secondary income", "reserves", "deindustrialisation", "marginal propensity to import", "Accelerator", "Multiplier", "cyclical"
+            "MC", "MR", "AR", "ATC", "BOE", "CPI", "MPS", "MPC", "GDP", "GNP", "PPF", "CPI", "BOP", "BoP", "balance of payments", "hysterisis", "current account", "FX", "QE", "deficit", "WTO", "LDC", "terms of trade", "twin deficts", "budget deficit", "national debt", "financial account", "primary income", "secondary income", "reserves", "deindustrialisation", "marginal propensity to import", "accelerator", "multiplier", "cyclical"
         ];
 
         const connectives = [
@@ -179,7 +179,8 @@
                     words.forEach(word => uniqueWords.add(word.toLowerCase()));
 
                     // Count advanced vocabulary
-                    totalAdvancedVocab += words.filter(word => advancedVocab.includes(word.toLowerCase())).length;
+                    totalAdvancedVocab += words.filter(word => economicVocab.includes(word.toLowerCase()) || Object.values(keywords).flat().includes(word.toLowerCase())).length;
+
 
                     // Track chains of reasoning
                     const chainLength = connectives.filter(connective => sentence.toLowerCase().includes(connective)).length;
