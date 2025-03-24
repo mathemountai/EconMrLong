@@ -67,5 +67,16 @@ Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibriu
 
 ---
 
+### 🎓 8. Paragraph Potholes
+
+A bank of **paragraphs for you to select the correct terms for. Simply click each term in the correct order**. Can you master all themes?
+
+Identify the right order of terms and build your writing.
+
+👉 [Go to the exercises](paragraphpotholes10.html)
+
+
+---
+
 💡 *These tools are evolving and are just part of my CPD interest in exploring the use of Python and AI as agents in economics learning!* 🚀  
 
