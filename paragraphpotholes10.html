@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Econ Paragraph Potholes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .paragraph {
+            margin-bottom: 20px;
+        }
+        .blank {
+            display: inline-block;
+            width: 150px;
+            height: 25px;
+            border: 1px dashed #000;
+            text-align: center;
+            line-height: 25px;
+            cursor: pointer;
+            margin: 0 5px;
+            background-color: #fff;
+        }
+        .term {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .correct {
+            background-color: #d4edda;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <Erlectobe <h1> ParagrAph Potholes</h1>
+    <div id="game-container">
+        <div class="paragraph" id="paragraph-container"></div>
+        <div class="terms" id="terms-container"></div>
+    </div>
+    <button onclick="checkAnswers()">Check Answers</button>
+    <button onclick="resetGame()">Retry</button>
+    <button onclick="loadNextParagraph()">Next</button>
+    <p id="result"></p>
+
+    <script>
+        const paragraphs = [
+            {
+                text: `In a perfectly competitive market, firms are price takers because there are many sellers and buyers, and products are homogeneous. However, in a <span class="blank" data-answer="monopoly"></span>, there is only one seller, and the firm has significant control over the price. Barriers to entry, such as <span class="blank" data-answer="economies_of_scale"></span>, prevent new firms from entering the market. In contrast, an <span class="blank" data-answer="oligopoly"></span> is a market structure dominated by a few large firms, often leading to interdependence and strategic behavior, such as <span class="blank" data-answer="price_fixing"></span>.`,
+                terms: ["monopoly", "economies_of_scale", "oligopoly", "price_fixing"]
+            },
+            {
+                text: `Inflation is a sustained increase in the general price level of goods and services, often measured by the <span class="blank" data-answer="consumer_price_index"></span>. One cause of inflation is <span class="blank" data-answer="demand_pull"></span>, where aggregate demand exceeds aggregate supply. On the other hand, unemployment occurs when individuals are willing and able to work but cannot find jobs. The <span class="blank" data-answer="natural_rate_of_unemployment"></span> represents the level of unemployment that exists even when the economy is at full capacity. Policies such as <span class="blank" data-answer="monetary_policy"></span> can be used to control inflation and unemployment, but they often involve trade-offs, as described by the <span class="blank" data-answer="phillips_curve"></span>.`,
+                terms: ["consumer_price_index", "demand_pull", "natural_rate_of_unemployment", "monetary_policy", "phillips_curve"]
+            },
+            {
+                text: `Elasticity measures the responsiveness of quantity demanded or supplied to changes in price or income. <span class="blank" data-answer="price_elasticity_of_demand"></span> measures how much the quantity demanded changes when the price changes. If the value is greater than 1, demand is considered <span class="blank" data-answer="elastic"></span>, meaning consumers are highly responsive to price changes. Conversely, <span class="blank" data-answer="income_elasticity_of_demand"></span> measures how demand changes with income. For example, luxury goods have a high income elasticity, while necessities have a <span class="blank" data-answer="low"></span> income elasticity. Understanding elasticity helps firms set prices and predict consumer behavior.`,
+                terms: ["price_elasticity_of_demand", "elastic", "income_elasticity_of_demand", "low"]
+            },
+            {
+                text: `Economic growth is an increase in a country's output of goods and services, often measured by the growth rate of <span class="blank" data-answer="gross_domestic_product"></span>. Growth can be achieved through increases in <span class="blank" data-answer="productivity"></span>, which is the output per worker, or by investing in <span class="blank" data-answer="human_capital"></span>, such as education and training. However, rapid growth can lead to negative externalities, such as environmental degradation. Governments often use <span class="blank" data-answer="fiscal_policy"></span> to stimulate growth during recessions, but this can lead to a budget <span class="blank" data-answer="deficit"></span> if spending exceeds revenue.`,
+                terms: ["gross_domestic_product", "productivity", "human_capital", "fiscal_policy", "deficit"]
+            },
+            {
+                text: `Externalities occur when the actions of producers or consumers have unintended side effects on third parties. A <span class="blank" data-answer="negative_externality"></span>, such as pollution, leads to an overproduction of goods that harm society. To correct this, governments can impose a <span class="blank" data-answer="tax"></span> on the producer, internalizing the externality. On the other hand, a <span class="blank" data-answer="positive_externality"></span>, such as education, benefits society, and governments may provide <span class="blank" data-answer="subsidies"></span> to encourage its production. The <span class="blank" data-answer="social_cost"></span> of an activity includes both private costs and external costs.`,
+                terms: ["negative_externality", "tax", "positive_externality", "subsidies", "social_cost"]
+            },
+            {
+                text: `The balance of payments is a record of all financial transactions between a country and the rest of the world. It consists of the <span class="blank" data-answer="current_account"></span>, which includes trade in goods and services, and the <span class="blank" data-answer="capital_account"></span>, which records investments and loans. A <span class="blank" data-answer="trade_deficit"></span> occurs when a country imports more goods than it exports, while a <span class="blank" data-answer="trade_surplus"></span> occurs when exports exceed imports. Exchange rates, such as a <span class="blank" data-answer="floating_exchange_rate"></span>, can affect the balance of payments by making exports cheaper or more expensive.`,
+                terms: ["current_account", "capital_account", "trade_deficit", "trade_surplus", "floating_exchange_rate"]
+            },
+            {
+                text: `Economists use the concept of <span class="blank" data-answer="opportunity_cost"></span> to describe the value of the next best alternative forgone when making a decision. This concept is fundamental to the idea of <span class="blank" data-answer="scarcity"></span>, which arises because resources are limited while human wants are unlimited. The <span class="blank" data-answer="production_possibility_frontier"></span> (PPF) illustrates the maximum possible output combinations of two goods or services an economy can achieve when all resources are fully and efficiently employed. Points inside the PPF indicate <span class="blank" data-answer="inefficiency"></span>, while points outside are unattainable with current resources.`,
+                terms: ["scarcity", "inefficiency", "opportunity_cost", "production_possibility_frontier"]
+            },
+            {
+                text: `The <span class="blank" data-answer="labour_market"></span> is where workers offer their services, and employers hire them. The equilibrium wage rate is determined by the intersection of the demand and supply of labor. Factors such as <span class="blank" data-answer="human_capital"></span>, which includes education and skills, can shift the supply curve. Discrimination and <span class="blank" data-answer="trade_unions"></span> can also affect wage rates and employment levels. Government interventions, like <span class="blank" data-answer="minimum_wage"></span> laws, aim to protect workers but can lead to <span class="blank" data-answer="unemployment"></span> if set above the equilibrium wage.`,
+                terms: ["minimum_wage", "trade_unions", "labour_market", "human_capital", "unemployment"]
+            },
+            {
+                text: `The <span class="blank" data-answer="distribution_of_income_and_wealth"></span> refers to how income and assets are shared among the population. Inequality in distribution can lead to social and economic issues. Governments use <span class="blank" data-answer="progressive_taxation"></span>, where higher income earners pay a larger percentage of their income in taxes, and <span class="blank" data-answer="transfer_payments"></span>, such as unemployment benefits, to reduce inequality. However, excessive redistribution can reduce <span class="blank" data-answer="incentives"></span> to work and invest, potentially hindering economic growth.`,
+                terms: ["progressive_taxation", "incentives", "distribution_of_income_and_wealth", "transfer_payments"]
+            },
+            {
+                text: `The <span class="blank" data-answer="circular_flow_of_income"></span> model illustrates the movement of money, resources, and goods/services in an economy. Households provide factors of production to firms and receive <span class="blank" data-answer="income"></span> in return, which they spend on goods and services produced by firms. This spending generates <span class="blank" data-answer="revenue"></span> for firms, enabling them to pay for resources. Leakages, such as <span class="blank" data-answer="savings"></span>, taxes, and imports, and injections, like investment, government spending, and exports, affect the overall level of economic activity.`,
+                terms: ["savings", "income", "circular_flow_of_income", "revenue"]
+            },
+            {
+                text: `The <span class="blank" data-answer="financial_markets"></span> facilitate the allocation of resources and the creation of liquidity in the economy. They consist of various markets, including the <span class="blank" data-answer="stock_market"></span>, where shares of companies are traded, and the <span class="blank" data-answer="bond_market"></span>, where debt securities are issued and traded. Financial markets are crucial for <span class="blank" data-answer="capital_formation"></span>, allowing firms to raise funds for investment. However, they can also be sources of <span class="blank" data-answer="financial_instability"></span> if not properly regulated.`,
+                terms: ["capital_formation", "financial_instability", "financial_markets", "stock_market", "bond_market"]
+            },
+            {
+                text: `The <span class="blank" data-answer="international_trade"></span> involves the exchange of goods and services across countries. It allows countries to specialize in the production of goods where they have a <span class="blank" data-answer="comparative_advantage"></span>, leading to increased global efficiency. However, trade can also result in <span class="blank" data-answer="trade_deficits"></span> if a country imports more than it exports. <span class="blank" data-answer="protectionist_policies"></span>, such as tariffs and quotas, are sometimes implemented to protect domestic industries but can lead to <span class="blank" data-answer="retaliation"></span> and reduced international trade.`,
+                terms: ["protectionist_policies", "retaliation", "international_trade", "comparative_advantage", "trade_deficits"]
+            },
+            {
+                text: `The <span class="blank" data-answer="exchange_rate"></span> is the price of one currency in terms of another. It affects the competitiveness of a country's goods and services in international markets. Factors influencing exchange rates include <span class="blank" data-answer="interest_rates"></span>, where higher rates offer better returns on investments denominated in that currency, attracting foreign capital and causing the currency to appreciate. Differences in <span class="blank" data-answer="inflation_rates"></span> also play a role; countries with lower inflation typically see their currency value rise due to increased purchasing power. Additionally, a nation's <span class="blank" data-answer="current_account_balance"></span> reflects its trade balance; a deficit indicates more imports than exports, leading to currency depreciation. The level of <span class="blank" data-answer="public_debt"></span> can deter foreign investment if perceived as unsustainable, potentially causing the currency to depreciate. Lastly, <span class="blank" data-answer="political_stability"></span> and economic performance influence investor confidence; stable countries with robust economies attract more foreign investment, leading to currency appreciation.`,
+                terms: ["exchange_rate", "interest_rates", "inflation_rates", "current_account_balance", "public_debt", "political_stability"]
+            }
+        ];
+
+        let currentParagraphIndex = 0;
+        let shuffledParagraphs = [];
+
+        // Shuffle array using Fisher-Yates algorithm
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Shuffle paragraphs at the start
+        function shuffleParagraphs() {
+            shuffledParagraphs = shuffle([...paragraphs]);
+        }
+
+        // Load a paragraph and terms
+        function loadParagraph(index) {
+            const paragraphContainer = document.getElementById('paragraph-container');
+            const termsContainer = document.getElementById('terms-container');
+            const currentParagraph = shuffledParagraphs[index];
+
+            // Insert paragraph with blanks
+            paragraphContainer.innerHTML = currentParagraph.text;
+
+            // Shuffle terms before displaying
+            const shuffledTerms = shuffle([...currentParagraph.terms]);
+            termsContainer.innerHTML = shuffledTerms
+                .map(term => `<div class="term" data-term="${term}">${term.replace(/_/g, ' ')}</div>`)
+                .join('');
+
+            addTermClickEvents();
+        }
+
+        // Add click event listeners to terms
+        function addTermClickEvents() {
+            document.querySelectorAll('.term').forEach(term => {
+                term.addEventListener('click', () => {
+                    const selectedTerm = term.getAttribute('data-term');
+                    fillBlank(selectedTerm);
+                });
+            });
+        }
+
+        // Fill the blank with the selected term
+        function fillBlank(term) {
+            const blanks = document.querySelectorAll('.blank');
+            for (let blank of blanks) {
+                if (!blank.textContent) { // Fill the first empty blank
+                    blank.textContent = term.replace(/_/g, ' ');
+                    blank.setAttribute('data-filled', term);
+                    break;
+                }
+            }
+        }
+
+        // Check answers
+        function checkAnswers() {
+            let correctCount = 0;
+            const blanks = document.querySelectorAll('.blank');
+
+            blanks.forEach(blank => {
+                const filledTerm = blank.getAttribute('data-filled');
+                const correctAnswer = blank.getAttribute('data-answer');
+
+                if (filledTerm === correctAnswer) {
+                    blank.classList.add('correct');
+                    correctCount++;
+                } else {
+                    blank.classList.add('incorrect');
+                }
+            });
+
+            document.getElementById('result').textContent = `You got ${correctCount} out of ${blanks.length} correct!`;
+        }
+
+        // Reset the current game
+        function resetGame() {
+            const blanks = document.querySelectorAll('.blank');
+            blanks.forEach(blank => {
+                blank.textContent = '';
+                blank.removeAttribute('data-filled');
+                blank.classList.remove('correct', 'incorrect');
+            });
+
+            document.getElementById('result').textContent = '';
+        }
+
+        // Load next paragraph
+        function loadNextParagraph() {
+            currentParagraphIndex++;
+            if (currentParagraphIndex >= shuffledParagraphs.length) {
+                currentParagraphIndex = 0;
+                shuffleParagraphs(); // Reshuffle if all paragraphs are completed
+            }
+            loadParagraph(currentParagraphIndex);
+            resetGame();
+        }
+
+        // Initialize game
+        window.onload = () => {
+            shuffleParagraphs();
+            loadParagraph(currentParagraphIndex);
+        };
+    </script>
+</body>
+</html>
