@@ -279,7 +279,7 @@
                     </tr>
                     <tr>
                         <td>Tech Vocabulary</td>
-                        <td class="${analysis.totalAdvancedVocab < 5 ? 'red-text' : ''}">${analysis.totalAdvancedVocab} words</td>
+                        <td class="${analysis.totalAdvancedVocab < 18 ? 'red-text' : ''}">${analysis.totalAdvancedVocab} words</td>
                         <td class="small-text">Number of unique tech vocab words. </td>
                     </tr>
                     <tr>
@@ -309,8 +309,8 @@
                     </tr>
                     <tr>
                         <td>Avg. Paragraph Length</td>
-                        <td class="${analysis.averageParagraphLength < 5 || analysis.averageParagraphLength > 10 ? 'red-text' : ''}">${analysis.averageParagraphLength.toFixed(2)} sentences</td>
-                        <td class="small-text">Average number of sentences per paragraph, (efficiency guide 7). </td>
+                        <td class="${analysis.averageParagraphLength < 4 || analysis.averageParagraphLength > 10 ? 'red-text' : ''}">${analysis.averageParagraphLength.toFixed(2)} sentences</td>
+                        <td class="small-text">Average number of sentences per paragraph, (efficiency guide 5). </td>
                     </tr>
                     <tr>
                         <td>Avg. Connectives per Paragraph</td>
