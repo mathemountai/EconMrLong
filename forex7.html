@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goods Market & Forex Market Simulation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2ecc71;
+      --danger-color: #e74c3c;
+      --warning-color: #f39c12;
+      --dark-color: #2c3e50;
+      --light-color: #ecf0f1;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --border-radius: 8px;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 800px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      color: var(--dark-color);
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    .intro {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 25px;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .controls-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .slider-container {
+      flex: 1;
+      min-width: 250px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .slider-label {
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+      color: var(--dark-color);
+    }
+    
+    .slider-value {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .slider-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .slider-control input[type="range"] {
+      flex-grow: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: #ddd;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .slider-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .slider-control button {
+      padding: 8px 12px;
+      font-size: 1em;
+      background-color: var(--light-color);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .slider-control button:hover {
+      background-color: #ddd;
+    }
+    
+    .results-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .result-card {
+      flex: 1;
+      min-width: 200px;
+      background: white;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    
+    .result-title {
+      font-size: 0.9em;
+      color: #7f8c8d;
+      margin-bottom: 5px;
+    }
+    
+    .result-value {
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+    
+    .currency-status {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 8px 15px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    .appreciating {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: var(--secondary-color);
+    }
+    
+    .depreciating {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: var(--danger-color);
+    }
+    
+    .stable {
+      background-color: rgba(52, 152, 219, 0.2);
+      color: var(--primary-color);
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    #resetBtn {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+    }
+    
+    #resetBtn:hover {
+      background-color: #ddd;
+    }
+    
+    #infoBtn {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    #infoBtn:hover {
+      background-color: #2980b9;
+    }
+    
+    /* Canvas styling */
+    .graph-container {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    
+    #curveCanvas {
+      width: 100%;
+      height: 400px;
+      background: #fff;
+      border-radius: var(--border-radius);
+    }
+    
+    .info-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .modal-title {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--dark-color);
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #7f8c8d;
+    }
+    
+    .concept {
+      margin-bottom: 20px;
+    }
+    
+    .concept-title {
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .controls-container {
+        flex-direction: column;
+      }
+      
+      .results-container {
+        flex-direction: column;
+      }
+      
+      .result-card {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Derived Demand: The Goods Market & Forex Market Simulation</h1>
+    
+    <div class="intro">
+      <p>This interactive simulation demonstrates how exports and imports in the Goods & Services Market  affect a country's currency value through the foreign exchange (Forex) market. Adjust the levels below to see how trade balances influence currency strength and shift the supply and demand curves.</p>
+      <p><strong>Key Concepts:</strong> When exports increase, foreign demand for the domestic currency rises (demand curve shifts right). When imports increase, domestic supply of the currency increases (supply curve shifts right). The intersection of these curves determines the equilibrium exchange rate.</p>
+    </div>
+    
+    <div class="controls-container">
+      <div class="slider-container">
+        <label class="slider-label" for="exports">Exports Level: <span id="exportsValue" class="slider-value">50</span></label>
+        <div class="slider-control">
+          <button id="exportsDec">–</button>
+          <input type="range" id="exports" min="0" max="100" value="50">
+          <button id="exportsInc">+</button>
+        </div>
+        <p class="slider-description">Higher exports increase foreign demand for your currency.</p>
+      </div>
+      
+      <div class="slider-container">
+        <label class="slider-label" for="imports">Imports Level: <span id="importsValue" class="slider-value">50</span></label>
+        <div class="slider-control">
+          <button id="importsDec">–</button>
+          <input type="range" id="imports" min="0" max="100" value="50">
+          <button id="importsInc">+</button>
+        </div>
+        <p class="slider-description">Higher imports increase supply of your currency in Forex markets.</p>
+      </div>
+    </div>
+    
+    <div class="results-container">
+      <div class="result-card">
+        <div class="result-title">Trade Balance</div>
+        <div class="result-value" id="tradeBalance">0</div>
+      </div>
+      
+      <div class="result-card">
+        <div class="result-title">Domestic Currency Strength</div>
+        <div class="result-value" id="exchangeRateDisplay">1.00</div>
+      </div>
+      
+      <div class="result-card">
+        <div class="result-title">Currency Status</div>
+        <div id="flagDisplay" class="currency-status stable">Stable</div>
+      </div>
+    </div>
+    
+    <div class="button-container">
+      <button id="resetBtn">Reset to Equilibrium</button>
+      <button id="infoBtn">Learn Economic Concepts</button>
+    </div>
+  </div>
+
+  <!-- Graph container -->
+  <div class="graph-container">
+    <h2 style="text-align: center; margin-bottom: 15px;">Forex Market: Supply and Demand for Domestic Currency</h2>
+    <canvas id="curveCanvas" width="700" height="400"></canvas>
+  </div>
+
+  <!-- Info Modal -->
+  <div class="info-modal" id="infoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Economic Concepts Explained</div>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      
+      <div class="concept">
+        <div class="concept-title">Exchange Rate Determination</div>
+        <p>The exchange rate is determined by the interaction of supply and demand for a currency in the foreign exchange market. This simulation simplifies the complex forex market to show the fundamental relationship between trade flows and currency values.</p>
+      </div>
+      
+      <div class="concept">
+        <div class="concept-title">Exports and Currency Demand</div>
+        <p>When a country exports goods and services, foreign buyers need to purchase the domestic currency to pay for those exports. This increases demand for the currency, which tends to appreciate its value (higher exchange rate).</p>
+      </div>
+      
+      <div class="concept">
+        <div class="concept-title">Imports and Currency Supply</div>
+        <p>When a country imports goods and services, domestic buyers need to sell their currency to obtain foreign currency to pay for imports. This increases supply of the domestic currency in forex markets, which tends to depreciate its value (lower exchange rate).</p>
+      </div>
+      
+      <div class="concept">
+        <div class="concept-title">Trade Balance</div>
+        <p>The trade balance is the difference between exports and imports of goods and services. A trade surplus (exports > imports) typically strengthens a currency, while a trade deficit (imports > exports) typically weakens it. However, in reality, many other factors also affect exchange rates.</p>
+      </div>
+      
+      <div class="concept">
+        <div class="concept-title">Real-World Considerations</div>
+        <p>While this simulation focuses on trade flows, actual exchange rates are influenced by many factors including interest rates, inflation, political stability, economic performance, and speculative flows. Central banks may also intervene in forex markets to influence their currency's value.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get DOM elements
+    const exportsSlider = document.getElementById('exports');
+    const importsSlider = document.getElementById('imports');
+    const exportsValueDisplay = document.getElementById('exportsValue');
+    const importsValueDisplay = document.getElementById('importsValue');
+    const exchangeRateDisplay = document.getElementById('exchangeRateDisplay');
+    const tradeBalanceDisplay = document.getElementById('tradeBalance');
+    const flagDisplay = document.getElementById('flagDisplay');
+    const resetBtn = document.getElementById('resetBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const exportsDecBtn = document.getElementById('exportsDec');
+    const exportsIncBtn = document.getElementById('exportsInc');
+    const importsDecBtn = document.getElementById('importsDec');
+    const importsIncBtn = document.getElementById('importsInc');
+    const infoModal = document.getElementById('infoModal');
+    const closeModal = document.getElementById('closeModal');
+
+    // Canvas setup
+    const canvas = document.getElementById('curveCanvas');
+    const ctx = canvas.getContext('2d');
+    const margin = 50;
+    const drawingWidth = canvas.width - 2 * margin;
+    const drawingHeight = canvas.height - 2 * margin;
+    // Domain for Quantity (Q) and Exchange Rate (P)
+    const Qmin = 200, Qmax = 300;
+    const Pmin = 0, Pmax = 2;
+
+    // Mapping functions: convert data coordinates to canvas coordinates.
+    function mapX(Q) {
+      return margin + ((Q - Qmin) / (Qmax - Qmin)) * drawingWidth;
+    }
+    function mapY(P) {
+      return canvas.height - margin - ((P - Pmin) / (Pmax - Pmin)) * drawingHeight;
+    }
+
+    // Update display and simulation
+    function updateDisplay() {
+      const exportsVal = parseInt(exportsSlider.value);
+      const importsVal = parseInt(importsSlider.value);
+      exportsValueDisplay.textContent = exportsVal;
+      importsValueDisplay.textContent = importsVal;
+      
+      // Calculate trade balance
+      const tradeBalance = exportsVal - importsVal;
+      tradeBalanceDisplay.textContent = tradeBalance;
+      if (tradeBalance > 0) {
+        tradeBalanceDisplay.style.color = '#2ecc71';
+      } else if (tradeBalance < 0) {
+        tradeBalanceDisplay.style.color = '#e74c3c';
+      } else {
+        tradeBalanceDisplay.style.color = '#3498db';
+      }
+
+      // Calculate domestic currency strength
+      let currencyStrength = 1 + (exportsVal - importsVal) / 100;
+      currencyStrength = Math.round(currencyStrength * 100) / 100;
+      exchangeRateDisplay.textContent = currencyStrength.toFixed(2);
+
+      // Flag currency movement.
+      flagDisplay.className = 'currency-status';
+      if (currencyStrength > 1) {
+        flagDisplay.textContent = "Appreciating";
+        flagDisplay.classList.add("appreciating");
+      } else if (currencyStrength < 1) {
+        flagDisplay.textContent = "Depreciating";
+        flagDisplay.classList.add("depreciating");
+      } else {
+        flagDisplay.textContent = "Stable";
+        flagDisplay.classList.add("stable");
+      }
+
+      // Update the supply & demand graph.
+      updateGraph(exportsVal, importsVal);
+    }
+
+    // Draw the axes on the canvas.
+    function drawAxes() {
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(margin, canvas.height - margin);
+      ctx.lineTo(canvas.width - margin, canvas.height - margin);
+      ctx.stroke();
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(margin, canvas.height - margin);
+      ctx.lineTo(margin, margin);
+      ctx.stroke();
+
+      // X-axis label: "Quantity of Currency"
+      ctx.font = "14px 'Open Sans', sans-serif";
+      ctx.fillStyle = "#000";
+      ctx.fillText("Quantity of Currency (billions)", canvas.width / 2 - 70, canvas.height - 10);
+
+      // Y-axis label: "Exchange Rate"
+      ctx.save();
+      ctx.translate(15, canvas.height / 2 + 20);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("Exchange Rate (units of foreign currency per domestic unit)", 0, 0);
+      ctx.restore();
+      
+      // Add axis ticks and labels
+      // X-axis ticks
+      for (let Q = Qmin; Q <= Qmax; Q += 20) {
+        const x = mapX(Q);
+        ctx.beginPath();
+        ctx.moveTo(x, canvas.height - margin);
+        ctx.lineTo(x, canvas.height - margin + 5);
+        ctx.stroke();
+        ctx.fillText(Q.toString(), x - 10, canvas.height - margin + 20);
+      }
+      
+      // Y-axis ticks
+      for (let P = Pmin; P <= Pmax; P += 0.2) {
+        const y = mapY(P);
+        ctx.beginPath();
+        ctx.moveTo(margin, y);
+        ctx.lineTo(margin - 5, y);
+        ctx.stroke();
+        ctx.fillText(P.toFixed(1), margin - 30, y + 5);
+      }
+    }
+
+    // Draw the supply and demand curves.
+    function updateGraph(exportsVal, importsVal) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawAxes();
+
+      const slope = 0.01;
+
+      // Baseline (unchanging) curves:
+      const eqP0 = 1;
+      const eqQ0 = 250;
+
+      // Baseline Demand: P = eqP0 - slope*(Q - eqQ0)
+      const baselineDemandStart = eqP0 - slope * (Qmin - eqQ0);
+      const baselineDemandEnd   = eqP0 - slope * (Qmax - eqQ0);
+      // Baseline Supply: P = eqP0 + slope*(Q - eqQ0)
+      const baselineSupplyStart = eqP0 + slope * (Qmin - eqQ0);
+      const baselineSupplyEnd   = eqP0 + slope * (Qmax - eqQ0);
+
+      // Draw baseline demand (dashed grey)
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.strokeStyle = "grey";
+      ctx.lineWidth = 2;
+      ctx.moveTo(mapX(Qmin), mapY(baselineDemandStart));
+      ctx.lineTo(mapX(Qmax), mapY(baselineDemandEnd));
+      ctx.stroke();
+      ctx.fillStyle = "grey";
+      ctx.font = "12px 'Open Sans', sans-serif";
+      ctx.fillText("Baseline Demand", mapX(Qmin) + 5, mapY(baselineDemandStart) - 5);
+
+      // Draw baseline supply (dashed grey)
+      ctx.beginPath();
+      ctx.moveTo(mapX(Qmin), mapY(baselineSupplyStart));
+      ctx.lineTo(mapX(Qmax), mapY(baselineSupplyEnd));
+      ctx.stroke();
+      ctx.fillText("Baseline Supply", mapX(Qmax) - 80, mapY(baselineSupplyEnd) - 5);
+      ctx.setLineDash([]); // Reset dash
+
+      // New (shifted) curves based on current exports/imports:
+      const eqQ = 200 + (exportsVal + importsVal) / 2;
+      const eqP = 1 + (exportsVal - importsVal) / 100;
+
+      // New Demand: P = eqP - slope*(Q - eqQ)
+      const newDemandStart = eqP - slope * (Qmin - eqQ);
+      const newDemandEnd   = eqP - slope * (Qmax - eqQ);
+      // New Supply: P = eqP + slope*(Q - eqQ)
+      const newSupplyStart = eqP + slope * (Qmin - eqQ);
+      const newSupplyEnd   = eqP + slope * (Qmax - eqQ);
+
+      // Draw new demand curve in blue
+      ctx.beginPath();
+      ctx.strokeStyle = "#3498db";
+      ctx.lineWidth = 3;
+      ctx.moveTo(mapX(Qmin), mapY(newDemandStart));
+      ctx.lineTo(mapX(Qmax), mapY(newDemandEnd));
+      ctx.stroke();
+      ctx.fillStyle = "#3498db";
+      ctx.font = "bold 13px 'Open Sans', sans-serif";
+      ctx.fillText("New Demand", mapX(Qmin) + 5, mapY(newDemandStart) - 5);
+
+      // Draw new supply curve in orange
+      ctx.beginPath();
+      ctx.strokeStyle = "#e67e22";
+      ctx.lineWidth = 3;
+      ctx.moveTo(mapX(Qmin), mapY(newSupplyStart));
+      ctx.lineTo(mapX(Qmax), mapY(newSupplyEnd));
+      ctx.stroke();
+      ctx.fillStyle = "#e67e22";
+      ctx.fillText("New Supply", mapX(Qmax) - 80, mapY(newSupplyEnd) - 5);
+
+      // Mark the new equilibrium point
+      const eqX = mapX(eqQ);
+      const eqY = mapY(eqP);
+      ctx.beginPath();
+      ctx.fillStyle = "#2c3e50";
+      ctx.arc(eqX, eqY, 6, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.font = "bold 12px 'Open Sans', sans-serif";
+      ctx.fillText(`Equilibrium (${eqQ}, ${eqP.toFixed(2)})`, eqX + 15, eqY - 15);
+      
+      // Add explanatory text
+      ctx.fillStyle = "#7f8c8d";
+      ctx.font = "italic 12px 'Open Sans', sans-serif";
+      ctx.fillText("Note: The exchange rate represents how much foreign currency can be obtained for one unit of domestic currency.", 
+                   margin, 30);
+    }
+
+    // Event listeners
+    exportsSlider.addEventListener('input', updateDisplay);
+    importsSlider.addEventListener('input', updateDisplay);
+    exportsDecBtn.addEventListener('click', () => {
+      if (exportsSlider.value > exportsSlider.min) {
+        exportsSlider.value = parseInt(exportsSlider.value) - 5;
+        updateDisplay();
+      }
+    });
+    exportsIncBtn.addEventListener('click', () => {
+      if (exportsSlider.value < exportsSlider.max) {
+        exportsSlider.value = parseInt(exportsSlider.value) + 5;
+        updateDisplay();
+      }
+    });
+    importsDecBtn.addEventListener('click', () => {
+      if (importsSlider.value > importsSlider.min) {
+        importsSlider.value = parseInt(importsSlider.value) - 5;
+        updateDisplay();
+      }
+    });
+    importsIncBtn.addEventListener('click', () => {
+      if (importsSlider.value < importsSlider.max) {
+        importsSlider.value = parseInt(importsSlider.value) + 5;
+        updateDisplay();
+      }
+    });
+    resetBtn.addEventListener('click', () => {
+      exportsSlider.value = 50;
+      importsSlider.value = 50;
+      updateDisplay();
+    });
+    
+    // Modal controls
+    infoBtn.addEventListener('click', () => {
+      infoModal.style.display = 'flex';
+    });
+    
+    closeModal.addEventListener('click', () => {
+      infoModal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === infoModal) {
+        infoModal.style.display = 'none';
+      }
+    });
+
+    // Initialize display when the page loads.
+    updateDisplay();
+  </script>
+</body>
+</html>
