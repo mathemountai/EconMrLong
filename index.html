@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EconMrLong</title>
+  <title>EconMrLong - E-Learning Tools</title>
   <link rel="manifest" href="./manifest.json">
+  
   <!-- Apple Touch Icons -->
   <link rel="apple-touch-icon" href="/EconMrLong/Icons/icon-192x192.png">
   <link rel="apple-touch-icon" sizes="192x192" href="/EconMrLong/Icons/icon-192x192.png">
@@ -13,173 +13,479 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/EconMrLong/Icons/icon-192x192.png">
     
   <!-- Splash Screen Meta Tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes"> <!-- Deprecated but still required for iOS -->
-  <meta name="mobile-web-app-capable" content="yes"> <!-- Correct version for Android -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="EconMrLong">
 
   <!-- Add icons for iOS home screen -->
   <link rel="apple-touch-icon" sizes="192x192" href="./Image/icon-192x192.png">
   <link rel="apple-touch-icon" sizes="512x512" href="./Image/icon-512x512.png">
+  
   <style>
-    /* General Styles */
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.4;
-      margin: 10px;
-      color: #333;
+    /* Reset and Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Typography */
     h1, h2, h3 {
       color: #2c3e50;
-      margin: 10px 0;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
     }
+    
     h1 {
-      font-size: 22px;
+      font-size: 1.5rem;
     }
+    
     h2 {
-      font-size: 18px;
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eaeaea;
     }
+    
     h3 {
-      font-size: 16px;
+      font-size: 1.1rem;
+      margin-top: 1.25rem;
     }
+    
     p {
-      margin: 8px 0;
+      margin-bottom: 1rem;
+      color: #444;
     }
+    
     a {
       color: #0366d6;
       text-decoration: none;
+      transition: color 0.2s;
     }
+    
     a:hover {
+      color: #0056b3;
       text-decoration: underline;
     }
+    
     ul, ol {
-      margin: 8px 0;
-      padding-left: 20px;
+      margin-bottom: 1rem;
+      padding-left: 1.25rem;
     }
-    hr {
-      border: 0;
-      height: 1px;
-      background: #ddd;
-      margin: 15px 0;
+    
+    li {
+      margin-bottom: 0.5rem;
+      position: relative;
     }
-
-    /* Header Styles */
-    header {
+    
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem;
+      transition: transform 0.3s ease;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    
+    .sidebar-header {
       display: flex;
       align-items: center;
-      padding: 8px;
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 10px;
+      padding: 0.5rem 0;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .logo {
-      width: 30px; /* Smaller logo for mobile */
-      height: 30px;
-      margin-right: 8px; /* Reduced spacing */
+    
+    .sidebar-logo {
+      width: 36px;
+      height: 36px;
+      margin-right: 0.75rem;
+      border-radius: 4px;
     }
-
-    /* Compact List Styles */
-    ul li, ol li {
-      margin: 4px 0; /* Tighter list item spacing */
+    
+    .sidebar-title {
+      font-size: 1.2rem;
+      font-weight: 600;
     }
-
-    /* Links with Icons */
-    .link-icon {
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      color: rgba(255,255,255,0.8);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    
+    .sidebar-menu a:hover {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .sidebar-menu a.active {
+      background-color: #0366d6;
+      color: white;
+    }
+    
+    .sidebar-menu-icon {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* News Flash in Sidebar */
+    .sidebar-news {
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .sidebar-news-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .sidebar-news-content {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    
+    .share-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 1.5rem;
+      transition: margin 0.3s ease;
+    }
+    
+    /* Mobile Toggle Button */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1100;
+      background: #0366d6;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: 1px solid #eaeaea;
+    }
+    
+    /* Tool Cards */
+    .tool-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-left: 4px solid #0366d6;
+    }
+    
+    .tool-card h3 {
+      margin-top: 0;
+    }
+    
+    /* Buttons */
+    .btn {
       display: inline-block;
-      margin-right: 5px;
+      background-color: #0366d6;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: #0056b3;
+      text-decoration: none;
+      color: white;
+    }
+    
+    /* Icons in lists */
+    .icon-list li {
+      padding-left: 1.5rem;
+    }
+    
+    .icon-list li:before {
+      content: "🔹";
+      position: absolute;
+      left: 0;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .sidebar-toggle {
+        display: block;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+      
+      .tool-card {
+        margin-bottom: 0;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 900px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <!-- Add the logo -->
-    <img src="icon-192x192.png" alt="EconMrLong Logo" class="logo">
-    <!-- Add the title -->
-    <h1>EconMrLong</h1>
-  </header>
+  <!-- Mobile Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
 
-  <h1>📌 E-Learning Tools</h1>
-  <p>Welcome to my development space to design and share study tools to enhance Y13 students' attainment in AQA A-Level economics.</p>
-  <hr>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="icon-192x192.png" alt="EconMrLong Logo" class="sidebar-logo">
+      <span class="sidebar-title">EconMrLong</span>
+    </div>
+    
+<ul class="sidebar-menu">
+  <li>
+    <a href="#" class="active">
+      <span class="sidebar-menu-icon">🏠</span>
+      <span>Home</span>
+    </a>
+  </li>
+  <li>
+    <a href="dsanamycc20plus4.html">
+      <span class="sidebar-menu-icon">📊</span>
+      <span>Essay Analyser</span>
+    </a>
+  </li>
+  <li>
+    <a href="newessayanalyser2.html">
+      <span class="sidebar-menu-icon">📈</span>
+      <span>Indicative Leveller</span>
+    </a>
+  </li>
+  <li>
+    <a href="matchinggamekl.html">
+      <span class="sidebar-menu-icon">🎯</span>
+      <span>Flash Match Game</span>
+    </a>
+  </li>
+  <li>
+    <a href="Flashcardprogress8.html">
+      <span class="sidebar-menu-icon">🎓</span>
+      <span>Flashcard Tracker</span>
+    </a>
+  </li>
+  <li>
+    <a href="paragraphpotholes10.html">
+      <span class="sidebar-menu-icon">🛣️</span>
+      <span>Paragraph Potholes</span>
+    </a>
+  </li>
+  <li>
+    <a href="forex7.html">
+      <span class="sidebar-menu-icon">💱</span>
+      <span>FOREX Perspectives</span>
+    </a>
+  </li>
+</ul>
+    
+    <div class="sidebar-news">
+      <div class="sidebar-news-title">
+        <svg class="share-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0l-4 4m4-4l4 4" />
+        </svg>
+        Quick Tip
+      </div>
+      <div class="sidebar-news-content">
+        Press <strong>Share</strong> and select <strong>"Save to your device home screen"</strong> to install this app.
+      </div>
+    </div>
+  </aside>
 
-  <h2>📝 1. Essay Analysis Program</h2>
-  <p>A page designed to analyse 25-marker essays in economics, evaluating:</p>
-  <ul>
-    <li>🔹 efficiency in writing</li>
-    <li>🔹 use of <strong>tech vocab</strong> & balance</li>
-    <li>🔹 <strong>keyword detection</strong>, highlighting <strong>connectives</strong></li>
-    <li>🔹 identifying <strong>chains</strong> of analysis and <strong>repetition</strong></li>
-  </ul>
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <div class="card">
+      <h1>📚 E-Learning Tools</h1>
+      <p>Welcome to my development space to design and share study tools to enhance Y13 students' attainment in AQA A-Level economics.</p>
+    </div>
 
-  <h3>Get Started</h3>
-  <p><a href="Handwriting/convert_handwriting.html">How to convert a handwritten essay to text</a></p>
-  <ul>
-    <li>🔹 Click below to access the <strong>Essay Analyser</strong></li>
-    <li>🔹 <strong>Enter the password when prompted</strong></li>
-  </ul>
-  <p>👉 <a href="dsanamycc20plus4.html">Go to the Essay Analyser</a></p>
-  <p>👉 <a href="newessayanalyser2.html">Go to the Indicative Leveller </a></p>
-  <hr>
+    <h2>📝 Essay Analysis Tools</h2>
+    
+    <div class="tool-card">
+      <h3>1. Essay Analysis Program</h3>
+      <p>Analyze 25-marker essays in economics, evaluating:</p>
+      <ul class="icon-list">
+        <li>Efficiency in writing</li>
+        <li>Use of <strong>tech vocab</strong> & balance</li>
+        <li><strong>Keyword detection</strong>, highlighting <strong>connectives</strong></li>
+        <li>Identifying <strong>chains</strong> of analysis and <strong>repetition</strong></li>
+      </ul>
+      
+      <h4>Get Started</h4>
+      <p><a href="Handwriting/convert_handwriting.html">How to convert a handwritten essay to text</a></p>
+      <ul class="icon-list">
+        <li>Click below to access the <strong>Essay Analyser</strong></li>
+        <li><strong>Enter the password when prompted</strong></li>
+      </ul>
+      <a href="dsanamycc20plus4.html" class="btn">Go to Essay Analyser</a>
+      <a href="newessayanalyser2.html" class="btn">Go to Indicative Leveller</a>
+    </div>
 
-  <h2>Knowledge Building Games</h2>
-  <p>🔥 <strong>Challenge yourself</strong> with these interactive exercises</p>
-  <p>🧠 <strong>Boost recall</strong> with spaced repetition</p>
+    <h2>🎮 Knowledge Building Games</h2>
+    <p class="card">🔥 <strong>Challenge yourself</strong> with interactive exercises to boost recall with spaced repetition.</p>
+    
+    <div class="tool-grid">
+      <div class="tool-card">
+        <h3>2. Flash Match Game</h3>
+        <p><strong>A memory-based matching game</strong> to improve your recall of key economic definitions.</p>
+        <a href="matchinggamekl.html" class="btn">Play Flash Match Game</a>
+        <p><small>Best viewed on iPad or PC. Cards adjust with screen size.</small></p>
+      </div>
+      
+      <div class="tool-card">
+        <h3>3. Flashcard Progress Tracker</h3>
+        <p>An <strong>interactive flashcard tool</strong> to aid in memorising economic definitions.</p>
+        <h4>How it Works</h4>
+        <ul class="icon-list">
+          <li>Click a <strong>theme</strong> & review flashcards</li>
+          <li><strong>Rate difficulty</strong>: Easy, OK, Hard</li>
+          <li>Themes turn <strong>blue</strong> when mastered</li>
+        </ul>
+        <a href="Flashcardprogress8.html" class="btn">Go to Flashcard Tracker</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>4. Blankety Blank</h3>
+        <p>A bank of <strong>missing word questions</strong>. Can you master all 26?</p>
+        <p>Fill in the blank word/s and build your recall of key definitions.</p>
+        <a href="blanketyblank2.html" class="btn">Go to Blankety Blank</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>5. Guess Who</h3>
+        <p>Can you guess the famous economist's surname based on the clues?</p>
+        <p>Some clues are dead giveaways! Plenty of facts available.</p>
+        <a href="Guesswho/guesswho.html" class="btn">Play Guess Who</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>6. Macro Perspectives</h3>
+        <p>Discern between the perspectives of Keynesians versus the neo-classical monetarists.</p>
+        <a href="perspectives302.html" class="btn">View Perspectives</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>7. Keynes v Hayek Policy Game</h3>
+        <p>A bit of fun: Can you achieve a stable economy and score AD & AS at equilibrium above 150?</p>
+        <a href="keynesvhayak112.html" class="btn">Play Policy Game</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>8. Paragraph Potholes</h3>
+        <p>Select the correct terms in order to complete paragraphs. Can you master all themes?</p>
+        <a href="paragraphpotholes10.html" class="btn">Try Paragraph Potholes</a>
+      </div>
+      
+      <div class="tool-card">
+        <h3>9. FOREX Perspectives</h3>
+        <p>Simulator linking goods market to FOREX market. Understand how demand for imports impacts currency.</p>
+        <a href="forex7.html" class="btn">View FOREX Simulator</a>
+      </div>
+    </div>
+  </main>
 
-  <h3>🎯 2. Flash Match Game (Recall Definitions)</h3>
-  <p><strong>A memory-based matching game</strong> to improve your recall of selected key economic definitions.</p>
-  <p>👉 <a href="matchinggamekl.html">Play the Flash Match Game</a></p>
-  <p>Open link in a new tab or browser window. Cards adjust with screen size—best viewed on iPad or PC.</p>
-  <hr>
-
-  <h3>🎓 3. Flashcard Progress Tracker</h3>
-  <p>An <strong>interactive flashcard tool</strong> to aid in memorising economic definitions across different topics.</p>
-  <h4>How it Works</h4>
-  <ul>
-    <li>🔹 Click a <strong>theme</strong> & review its flashcards</li>
-    <li>🔹 <strong>Rate difficulty</strong>: Easy, OK, Hard</li>
-    <li>🔹 <strong>Track progress</strong>: Themes turn <strong>blue</strong> when all cards are marked "Easy"</li>
-    <li>🔹 <strong>Reset anytime</strong> to start fresh</li>
-  </ul>
-  <p>👉 <a href="Flashcardprogress8.html">Go to Flashcard Progress Tracker</a></p>
-  <p>Open link in a new tab or browser.</p>
-  <hr>
-
-  <h3>🎓 4. Blankety Blank</h3>
-  <p>A bank of <strong>missing word questions</strong>. Can you master all 26?</p>
-  <p>Fill in the blank word/s and build your recall of key definitions.</p>
-  <p>👉 <a href="blanketyblank2.html">Go to Blankety Blank game</a></p>
-  <hr>
-
-  <h3>5. Guess Who</h3>
-  <p>Can you guess the famous economist's surname based on the clues? Some clues are dead giveaways! But in any case, there are plenty of facts available.</p>
-  <p>👉 <a href="Guesswho/guesswho.html">Guess Who</a></p>
-  <hr>
-
-  <h3>6. Macro Perspectives</h3>
-  <p>Being clear on the point of view is being clear on your essay—check if you can discern between the perspectives of Keynesians versus the neo-classical monetarists.</p>
-  <p>👉 <a href="perspectives302.html">Perspectives Monetarist v Keynesian</a></p>
-  <hr>
-
-  <h3>7. Keynes v Hayek Policy Game</h3>
-  <p>A bit of fun:</p>
-  <p>👉 <a href="keynesvhayak112.html">Manage the Macroeconomy by choosing appropriate policy</a></p>
-  <p>Keynes v Hayek: Can you achieve a stable economy and score AD & AS at equilibrium above 150? Good luck!</p>
-  <hr>
-
-  <h3>🎓 8. Paragraph Potholes</h3>
-  <p>A bank of <strong>paragraphs for you to select the correct terms for. Simply click each term in the correct order</strong>. Can you master all themes?</p>
-  <p>Identify the right order of terms and build your writing.</p>
-  <p>👉 <a href="paragraphpotholes10.html">Go to the exercises</a></p>
-  <hr>
-<h3>9. FOREX Perspectives</h3>
-  <p>This is a simulator that links the changes in the goods market to the FOREX market. Clarify your understanding of how the demand for imports will impact the supply of the domestic currency and its purchasing power ( i.e. the FX rate).   
-</p>
-  <p>👉 <a href="forex7.html">Fx Perspectives</a></p>
-  <hr>
-
-
-  
   <script>
+    // Toggle sidebar on mobile
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 992 && 
+          !sidebar.contains(e.target) && 
+          e.target !== sidebarToggle) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // Service Worker Registration
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/EconMrLong/service-worker.js')
         .then(() => {
