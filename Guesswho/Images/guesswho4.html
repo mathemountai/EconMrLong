@@ -65,6 +65,11 @@
             max-width: 300px;
             border-radius: 10px;
         }
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +82,7 @@
         <button onclick="showNextClue()">Get Next Clue</button>
         <button id="restart" onclick="restartGame()">Restart</button>
         <br>
+        <div id="feedback" class="feedback"></div>
         <img id="economistImage" src="" alt="Economist Image">
     </div>
 
@@ -164,6 +170,7 @@
             document.getElementById("clues").innerHTML = "";
             document.getElementById("guess").value = "";
             document.getElementById("economistImage").style.display = "none";
+            document.getElementById("feedback").innerText = ""; // Clear previous feedback
             showNextClue();
         }
 
@@ -180,13 +187,19 @@
         }
 
         function checkGuess() {
-            if (document.getElementById("guess").value.trim().toLowerCase() === selectedEconomist.name.toLowerCase()) {
+            const guess = document.getElementById("guess").value.trim().toLowerCase();
+            if (guess === selectedEconomist.name.toLowerCase()) {
                 document.getElementById("economistImage").src = selectedEconomist.image;
                 document.getElementById("economistImage").style.display = "block";
-                alert("Correct! You guessed the economist.");
+                document.getElementById("feedback").innerText = "Correct! You guessed the economist.";
             } else {
-                alert("Incorrect, try again.");
+                document.getElementById("feedback").innerText = "Incorrect, try again.";
             }
+            document.getElementById("guess").value = ""; // Clear the input field
+        }
+
+        function restartGame() {
+            startGame();
         }
 
         startGame();
