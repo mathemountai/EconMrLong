@@ -65,8 +65,8 @@
             fullText += pageText + '\n';
           }
 
-          const encoded = encodeURIComponent(fullText);
-          window.location.href = `newessayanalyser2.html?essay=${encoded}`;
+          sessionStorage.setItem('uploadedEssay', fullText);
+window.location.href = 'newessayanalyser2.html';
         });
       };
 
