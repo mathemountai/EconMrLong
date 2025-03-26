@@ -502,13 +502,16 @@ const overallLevel = Math.min(5, Math.max(1, Math.round(overallScore / 5.3)));  
         }
     </script>
     
-    <script>
+ <script>
   window.onload = function () {
     const essayText = sessionStorage.getItem('uploadedEssay');
     if (essayText) {
-      document.getElementById('essayInput').value = essayText;
-      analyzeEssay(); // Automatically analyze
-      sessionStorage.removeItem('uploadedEssay'); // optional: clean up after use
+      const textarea = document.getElementById('essayInput');
+      if (textarea) {
+        textarea.value = essayText;
+        analyzeEssay(); // Automatically runs the analysis
+        sessionStorage.removeItem('uploadedEssay'); // Clean up
+      }
     }
   };
 </script>
