@@ -18,6 +18,7 @@ A page designed to analyse 25 marker essays in economics, evaluating:
 🔹 **Enter the password when prompted**  
 
 👉 **[Go to the Essay Analyser](dsanamycc20plus4.html)**  
+**[Go to the PDF upload](pdfupload.html)**
 
 ---
  ## **Knowledge Building Games** ##
