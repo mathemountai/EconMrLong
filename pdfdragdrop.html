@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drop PDF to Analyze</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    #dropZone {
+      border: 2px dashed #888;
+      border-radius: 12px;
+      padding: 50px;
+      background-color: #f9f9f9;
+      color: #444;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+    #dropZone.dragover {
+      background-color: #d2f3ff;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Drop a PDF Essay to Analyze</h2>
+  <div id="dropZone">Drag and drop your PDF essay here</div>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+
+    dropZone.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', function () {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+
+      if (file && file.type === 'application/pdf') {
+        const reader = new FileReader();
+
+        reader.onload = function () {
+          const typedArray = new Uint8Array(this.result);
+
+          pdfjsLib.getDocument(typedArray).promise.then(async function (pdf) {
+            let fullText = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const textContent = await page.getTextContent();
+              const pageText = textContent.items.map(item => item.str).join(' ');
+              fullText += pageText + '\n';
+            }
+
+            const encoded = encodeURIComponent(fullText);
+            window.location.href = `newessayanalyser2.html?essay=${encoded}`;
+          });
+        };
+
+        reader.readAsArrayBuffer(file);
+      } else {
+        alert('Please drop a valid PDF file.');
+      }
+    });
+  </script>
+</body>
+
+</html>

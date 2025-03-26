@@ -73,6 +73,7 @@
             border-radius: 4px;
             text-align: center;
         }
+            
     </style>
 </head>
 <body>
@@ -102,18 +103,6 @@
                 alert("Incorrect password. Please try again.");
             }
         }
-
-        <script>
-  window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const essayText = params.get('essay');
-    if (essayText) {
-      const decoded = decodeURIComponent(essayText);
-      document.getElementById('essayInput').value = decoded;
-      analyzeEssay(); // Assumes this function exists
-    }
-  };
-</script>
         // Economic Keywords and Thematic Phrases (normalized)
         const economicVocab = [
             "hysteresis", "aggregate demand", "ad", "aggregate supply", "as", 
@@ -512,5 +501,18 @@ const overallLevel = Math.min(5, Math.max(1, Math.round(overallScore / 5.3)));  
             return feedback[level - 1];
         }
     </script>
+    
+    <script>
+  window.onload = function () {
+    const params = new URLSearchParams(window.location.search);
+    const essayText = params.get('essay');
+    if (essayText) {
+      const decoded = decodeURIComponent(essayText);
+      document.getElementById('essayInput').value = decoded;
+      analyzeEssay(); // Automatically runs your analysis function
+    }
+  };
+</script>
+
 </body>
 </html>
