@@ -4,72 +4,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Economics Essay Analyzer</title>
+  <title>Upload or Drop PDF Essay</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      text-align: center;
+      padding: 40px;
     }
-    textarea {
-      width: 100%;
-      height: 300px;
-      margin-top: 10px;
+    #dropZone {
+      border: 2px dashed #888;
+      border-radius: 12px;
+      padding: 50px;
+      background-color: #f9f9f9;
+      color: #444;
+      font-size: 18px;
+      transition: background-color 0.3s;
+      margin-bottom: 30px;
     }
-    .output {
-      white-space: pre-wrap;
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 5px;
+    #dropZone.dragover {
+      background-color: #d2f3ff;
+    }
+    #uploadSection {
       margin-top: 20px;
+    }
+    input[type="file"] {
+      padding: 10px;
+    }
+    .instruction {
+      font-size: 16px;
+      margin: 15px 0;
     }
   </style>
 </head>
 
 <body>
-  <h1>Economics Essay Analyzer</h1>
+  <h2>Submit Your Essay</h2>
 
-  <label for="pdfUpload">Upload PDF Essay:</label>
-  <input type="file" id="pdfUpload" accept="application/pdf">
+  <div class="instruction">Drag and drop a PDF into the box below <strong>or</strong> use the file upload option</div>
 
-  <h2>Or Paste Your Essay Below:</h2>
-  <textarea id="essayInput" placeholder="Paste your essay here..."></textarea>
-  <button onclick="analyzeEssay()">Analyze Essay</button>
+  <div id="dropZone">Drop your PDF essay here</div>
 
-  <div id="analysisOutput" class="output"></div>
+  <div id="uploadSection">
+    <input type="file" id="pdfUpload" accept="application/pdf">
+  </div>
 
   <script>
-    document.getElementById('pdfUpload').addEventListener('change', function (e) {
-      const file = e.target.files[0];
+    function extractTextAndRedirect(file) {
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        const typedArray = new Uint8Array(this.result);
+
+        pdfjsLib.getDocument(typedArray).promise.then(async function (pdf) {
+          let fullText = '';
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ');
+            fullText += pageText + '\n';
+          }
+
+          const encoded = encodeURIComponent(fullText);
+          window.location.href = `newessayanalyser2.html?essay=${encoded}`;
+        });
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    const dropZone = document.getElementById('dropZone');
+
+    dropZone.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', function () {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+
       if (file && file.type === 'application/pdf') {
-        const reader = new FileReader();
-
-        reader.onload = function () {
-          const typedArray = new Uint8Array(this.result);
-          pdfjsLib.getDocument(typedArray).promise.then(async function (pdf) {
-            let fullText = '';
-            for (let i = 1; i <= pdf.numPages; i++) {
-              const page = await pdf.getPage(i);
-              const textContent = await page.getTextContent();
-              const pageText = textContent.items.map(item => item.str).join(' ');
-              fullText += pageText + '\n';
-            }
-            document.getElementById('essayInput').value = fullText;
-          });
-        };
-
-        reader.readAsArrayBuffer(file);
+        extractTextAndRedirect(file);
       } else {
-        alert('Please upload a valid PDF file.');
+        alert('Please drop a valid PDF file.');
       }
     });
 
-    function analyzeEssay() {
-      const essay = document.getElementById('essayInput').value;
-      const output = document.getElementById('analysisOutput');
-      // Placeholder for your existing analysis logic
-      output.textContent = `Analyzing essay...\n\n${essay.substring(0, 500)}...`; // demo only
-    }
+    document.getElementById('pdfUpload').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        extractTextAndRedirect(file);
+      } else {
+        alert('Please select a valid PDF file.');
+      }
+    });
   </script>
 </body>
 
