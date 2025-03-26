@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Economics Essay Planning Game</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    h2 { color: #003366; }
+    .question-box { margin-bottom: 20px; }
+    .options button { display: block; margin: 5px 0; padding: 8px; width: 100%; }
+    .feedback { font-weight: bold; margin-top: 10px; }
+    .next-btn { margin-top: 20px; display: none; }
+  </style>
+</head>
+<body>
+
+<h2>Economics 25-Mark Question Planner</h2>
+<div id="game">
+  <div class="question-box" id="questionBox"></div>
+  <div class="options" id="optionsBox"></div>
+  <div class="feedback" id="feedback"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<script>
+const questions = [
+  {
+    "question": "Supply-side policies for UK growth?",
+    "forPoints": [
+      "LRAS shift ",
+      "Lower natural rate of unemployment ",
+      "Attract FDI"
+    ],
+    "against": "May worsen inequality",
+    "diagram": "LRAS shift",
+    "conclude": "C: Effective if paired with training L: Short-run costs (austerity)"
+  },
+  {
+    "question": "Pound depreciation impact",
+    "forPoints": [
+      "Export boost (J-curve) ",
+      "Tourism growth ",
+      "Import substitution"
+    ],
+    "against": "Imported inflation",
+    "diagram": "AD/AS (cost-push)",
+    "conclude": "C: Net benefit if inflation controlled L: Short: AD\u2191. Long: Competitiveness"
+  },
+  {
+    "question": "Economic growth benefits?",
+    "forPoints": [
+      "Higher living standards ",
+      "Tax revenue\u2191 ",
+      "Employment\u2191"
+    ],
+    "against": "Environmental damage",
+    "diagram": "PPF",
+    "conclude": "C: Beneficial if sustainable L: Short: Consumption\u2191. Long: Climate costs"
+  },
+  {
+    "question": "Full employment as main goal?",
+    "forPoints": [
+      "Maximize PPF ",
+      "Social benefits ",
+      "Fiscal dividend"
+    ],
+    "against": "Demand-pull inflation risk",
+    "diagram": "Phillips Curve",
+    "conclude": "C: Secondary to price stability L: Short: AD\u2191. Long: Structural bottlenecks"
+  },
+  {
+    "question": "Interest rate rise impact",
+    "forPoints": [
+      "Inflation control ",
+      "Strengthen \u00a3 ",
+      "Encourage saving"
+    ],
+    "against": "Investment decline",
+    "diagram": "AD/AS",
+    "conclude": "C: Necessary if inflation > target L: Short: AD\u2193. Long: Stability"
+  },
+  {
+    "question": "Fiscal policy for inequality?",
+    "forPoints": [
+      "Progressive taxes ",
+      "Welfare payments ",
+      "Public services"
+    ],
+    "against": "Work disincentives",
+    "diagram": "Lorenz Curve",
+    "conclude": "C: Effective but costly L: Short: Redistribution. Long: Dependency"
+  },
+  {
+    "question": "Monetary policy for AD?",
+    "forPoints": [
+      "Quick transmission ",
+      "BoE independence ",
+      "Flexible rates"
+    ],
+    "against": "Liquidity trap risk",
+    "diagram": "AD/AS + LRAS",
+    "conclude": "C: Effective unless zero lower bound L: Short: Consumption\u2191. Long: Debt bubbles"
+  },
+  {
+    "question": "Globalisation impact",
+    "forPoints": [
+      "Lower prices ",
+      "Specialisation ",
+      "FDI benefits"
+    ],
+    "against": "Structural unemployment",
+    "diagram": "PPF",
+    "conclude": "C: Net benefit with mitigation L: Short: Job losses. Long: Efficiency\u2191"
+  },
+  {
+    "question": "Budget deficit problems?",
+    "forPoints": [
+      "Crowding out ",
+      "Debt burden ",
+      "Interest costs"
+    ],
+    "against": "Recession necessity",
+    "diagram": "AD/AS",
+    "conclude": "C: Problematic if >3% GDP L: Short: Stimulus. Long: Debt servicing"
+  },
+  {
+    "question": "Supply-side policies for unemployment",
+    "forPoints": [
+      "Reduce structural ",
+      "Skills matching ",
+      "Mobility\u2191"
+    ],
+    "against": "Time lags",
+    "diagram": "LRAS",
+    "conclude": "C: Best for long-term L: Short: Costs. Long: Productivity\u2191"
+  },
+  {
+    "question": "Ageing population impact",
+    "forPoints": [
+      "Pension costs\u2191 ",
+      "Labour shortages ",
+      "Healthcare demand\u2191"
+    ],
+    "against": "Silver economy",
+    "diagram": "Dependency ratio",
+    "conclude": "C: Requires reform L: Short: Fiscal drag. Long: Automation"
+  },
+  {
+    "question": "Current account deficit?",
+    "forPoints": [
+      "FDI covers ",
+      "Consumption\u2191 ",
+      "Strong \u00a3 signal"
+    ],
+    "against": "Debt trap",
+    "diagram": "BOP chart",
+    "conclude": "C: Manageable if FDI\u2191 L: Short: Sustainable. Long: Vulnerability"
+  },
+  {
+    "question": "Productivity as growth key?",
+    "forPoints": [
+      "Wages\u2191 ",
+      "Competitiveness ",
+      "Inflation control"
+    ],
+    "against": "Job displacement",
+    "diagram": "PPF",
+    "conclude": "C: Necessary not sufficient L: Short: Unemployment. Long: Living standards\u2191"
+  },
+  {
+    "question": "Government spending impact",
+    "forPoints": [
+      "AD stimulus ",
+      "Multiplier ",
+      "Public goods"
+    ],
+    "against": "Crowding out",
+    "diagram": "AD/AS",
+    "conclude": "C: Effective in recessions L: Short: Growth\u2191. Long: Debt\u2191"
+  },
+  {
+    "question": "Inequality vs growth",
+    "forPoints": [
+      "Talent waste ",
+      "Social unrest ",
+      "AD constraint"
+    ],
+    "against": "Incentive effect",
+    "diagram": "Lorenz Curve",
+    "conclude": "C: Harms inclusive growth L: Short: Poverty\u2193. Long: Innovation?"
+  },
+  {
+    "question": "FDI in developing nations",
+    "forPoints": [
+      "Tech transfer ",
+      "Jobs ",
+      "Infrastructure"
+    ],
+    "against": "Exploitation",
+    "diagram": "PPF",
+    "conclude": "C: Benefits with regulation L: Short: Sweatshops. Long: Industrialization"
+  },
+  {
+    "question": "Fiscal policy effectiveness",
+    "forPoints": [
+      "Targeted ",
+      "Automatic stabilizers ",
+      "Direct AD"
+    ],
+    "against": "Time lags",
+    "diagram": "AD/AS",
+    "conclude": "C: Crisis tool L: Short: Quick. Long: Rigidities"
+  },
+  {
+    "question": "Growth vs environment",
+    "forPoints": [
+      "Pollution ",
+      "Resource depletion ",
+      "Climate costs"
+    ],
+    "against": "Green growth",
+    "diagram": "Negative externality",
+    "conclude": "C: Must decouple L: Short: Damage. Long: Tech fixes"
+  },
+  {
+    "question": "Corporation tax changes",
+    "forPoints": [
+      "FDI\u2191 ",
+      "Investment\u2191 ",
+      "Growth\u2191"
+    ],
+    "against": "Revenue loss",
+    "diagram": "Laffer Curve",
+    "conclude": "C: Optimal 18-21% L: Short: Buybacks. Long: Capacity\u2191"
+  },
+  {
+    "question": "Monetary policy for inflation",
+    "forPoints": [
+      "Rate transmission ",
+      "Quick ",
+      "Demand control"
+    ],
+    "against": "Cost-push limits",
+    "diagram": "AD/AS",
+    "conclude": "C: Works unless supply shock L: Short: AD\u2193. Long: Stability"
+  },
+  {
+    "question": "Inequality vs mobility",
+    "forPoints": [
+      "Education gaps ",
+      "Poverty traps ",
+      "Opportunity loss"
+    ],
+    "against": "Meritocracy",
+    "diagram": "Lorenz Curve",
+    "conclude": "C: Significant barrier L: Short: Welfare. Long: Talent loss"
+  }
+];
+
+const againstPool = ["Liquidity trap risk", "Demand-pull inflation risk", "Meritocracy", "Environmental damage", "Cost-push limits"];
+const concludePool = ["C: Secondary to price stability L: Short: AD\u2191. Long: Structural bottlenecks", "C: Effective unless zero lower bound L: Short: Consumption\u2191. Long: Debt bubbles", "C: Must decouple L: Short: Damage. Long: Tech fixes", "C: Necessary not sufficient L: Short: Unemployment. Long: Living standards\u2191", "C: Significant barrier L: Short: Welfare. Long: Talent loss"];
+
+let current = 0;
+let playerAnswers = {};
+let totalScore = 0;
+let maxScore = 0;
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  playerAnswers = { for: [], against: "", diagram: "", conclude: "" };
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("nextBtn").style.display = "none";
+
+  document.getElementById("questionBox").innerHTML = `<h3>Q${current + 1}: ${q.question}</h3><p>Select 3 'For' points:</p>`;
+
+  let allFor = [...q.forPoints];
+  while (allFor.length < 5) {
+    const randomQ = questions[Math.floor(Math.random() * questions.length)];
+    const point = randomQ.forPoints[Math.floor(Math.random() * randomQ.forPoints.length)];
+    if (!allFor.includes(point)) allFor.push(point);
+  }
+
+  const forButtons = shuffle(allFor.map(p => `<button data-type="for" data-value="${p}">${p}</button>`)).join('');
+  const againstButtons = shuffle([...new Set([q.against, ...againstPool])].slice(0,5)
+    .map(a => `<button data-type="against" data-value="${a}">${a}</button>`)).join('');
+  const diagramButtons = shuffle([...new Set([q.diagram, ...["Dependency ratio", "AD/AS", "LRAS", "AD/AS (cost-push)", "Negative externality"]])].slice(0,5).map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`)).join('');
+  const concludeButtons = shuffle([...new Set([q.conclude, ...concludePool])].slice(0,5)
+    .map(c => `<button data-type="conclude" data-value="${c}">${c}</button>`)).join('');
+
+  document.getElementById("optionsBox").innerHTML =
+    `<div>${forButtons}</div><hr>
+    <p>Select the 'Against' point:</p><div>${againstButtons}</div><hr>
+    <p>Select the correct diagram:</p><div>${diagramButtons}</div><hr>
+    <p>Select the conclusion:</p><div>${concludeButtons}</div>`;
+
+  document.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const type = btn.dataset.type;
+      const value = btn.dataset.value;
+
+      if (type === "for") {
+        if (playerAnswers.for.includes(value)) return;
+        if (playerAnswers.for.length >= 3) return alert("You can only select 3 'For' points.");
+        playerAnswers.for.push(value);
+        btn.style.backgroundColor = "#cceeff";
+      } else {
+        if (playerAnswers[type]) return;
+        playerAnswers[type] = value;
+        btn.style.backgroundColor = "#cceeff";
+      }
+
+      if (
+        playerAnswers.for.length === 3 &&
+        playerAnswers.against &&
+        playerAnswers.diagram &&
+        playerAnswers.conclude
+      ) {
+        checkAnswer();
+      }
+    });
+  });
+}
+
+function checkAnswer() {
+  const q = questions[current];
+  let score = 0;
+
+  const forCorrect = q.forPoints.every(p => playerAnswers.for.includes(p)) && playerAnswers.for.length === 3;
+
+  document.querySelectorAll("button").forEach(btn => {
+    const type = btn.dataset.type;
+    const val = btn.dataset.value;
+
+    if (type === "for") {
+      if (q.forPoints.includes(val)) {
+        if (playerAnswers.for.includes(val)) {
+          btn.style.backgroundColor = "#b6e7a6";
+        } else {
+          btn.style.border = "2px dashed green";
+        }
+      } else if (playerAnswers.for.includes(val)) {
+        btn.style.backgroundColor = "#f8b6b6";
+      }
+    } else {
+      const correctValue = q[type];
+      if (val === correctValue) {
+        if (playerAnswers[type] === val) {
+          btn.style.backgroundColor = "#b6e7a6";
+        } else {
+          btn.style.border = "2px dashed green";
+        }
+      } else if (playerAnswers[type] === val) {
+        btn.style.backgroundColor = "#f8b6b6";
+      }
+    }
+  });
+
+  if (forCorrect) score += 1;
+  if (playerAnswers.against === q.against) score += 1;
+  if (playerAnswers.diagram === q.diagram) score += 1;
+  if (playerAnswers.conclude === q.conclude) score += 1;
+
+  totalScore += score;
+  maxScore += 4;
+
+  document.getElementById("feedback").textContent = `You got ${score}/4 correct.`;
+  document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    const percent = Math.round((totalScore / maxScore) * 100);
+    document.getElementById("game").innerHTML = `
+      <h3>Well done! You've completed the game.</h3>
+      <p>Your total score: <strong>${totalScore} / ${maxScore}</strong> (${percent}%)</p>
+      <p>${percent >= 80 ? "Excellent work!" : percent >= 60 ? "Nice effort!" : "Keep practicing!"}</p>
+    `;
+    return;
+  }
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

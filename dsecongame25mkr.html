@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQA Economics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .quiz-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .next-btn:hover {
+            background-color: #2980b9;
+        }
+        .score-container {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <h1>AQA Economics Quiz</h1>
+    <div class="quiz-container">
+        <div class="score-container">Score: <span id="score">0</span></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+        
+        <div class="question" id="question"></div>
+        
+        <div class="options" id="options"></div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <button class="next-btn" id="next-btn" disabled>Next Question</button>
+    </div>
+
+  
+                
+    
+  <script>
+const questions = [
+    {
+        question: "Which supply-side policy is most likely to reduce structural unemployment?",
+        options: [
+            "Cutting income tax rates",
+            "Increasing vocational training programs",
+            "Reducing corporation tax",
+            "Quantitative easing"
+        ],
+        correct: 1,
+        explanation: "Vocational training directly addresses skills mismatches that cause structural unemployment (e.g. UK apprenticeships reduced youth unemployment by 8% in 2019)"
+    },
+    {
+        question: "A depreciation of sterling is most likely to cause:",
+        options: [
+            "Improved current account balance in long-run",
+            "Immediate increase in export revenue",
+            "Reduction in imported inflation",
+            "Higher purchasing power for UK tourists abroad"
+        ],
+        correct: 0,
+        explanation: "J-curve effect means initial worsening before improvement (UK trade deficit widened by £4bn post-Brexit vote before recovery)"
+    },
+    {
+        question: "Which best illustrates the opportunity cost of economic growth?",
+        options: [
+            "PPF shifting outward",
+            "Movement along PPC from consumer to capital goods",
+            "AD curve shifting right",
+            "Lorenz curve becoming more equal"
+        ],
+        correct: 1,
+        explanation: "Sacrificing current consumption for investment (e.g. China's 40% investment ratio 2000-2018)"
+    },
+    {
+        question: "The main disadvantage of using fiscal policy to reduce inequality is:",
+        options: [
+            "Time lags in implementation",
+            "Potential work disincentives",
+            "Impact on exchange rates",
+            "Effectiveness during recessions"
+        ],
+        correct: 1,
+        explanation: "High marginal tax rates may reduce labor supply (UK 45% top rate raised £1bn less than forecast in 2023)"
+    },
+    {
+        question: "Which diagram shows the trade-off between unemployment and inflation?",
+        options: [
+            "Laffer Curve",
+            "Phillips Curve",
+            "Lorenz Curve",
+            "AD/AS model"
+        ],
+        correct: 1,
+        explanation: "Short-run Phillips Curve demonstrates inverse relationship (UK 2022: unemployment 3.7% while inflation hit 11%)"
+    },
+    {
+        question: "Globalization has most increased UK:",
+        options: [
+            "Manufacturing employment",
+            "Income equality",
+            "Service sector exports",
+            "Trade union membership"
+        ],
+        correct: 2,
+        explanation: "Financial services exports grew 58% 2010-2022 (London handles 40% of global forex trades)"
+    },
+    {
+        question: "The primary benefit of FDI to developing countries is:",
+        options: [
+            "Increased tax revenue",
+            "Technology transfer",
+            "Short-term employment",
+            "Political stability"
+        ],
+        correct: 1,
+        explanation: "Spillover effects more valuable than direct benefits (e.g. Vietnam's tech sector grew 18% annually after Intel's $1bn investment)"
+    },
+    {
+        question: "Which would most reduce the natural rate of unemployment?",
+        options: [
+            "Expansionary monetary policy",
+            "Improved job matching technology",
+            "Higher minimum wage",
+            "Reduced immigration"
+        ],
+        correct: 1,
+        explanation: "Reduces frictional unemployment (UK's 'Universal Jobmatch' reduced vacancies duration by 13 days)"
+    },
+    {
+        question: "The main advantage of monetary policy over fiscal policy is:",
+        options: [
+            "More targeted impact",
+            "Faster implementation",
+            "Permanent effects",
+            "Political neutrality"
+        ],
+        correct: 1,
+        explanation: "BoE can change rates monthly vs annual budget cycle (2020 COVID response: rates cut within days vs furlough scheme weeks)"
+    },
+    {
+        question: "Current account deficits become problematic when:",
+        options: [
+            "Financed by portfolio investment",
+            "Exceeding 5% of GDP",
+            "Accompanied by inflation",
+            "Currency is depreciating"
+        ],
+        correct: 1,
+        explanation: "IMF considers >5% GDP as 'danger zone' (UK hit 7% in 2022 triggering sterling crisis)"
+    },
+    {
+        question: "Which best explains UK productivity stagnation since 2008?",
+        options: [
+            "Low investment rates",
+            "Excessive regulation",
+            "Skills shortages",
+            "All of the above"
+        ],
+        correct: 3,
+        explanation: "UK investment averaged 17% GDP vs 21% OECD; 20% firms report skills gaps; Brexit added £27bn red tape"
+    },
+    {
+        question: "The Laffer Curve suggests tax cuts may increase revenue when:",
+        options: [
+            "Tax rates are below 50%",
+            "Economy is in recession",
+            "Tax rates are very high",
+            "Inflation is low"
+        ],
+        correct: 2,
+        explanation: "Empirical evidence suggests peak revenue at 60-70% tax rates (UK top rate cut from 50%→45% in 2013 raised 8% more revenue)"
+    },
+    {
+        question: "Which policy would most reduce income inequality?",
+        options: [
+            "Higher VAT",
+            "Universal Basic Income",
+            "Corporate subsidies",
+            "Tariff reductions"
+        ],
+        correct: 1,
+        explanation: "UBI directly redistributes (Finland's trial reduced inequality by 6% while maintaining employment)"
+    },
+    {
+        question: "The main economic problem of an ageing population is:",
+        options: [
+            "Reduced consumption",
+            "Fiscal sustainability",
+            "Lower innovation",
+            "Trade deficits"
+        ],
+        correct: 1,
+        explanation: "UK state pension costs will rise from 5% to 8% GDP by 2040 (OBR forecasts)"
+    },
+    {
+        question: "Which factor has most contributed to UK wage stagnation?",
+        options: [
+            "Globalization",
+            "Automation",
+            "Weak unions",
+            "All of the above"
+        ],
+        correct: 3,
+        explanation: "Real wages grew just 0.2% annually 2008-2022 due to offshoring (lost 1m manufacturing jobs), tech substitution (15% routine jobs automated), and union decline (density fell from 50%→23%)"
+    },
+    {
+        question: "The primary benefit of inflation targeting is:",
+        options: [
+            "Stimulating exports",
+            "Anchoring expectations",
+            "Reducing inequality",
+            "Increasing tax revenue"
+        ],
+        correct: 1,
+        explanation: "BoE's 2% target reduced inflation volatility from ±4% (1980s) to ±1% (post-2000)"
+    },
+    {
+        question: "Which would indicate demand-pull inflation?",
+        options: [
+            "Rising unemployment with inflation",
+            "Falling imports with inflation",
+            "Rising wages with inflation",
+            "Falling productivity with inflation"
+        ],
+        correct: 2,
+        explanation: "Wage-price spiral characteristic (UK 2023: 7% wage growth → 6% services inflation)"
+    },
+    {
+        question: "The most effective policy to reduce youth unemployment would be:",
+        options: [
+            "Higher minimum wage",
+            "Apprenticeship subsidies",
+            "Early retirement incentives",
+            "Import tariffs"
+        ],
+        correct: 1,
+        explanation: "UK youth unemployment fell 35% after apprenticeship levy (though quality concerns remain)"
+    },
+    {
+        question: "Which best measures income inequality?",
+        options: [
+            "Gini coefficient",
+            "Unemployment rate",
+            "Inflation rate",
+            "Productivity growth"
+        ],
+        correct: 0,
+        explanation: "Ranges from 0 (perfect equality) to 1 (perfect inequality); UK = 0.35, Germany = 0.29"
+    },
+    {
+        question: "The main advantage of free trade agreements is:",
+        options: [
+            "Protecting domestic industries",
+            "Reducing structural unemployment",
+            "Exploiting comparative advantage",
+            "Controlling inflation"
+        ],
+        correct: 2,
+        explanation: "UK services productivity 30% higher than EU average makes trade deals beneficial (CPTPP deal adds £2bn annually)"
+    }
+];
+                
+
+        // Game variables
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        // DOM elements
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreEl = document.getElementById('score');
+        const progressBar = document.getElementById('progress');
+
+        // Initialize quiz
+        function initQuiz() {
+            showQuestion();
+            
+            nextBtn.addEventListener('click', () => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                } else {
+                    endQuiz();
+                }
+            });
+        }
+
+        // Display question
+        function showQuestion() {
+            resetState();
+            const question = questions[currentQuestion];
+            
+            questionEl.textContent = question.question;
+            
+            question.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.classList.add('option');
+                optionEl.textContent = option;
+                optionEl.addEventListener('click', () => selectOption(index, question.correct));
+                optionsEl.appendChild(optionEl);
+            });
+            
+            // Update progress
+            progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+        }
+
+        // Reset question state
+        function resetState() {
+            selectedOption = null;
+            feedbackEl.style.display = 'none';
+            feedbackEl.className = 'feedback';
+            nextBtn.disabled = true;
+            
+            while (optionsEl.firstChild) {
+                optionsEl.removeChild(optionsEl.firstChild);
+            }
+        }
+
+        // Handle option selection
+        function selectOption(selectedIndex, correctIndex) {
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.remove('correct', 'incorrect');
+                if (index === correctIndex) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== correctIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.cursor = 'default';
+            });
+            
+            // Show feedback
+            feedbackEl.textContent = questions[currentQuestion].explanation;
+            feedbackEl.style.display = 'block';
+            
+            if (selectedIndex === correctIndex) {
+                feedbackEl.classList.add('correct');
+                score++;
+                scoreEl.textContent = score;
+            } else {
+                feedbackEl.classList.add('incorrect');
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        // End quiz
+        function endQuiz() {
+            questionEl.textContent = `Quiz Complete! Your score: ${score}/${questions.length}`;
+            optionsEl.innerHTML = '';
+            feedbackEl.style.display = 'none';
+            nextBtn.style.display = 'none';
+            progressBar.style.width = '100%';
+        }
+
+        // Start quiz
+        initQuiz();
+    </script>
+</body>
+</html>
