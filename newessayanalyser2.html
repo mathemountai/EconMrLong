@@ -504,12 +504,11 @@ const overallLevel = Math.min(5, Math.max(1, Math.round(overallScore / 5.3)));  
     
     <script>
   window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const essayText = params.get('essay');
+    const essayText = sessionStorage.getItem('uploadedEssay');
     if (essayText) {
-      const decoded = decodeURIComponent(essayText);
-      document.getElementById('essayInput').value = decoded;
-      analyzeEssay(); // Automatically runs your analysis function
+      document.getElementById('essayInput').value = essayText;
+      analyzeEssay(); // Automatically analyze
+      sessionStorage.removeItem('uploadedEssay'); // optional: clean up after use
     }
   };
 </script>
