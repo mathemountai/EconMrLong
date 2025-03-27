@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accounting Match Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .column {
+      width: 45%;
+    }
+    .term, .definition {
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 5px 0;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .selected {
+      background: #cce5ff;
+    }
+    .matched {
+      background: #d4edda;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <h1>Match the Accounting Terms!</h1>
+  <p>Click a term, then click its matching definition.</p>
+  <div class="container">
+    <div class="column" id="terms"></div>
+    <div class="column" id="definitions"></div>
+  </div>
+
+  <script>
+    const pairs = [
+      ["Revenue", "Money earned from selling goods or services."],
+      ["Assets", "Things a business owns, like cash, equipment, or stock."],
+      ["Liabilities", "Money the business owes, like loans or unpaid bills."],
+      ["Net Profit", "What’s left after all costs and expenses are subtracted from revenue."],
+      ["Accrual", "An expense or income recorded before payment or receipt."],
+      ["Prepayment", "Money paid in advance for goods or services."],
+      ["Gross Profit", "Revenue minus the direct cost of goods sold."],
+      ["VAT", "A tax added to most goods and services."],
+      ["Closing Stock", "Unsold goods left at the end of a period."],
+      ["Owner’s Capital", "Money the owner has invested in the business."]
+    ];
+
+    let selectedTerm = null;
+    let selectedDefinition = null;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)];
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const terms = [...pairs.map(p => p[0])];
+    const definitions = [...pairs.map(p => p[1])];
+    shuffle(terms);
+    shuffle(definitions);
+
+    const termCol = document.getElementById('terms');
+    const defCol = document.getElementById('definitions');
+
+    function createItem(text, type) {
+      const div = document.createElement('div');
+      div.classList.add(type);
+      div.textContent = text;
+
+      div.addEventListener('click', function () {
+        if (div.classList.contains('matched')) return;
+
+        if (type === 'term') {
+          if (selectedTerm && selectedTerm !== div) selectedTerm.classList.remove('selected');
+          selectedTerm = div;
+          div.classList.toggle('selected');
+        } else {
+          if (selectedDefinition && selectedDefinition !== div) selectedDefinition.classList.remove('selected');
+          selectedDefinition = div;
+          div.classList.toggle('selected');
+        }
+
+        if (selectedTerm && selectedDefinition) {
+          const termText = selectedTerm.textContent;
+          const defText = selectedDefinition.textContent;
+          const correctDef = pairs.find(p => p[0] === termText)?.[1];
+
+          if (correctDef === defText) {
+            selectedTerm.classList.remove('selected');
+            selectedDefinition.classList.remove('selected');
+            selectedTerm.classList.add('matched');
+            selectedDefinition.classList.add('matched');
+            selectedTerm = null;
+            selectedDefinition = null;
+          } else {
+            setTimeout(() => {
+              selectedTerm.classList.remove('selected');
+              selectedDefinition.classList.remove('selected');
+              selectedTerm = null;
+              selectedDefinition = null;
+            }, 600);
+          }
+        }
+      });
+
+      return div;
+    }
+
+    terms.forEach(term => termCol.appendChild(createItem(term, 'term')));
+    definitions.forEach(def => defCol.appendChild(createItem(def, 'definition')));
+  </script>
+</body>
+</html>
