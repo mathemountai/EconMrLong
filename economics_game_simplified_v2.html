@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,16 @@
     .question-box { margin-bottom: 20px; }
     .options button { display: block; margin: 5px 0; padding: 8px; width: 100%; }
     .feedback { font-weight: bold; margin-top: 10px; }
-    .next-btn { margin-top: 20px; display: none; }
+    .next-btn { 
+      margin-top: 20px; 
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: none; /* Initially hidden */
+    }
   </style>
 </head>
 <body>
@@ -20,7 +28,7 @@
   <div class="question-box" id="questionBox"></div>
   <div class="options" id="optionsBox"></div>
   <div class="feedback" id="feedback"></div>
-  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+  <button class="next-btn" id="nextBtn">Next Question</button>
 </div>
 
 <script>
@@ -33,52 +41,52 @@ const questions = [
       "Attract FDI"
     ],
     "against": "May worsen inequality",
-    "diagram": "LRAS shift",
-    "conclude": "C: Effective if paired with training L: Short-run costs (austerity)"
+    "diagram": "PPF",
+    "conclude": "Effective if paired with training SR: costs (austerity)"
   },
   {
     "question": "Pound depreciation impact",
     "forPoints": [
-      "Export boost (J-curve) ",
+      "Export boost ",
       "Tourism growth ",
       "Import substitution"
     ],
     "against": "Imported inflation",
     "diagram": "AD/AS (cost-push)",
-    "conclude": "C: Net benefit if inflation controlled L: Short: AD\u2191. Long: Competitiveness"
+    "conclude": "Benefit (X-M) SR: J-curve effect (SRAS↑) LR: Competitiveness"
   },
   {
     "question": "Economic growth benefits?",
     "forPoints": [
       "Higher living standards ",
-      "Tax revenue\u2191 ",
-      "Employment\u2191"
+      "Tax revenue↑ ",
+      "Employment↑"
     ],
     "against": "Environmental damage",
-    "diagram": "PPF",
-    "conclude": "C: Beneficial if sustainable L: Short: Consumption\u2191. Long: Climate costs"
+    "diagram": "LRAS",
+    "conclude": "Beneficial if sustainable SR: Consumption↑. LR: Climate costs"
   },
   {
     "question": "Full employment as main goal?",
     "forPoints": [
       "Maximize PPF ",
       "Social benefits ",
-      "Fiscal dividend"
-    ],
+      "Fiscal benefit, Budget deficit↓ "
+  ],
     "against": "Demand-pull inflation risk",
     "diagram": "Phillips Curve",
-    "conclude": "C: Secondary to price stability L: Short: AD\u2191. Long: Structural bottlenecks"
+    "conclude": "Secondary to price stability SR: AD↑. LR: Structural bottlenecks"
   },
   {
     "question": "Interest rate rise impact",
     "forPoints": [
       "Inflation control ",
-      "Strengthen \u00a3 ",
+      "Strengthen £ ",
       "Encourage saving"
     ],
     "against": "Investment decline",
     "diagram": "AD/AS",
-    "conclude": "C: Necessary if inflation > target L: Short: AD\u2193. Long: Stability"
+    "conclude": "Necessary if inflation > target SR: AD↓. LR: Stability"
   },
   {
     "question": "Fiscal policy for inequality?",
@@ -89,7 +97,7 @@ const questions = [
     ],
     "against": "Work disincentives",
     "diagram": "Lorenz Curve",
-    "conclude": "C: Effective but costly L: Short: Redistribution. Long: Dependency"
+    "conclude": "Effective but costly SR: Redistribution. LR: Dependency"
   },
   {
     "question": "Monetary policy for AD?",
@@ -100,7 +108,7 @@ const questions = [
     ],
     "against": "Liquidity trap risk",
     "diagram": "AD/AS + LRAS",
-    "conclude": "C: Effective unless zero lower bound L: Short: Consumption\u2191. Long: Debt bubbles"
+    "conclude": "Effective unless zero lower bound SR: Consumption↑. LR: excess borrowing, price bubbles"
   },
   {
     "question": "Globalisation impact",
@@ -109,9 +117,9 @@ const questions = [
       "Specialisation ",
       "FDI benefits"
     ],
-    "against": "Structural unemployment",
-    "diagram": "PPF",
-    "conclude": "C: Net benefit with mitigation L: Short: Job losses. Long: Efficiency\u2191"
+    "against": "Structural unemployment, deindustrialisation",
+    "diagram": "Trade diagram",
+    "conclude": "Net benefit,  consumer surplus, trade levels higher  SR: Job losses. LR: Efficiency↑"
   },
   {
     "question": "Budget deficit problems?",
@@ -121,52 +129,52 @@ const questions = [
       "Interest costs"
     ],
     "against": "Recession necessity",
-    "diagram": "AD/AS",
-    "conclude": "C: Problematic if >3% GDP L: Short: Stimulus. Long: Debt servicing"
+    "diagram": "AD/AS output gap",
+    "conclude": "Problematic if >3% GDP SR: Stimulus. LR: Debt servicing"
   },
   {
     "question": "Supply-side policies for unemployment",
     "forPoints": [
       "Reduce structural ",
       "Skills matching ",
-      "Mobility\u2191"
+      "Mobility↑"
     ],
     "against": "Time lags",
     "diagram": "LRAS",
-    "conclude": "C: Best for long-term L: Short: Costs. Long: Productivity\u2191"
+    "conclude": "Best for long-term SR: Costs. LR: Productivity↑"
   },
   {
     "question": "Ageing population impact",
     "forPoints": [
-      "Pension costs\u2191 ",
+      "Pension costs↑ ",
       "Labour shortages ",
-      "Healthcare demand\u2191"
+      "Healthcare demand↑"
     ],
     "against": "Silver economy",
-    "diagram": "Dependency ratio",
-    "conclude": "C: Requires reform L: Short: Fiscal drag. Long: Automation"
+    "diagram": "LRAS",
+    "conclude": "Requires reform SR: Fiscal drag. LR: Automation"
   },
   {
     "question": "Current account deficit?",
     "forPoints": [
       "FDI covers ",
-      "Consumption\u2191 ",
-      "Strong \u00a3 signal"
+      "Consumer Surplus↑ ",
+      "Strong £ signal"
     ],
-    "against": "Debt trap",
-    "diagram": "BOP chart",
-    "conclude": "C: Manageable if FDI\u2191 L: Short: Sustainable. Long: Vulnerability"
+    "against": "X<M leakage, budget deficit",
+    "diagram": "AD/AS",
+    "conclude": "Manageable if FDI↑ SR: Sustainable. LR: Vulnerability"
   },
   {
     "question": "Productivity as growth key?",
     "forPoints": [
-      "Wages\u2191 ",
+      "Wages↑ ",
       "Competitiveness ",
       "Inflation control"
     ],
     "against": "Job displacement",
     "diagram": "PPF",
-    "conclude": "C: Necessary not sufficient L: Short: Unemployment. Long: Living standards\u2191"
+    "conclude": "Necessary not sufficient SR: Unemployment. LR: Living standards↑"
   },
   {
     "question": "Government spending impact",
@@ -177,7 +185,7 @@ const questions = [
     ],
     "against": "Crowding out",
     "diagram": "AD/AS",
-    "conclude": "C: Effective in recessions L: Short: Growth\u2191. Long: Debt\u2191"
+    "conclude": "Effective in recessions SR: Growth↑. LR: Debt↑"
   },
   {
     "question": "Inequality vs growth",
@@ -188,7 +196,7 @@ const questions = [
     ],
     "against": "Incentive effect",
     "diagram": "Lorenz Curve",
-    "conclude": "C: Harms inclusive growth L: Short: Poverty\u2193. Long: Innovation?"
+    "conclude": "Harms inclusive growth SR: Poverty↓. LR: Innovation?"
   },
   {
     "question": "FDI in developing nations",
@@ -199,7 +207,7 @@ const questions = [
     ],
     "against": "Exploitation",
     "diagram": "PPF",
-    "conclude": "C: Benefits with regulation L: Short: Sweatshops. Long: Industrialization"
+    "conclude": "Benefits with regulation SR: Sweatshops. LR: Industrialization"
   },
   {
     "question": "Fiscal policy effectiveness",
@@ -210,7 +218,7 @@ const questions = [
     ],
     "against": "Time lags",
     "diagram": "AD/AS",
-    "conclude": "C: Crisis tool L: Short: Quick. Long: Rigidities"
+    "conclude": "Crisis tool SR: Quick. LR: Rigidities"
   },
   {
     "question": "Growth vs environment",
@@ -221,18 +229,18 @@ const questions = [
     ],
     "against": "Green growth",
     "diagram": "Negative externality",
-    "conclude": "C: Must decouple L: Short: Damage. Long: Tech fixes"
+    "conclude": "Must decouple SR: Damage. LR: Tech fixes"
   },
   {
     "question": "Corporation tax changes",
     "forPoints": [
-      "FDI\u2191 ",
-      "Investment\u2191 ",
-      "Growth\u2191"
+      "FDI↑ ",
+      "Investment↑ ",
+      "Growth↑"
     ],
     "against": "Revenue loss",
     "diagram": "Laffer Curve",
-    "conclude": "C: Optimal 18-21% L: Short: Buybacks. Long: Capacity\u2191"
+    "conclude": "Optimal 18-21% SR: Buybacks. LR: Capacity↑"
   },
   {
     "question": "Monetary policy for inflation",
@@ -243,7 +251,7 @@ const questions = [
     ],
     "against": "Cost-push limits",
     "diagram": "AD/AS",
-    "conclude": "C: Works unless supply shock L: Short: AD\u2193. Long: Stability"
+    "conclude": "Works unless supply shock SR: AD↓. LR: Stability"
   },
   {
     "question": "Inequality vs mobility",
@@ -254,12 +262,13 @@ const questions = [
     ],
     "against": "Meritocracy",
     "diagram": "Lorenz Curve",
-    "conclude": "C: Significant barrier L: Short: Welfare. Long: Talent loss"
+    "conclude": "Significant barrier SR: Welfare. LR: Talent loss"
   }
 ];
 
 const againstPool = ["Liquidity trap risk", "Demand-pull inflation risk", "Meritocracy", "Environmental damage", "Cost-push limits"];
-const concludePool = ["C: Secondary to price stability L: Short: AD\u2191. Long: Structural bottlenecks", "C: Effective unless zero lower bound L: Short: Consumption\u2191. Long: Debt bubbles", "C: Must decouple L: Short: Damage. Long: Tech fixes", "C: Necessary not sufficient L: Short: Unemployment. Long: Living standards\u2191", "C: Significant barrier L: Short: Welfare. Long: Talent loss"];
+const concludePool = ["Secondary to price stability SR: AD↑. LR: Structural bottlenecks", "Effective unless zero lower bound SR: Consumption↑. LR: Debt bubbles", "Must decouple SR: Damage. LR: Tech fixes", "Necessary not sufficient SR: Unemployment. LR: Living standards↑", "Significant barrier SR: Welfare. LR: Talent loss"];
+
 
 let current = 0;
 let playerAnswers = {};
@@ -288,7 +297,7 @@ function renderQuestion() {
   const forButtons = shuffle(allFor.map(p => `<button data-type="for" data-value="${p}">${p}</button>`)).join('');
   const againstButtons = shuffle([...new Set([q.against, ...againstPool])].slice(0,5)
     .map(a => `<button data-type="against" data-value="${a}">${a}</button>`)).join('');
-  const diagramButtons = shuffle([...new Set([q.diagram, ...["Dependency ratio", "AD/AS", "LRAS", "AD/AS (cost-push)", "Negative externality"]])].slice(0,5).map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`)).join('');
+  const diagramButtons = shuffle([...new Set([q.diagram, ...["Laffer Curve", "AD/AS Demand", "SRAS", "AD/AS (cost-push)", "Negative externality"]])].slice(0,5).map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`)).join('');
   const concludeButtons = shuffle([...new Set([q.conclude, ...concludePool])].slice(0,5)
     .map(c => `<button data-type="conclude" data-value="${c}">${c}</button>`)).join('');
 
@@ -298,28 +307,35 @@ function renderQuestion() {
     <p>Select the correct diagram:</p><div>${diagramButtons}</div><hr>
     <p>Select the conclusion:</p><div>${concludeButtons}</div>`;
 
-  document.querySelectorAll("button").forEach(btn => {
-    btn.addEventListener("click", function () {
-      const type = btn.dataset.type;
-      const value = btn.dataset.value;
+  document.querySelectorAll("#optionsBox button").forEach(btn => {
+    btn.addEventListener("click", function() {
+      const type = this.dataset.type;
+      const value = this.dataset.value;
 
       if (type === "for") {
-        if (playerAnswers.for.includes(value)) return;
-        if (playerAnswers.for.length >= 3) return alert("You can only select 3 'For' points.");
-        playerAnswers.for.push(value);
-        btn.style.backgroundColor = "#cceeff";
+        if (playerAnswers.for.includes(value)) {
+          playerAnswers.for = playerAnswers.for.filter(v => v !== value);
+          this.style.backgroundColor = "";
+        } else if (playerAnswers.for.length < 3) {
+          playerAnswers.for.push(value);
+          this.style.backgroundColor = "#cceeff";
+        }
       } else {
-        if (playerAnswers[type]) return;
-        playerAnswers[type] = value;
-        btn.style.backgroundColor = "#cceeff";
+        if (playerAnswers[type] === value) {
+          playerAnswers[type] = "";
+          this.style.backgroundColor = "";
+        } else {
+          const prevSelected = document.querySelector(`button[data-type="${type}"][style*="background-color"]`);
+          if (prevSelected) prevSelected.style.backgroundColor = "";
+          playerAnswers[type] = value;
+          this.style.backgroundColor = "#cceeff";
+        }
       }
 
-      if (
-        playerAnswers.for.length === 3 &&
-        playerAnswers.against &&
-        playerAnswers.diagram &&
-        playerAnswers.conclude
-      ) {
+      if (playerAnswers.for.length === 3 && 
+          playerAnswers.against && 
+          playerAnswers.diagram && 
+          playerAnswers.conclude) {
         checkAnswer();
       }
     });
@@ -332,7 +348,7 @@ function checkAnswer() {
 
   const forCorrect = q.forPoints.every(p => playerAnswers.for.includes(p)) && playerAnswers.for.length === 3;
 
-  document.querySelectorAll("button").forEach(btn => {
+  document.querySelectorAll("#optionsBox button").forEach(btn => {
     const type = btn.dataset.type;
     const val = btn.dataset.value;
 
@@ -369,7 +385,7 @@ function checkAnswer() {
   maxScore += 4;
 
   document.getElementById("feedback").textContent = `You got ${score}/4 correct.`;
-  document.getElementById("nextBtn").style.display = "inline-block";
+  document.getElementById("nextBtn").style.display = "block";
 }
 
 function nextQuestion() {
@@ -386,6 +402,8 @@ function nextQuestion() {
   renderQuestion();
 }
 
+// Initialize
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
 renderQuestion();
 </script>
 </body>
