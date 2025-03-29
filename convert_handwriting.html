@@ -47,26 +47,72 @@
     <div class="container">
         <h1>How to Convert a Handwritten Essay to Text</h1>
 
-        <h2>1. Download Pen to Print</h2>
+        <h2>1. Download a Handwriting to text converter </h2>
         <img src="AE120468-7BF6-4447-BBCB-4EDF579F0B52.jpeg" alt="Pen to Print App Icon" width="100">
-        
-        <h2>2. Scan and Convert</h2>
-        <p>Use the <strong>Pen to Print</strong> app to scan a handwritten page and convert it into text.</p>
+        <h2>Scan and Convert</h2>
+        <p>Use a handwriting app. For example,<strong>Pen to Print</strong> is a quality app that will scan multiple handwritten pages and convert it into text.</p>
 
-        <h2>3. Save as a Photo</h2>
-        <p>Once converted, save the page as a photo.</p>
+        <h2>2. Import Pdf Files</h2>
+        <p>If you have converted text in a Pdf,then you can simply upload the pdf file. 
+            </p>
 
-        <h2>4. Extract Text on iOS</h2>
-        <p>On iOS, open the photo, press and hold the text, then select and copy it.</p>
+        <h2>3. Extract Text on iOS</h2>
+        <p>Alternativley save the page as a photo. On iOS, open the photo, press and hold the text, then select and copy it. </p>
 
-        <h2>5. Paste into Notes</h2>
-        <p>Paste the copied text into a note. Repeat this for each page of the essay.</p>
-
-        <h2>6. Clean Up the Text</h2>
-        <p>Delete unnecessary characters from diagrams and remove unwanted line breaks.</p>
-
-        <h2>7. Copy and Paste into the Essay Analyzer</h2>
-        <p>Once the text is cleaned up, copy and paste it into the essay analyzer.</p>
+        <h2>4. Directly, paste into the Leveller </h2>
+        <p>You can paste and delete unnecessary characters from diagrams and remove unwanted line breaks.</p>
+    
     </div>
+    <script>
+  // 1. Create and insert home button
+  const homeBtn = document.createElement('a');
+  homeBtn.href = 'index.html';
+  homeBtn.className = 'home-logo-btn';
+  homeBtn.innerHTML = `
+    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
+  `;
+  
+  // 2. Add to page (top-left corner by default)
+  document.body.prepend(homeBtn);
+  
+  // 3. Auto-close sidebar on mobile if exists
+  homeBtn.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && window.innerWidth <= 992) {
+      sidebar.classList.remove('open');
+    }
+  });
+
+  // 4. Auto-add CSS styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .home-logo-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+      text-decoration: none;
+      color: #2c3e50;
+      transition: all 0.2s ease;
+    }
+    .home-logo-btn:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+    .home-logo-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
 </body>
 </html>
