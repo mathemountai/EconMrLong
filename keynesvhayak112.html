@@ -360,5 +360,56 @@
     // Initial draw and UI update
     updateUI();
   </script>
+  <script>
+  // 1. Create and insert home button
+  const homeBtn = document.createElement('a');
+  homeBtn.href = 'index.html';
+  homeBtn.className = 'home-logo-btn';
+  homeBtn.innerHTML = `
+    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
+  `;
+  
+  // 2. Add to page (top-left corner by default)
+  document.body.prepend(homeBtn);
+  
+  // 3. Auto-close sidebar on mobile if exists
+  homeBtn.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && window.innerWidth <= 992) {
+      sidebar.classList.remove('open');
+    }
+  });
+
+  // 4. Auto-add CSS styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .home-logo-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+      text-decoration: none;
+      color: #2c3e50;
+      transition: all 0.2s ease;
+    }
+    .home-logo-btn:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+    .home-logo-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
 </body>
 </html>
