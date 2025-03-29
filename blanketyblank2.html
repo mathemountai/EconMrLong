@@ -353,5 +353,40 @@
     // Start the quiz
     getRandomQuestion();
   </script>
+<!-- Paste this once before </body> on every page -->
+<script>
+  // Create and position the logo
+  const homeLogo = document.createElement('a');
+  homeLogo.href = 'index.html';
+  homeLogo.className = 'home-logo';
+  homeLogo.innerHTML = '<img src="icon-192x192.png" alt="Home">';
+  
+  // Add to top-right corner
+  document.body.appendChild(homeLogo);
+  
+  // Add required styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .home-logo {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      transition: transform 0.2s;
+    }
+    .home-logo:hover {
+      transform: scale(1.1);
+    }
+    .home-logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+  
 </body>
 </html>
