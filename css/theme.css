@@ -1,0 +1,56 @@
+
+:root {
+  --radius: 6px;
+  --transition: 0.2s ease;
+}
+
+body[data-theme="dark"] {
+  --bg: #121212;
+  --fg: #f1f1f1;
+  --mid: #333;
+  --highlight: #aaa;
+  --accent: #666;
+}
+
+body[data-theme="bw"] {
+  --bg: #000;
+  --fg: #fff;
+  --mid: #444;
+  --highlight: #ccc;
+  --accent: #888;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--highlight);
+}
+
+.card, .tool-card {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--mid);
+}
+
+.btn {
+  background: var(--mid);
+  color: var(--fg);
+  border: 1px solid var(--accent);
+}
+.btn:hover {
+  background: var(--accent);
+}
+
+.sidebar {
+  background: var(--bg);
+  color: var(--fg);
+  border-right: 1px solid var(--mid);
+}
