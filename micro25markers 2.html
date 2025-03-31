@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AQA Economics Paper 1 – Microeconomics 25-Mark Game</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 20px; }
+    h1, h2, h3 { color: #003366; }
+    .question-box { margin-bottom: 20px; }
+    .options button { display: block; margin: 5px 0; padding: 8px; width: 100%; font-size: 1em; }
+    .feedback { font-weight: bold; margin-top: 10px; }
+    .next-btn { 
+      margin-top: 20px; 
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: none; /* Initially hidden */
+    }
+  </style>
+</head>
+<body>
+  <h1>AQA Economics Paper 1 – Microeconomics 25-Mark Game</h1>
+  <div id="game">
+    <div class="question-box" id="questionBox"></div>
+    <div class="options" id="optionsBox"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="nextBtn">Next Question</button>
+  </div>
+  
+  <script>
+    /* 
+       This array contains the microeconomics questions.
+       Each question object includes:
+         - question: the full question text.
+         - forPoints: an array of 3 correct 'For' points.
+         - against: a string (joining the three bullet points with semicolons).
+         - diagram: the correct diagram.
+         - conclude: the correct CLASP (here given as "conclude").
+    */
+    const questions = [
+      {
+        "question": "Evaluate whether a windfall tax on energy firms is the most effective way to fund household support, using Extracts C-D. (2023, Section B)",
+        "forPoints": [
+          "Captures abnormal profits (Pigouvian)",
+          "£5bn revenue in UK 2022",
+          "80% investment relief maintains supply"
+        ],
+        "against": "Shell relocated HQ (capital flight); 60% cost pass-through to consumers; Arbitrary 'windfall' definition",
+        "diagram": "Supply shift left + DWL",
+        "conclude": "P: Sunset clause with investment conditions"
+      },
+      {
+        "question": "Evaluate the view that indirect taxes are always more effective than regulation at reducing demerit good consumption. (2023, Section C)",
+        "forPoints": [
+          "Price mechanism preserves choice",
+          "Revenue for health programs",
+          "UK sugar tax → 34% reformulation"
+        ],
+        "against": "Inelastic demand limits effectiveness; Regressive impacts; Black markets (Ireland→NI smuggling)",
+        "diagram": "Tax wedge diagram",
+        "conclude": "P: Hybrid approach (tax + advertising bans)"
+      },
+      {
+        "question": "Using Extracts A-B, evaluate whether a National Living Wage increase to £10/hr would benefit the UK economy. (2022, Section B)",
+        "forPoints": [
+          "Monopsony power reduction",
+          "2.1m workers gained (2023)",
+          "Productivity gains (efficiency wages)"
+        ],
+        "against": "SME profit margins squeezed; OBR estimates 60k job losses; Regional disparities worsen",
+        "diagram": "Minimum wage diagram",
+        "conclude": "P: Regional wage bands"
+      },
+      {
+        "question": "Evaluate the view that trade unions inevitably cause labour market inefficiencies. (2022, Section C)",
+        "forPoints": [
+          "Counter monopsony exploitation",
+          "Costco: $24/hr vs. Walmart $14",
+          "German co-determination model"
+        ],
+        "against": "2022 rail strikes cost £1bn; Wage-price spirals risk; Rigidities hinder innovation",
+        "diagram": "Union wage above equilibrium",
+        "conclude": "P: Essential services strike bans"
+      },
+      {
+        "question": "Evaluate the microeconomic effects of plastic packaging taxes using Extracts B-C. (2021, Section B)",
+        "forPoints": [
+          "Internalizes externality (4p/unit)",
+          "UK recycling rates ↑12%",
+          "Spurs innovation (bioplastics)"
+        ],
+        "against": "15% cost pass-through to consumers; Export loopholes remain; Admin costs = 8% revenue",
+        "diagram": "Negative externality diagram",
+        "conclude": "P: Global treaty alignment"
+      },
+      {
+        "question": "Evaluate whether state provision is always superior to private provision of public goods. (2021, Section C)",
+        "forPoints": [
+          "Free-rider prevention",
+          "NHS achieves 18% cost efficiency",
+          "Equity in access"
+        ],
+        "against": "Bureaucratic inefficiency; Underinvestment (UK road repairs); Political interference",
+        "diagram": "Public goods diagram",
+        "conclude": "P: PPPs with strict regulation"
+      },
+      {
+        "question": "Evaluate if pollution permits outperform carbon taxes in reducing emissions. (2018, Section C)",
+        "forPoints": [
+          "Certain quantity outcome",
+          "EU ETS cut emissions 29%",
+          "Market incentives for tech"
+        ],
+        "against": "Price volatility (€5→€90/ton); Lobbying for free allocations; Monitoring costs",
+        "diagram": "Permit market diagram",
+        "conclude": "P: Price floor + ceiling hybrid"
+      },
+      {
+        "question": "Evaluate the impact of fatty food taxes using Extracts A-C. (2015, Section B)",
+        "forPoints": [
+          "Hungary obesity ↓7% post-tax",
+          "Cross-elasticity with healthy foods",
+          "Funds preventive healthcare"
+        ],
+        "against": "Demand inelastic (-0.15); Border shopping (Denmark→Germany); Industry job losses",
+        "diagram": "Tax burden analysis",
+        "conclude": "P: Subsidize vegetables simultaneously"
+      }
+    ];
+
+    // Game state variables
+    let current = 0;
+    let playerAnswers = {};
+    let totalScore = 0;
+    let maxScore = 0;
+
+    // Shuffle utility
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    // Render the current question and its options
+    function renderQuestion() {
+      const q = questions[current];
+      playerAnswers = { for: [], against: "", diagram: "", conclude: "" };
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("questionBox").innerHTML = `<h3>${q.question}</h3><p>Select 3 'For' points:</p>`;
+      
+      // For options: include the correct ones plus a few distractors from other questions
+      let forOptions = [...q.forPoints];
+      while (forOptions.length < 5) {
+        const randomQ = questions[Math.floor(Math.random() * questions.length)];
+        const candidate = randomQ.forPoints[Math.floor(Math.random() * randomQ.forPoints.length)];
+        if (!forOptions.includes(candidate)) {
+          forOptions.push(candidate);
+        }
+      }
+      forOptions = shuffle(forOptions);
+      const forHTML = forOptions.map(p => `<button data-type="for" data-value="${p}">${p}</button>`).join('');
+      
+      // Against options: combine the correct answer with distractors
+      let againstOptions = [q.against];
+      while (againstOptions.length < 5) {
+        const randomQ = questions[Math.floor(Math.random() * questions.length)];
+        const candidate = randomQ.against;
+        if (!againstOptions.includes(candidate)) {
+          againstOptions.push(candidate);
+        }
+      }
+      againstOptions = shuffle(againstOptions);
+      const againstHTML = againstOptions.map(a => `<button data-type="against" data-value="${a}">${a}</button>`).join('');
+      
+      // Diagram options
+      let diagramOptions = [q.diagram];
+      while (diagramOptions.length < 5) {
+        const randomQ = questions[Math.floor(Math.random() * questions.length)];
+        const candidate = randomQ.diagram;
+        if (!diagramOptions.includes(candidate)) {
+          diagramOptions.push(candidate);
+        }
+      }
+      diagramOptions = shuffle(diagramOptions);
+      const diagramHTML = diagramOptions.map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`).join('');
+      
+      // Conclude options (CLASP)
+      let concludeOptions = [q.conclude];
+      while (concludeOptions.length < 5) {
+        const randomQ = questions[Math.floor(Math.random() * questions.length)];
+        const candidate = randomQ.conclude;
+        if (!concludeOptions.includes(candidate)) {
+          concludeOptions.push(candidate);
+        }
+      }
+      concludeOptions = shuffle(concludeOptions);
+      const concludeHTML = concludeOptions.map(c => `<button data-type="conclude" data-value="${c}">${c}</button>`).join('');
+      
+      // Build the options display
+      document.getElementById("optionsBox").innerHTML = `
+        <div>${forHTML}</div><hr>
+        <p>Select the 'Against' point:</p><div>${againstHTML}</div><hr>
+        <p>Select the correct diagram:</p><div>${diagramHTML}</div><hr>
+        <p>Select the conclusion:</p><div>${concludeHTML}</div>
+      `;
+      
+      // Add event listeners to buttons
+      document.querySelectorAll("#optionsBox button").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const type = this.dataset.type;
+          const value = this.dataset.value;
+          if (type === "for") {
+            if (playerAnswers.for.includes(value)) {
+              playerAnswers.for = playerAnswers.for.filter(v => v !== value);
+              this.style.backgroundColor = "";
+            } else if (playerAnswers.for.length < 3) {
+              playerAnswers.for.push(value);
+              this.style.backgroundColor = "#cceeff";
+            }
+          } else {
+            if (playerAnswers[type] === value) {
+              playerAnswers[type] = "";
+              this.style.backgroundColor = "";
+            } else {
+              document.querySelectorAll(`button[data-type="${type}"]`).forEach(b => b.style.backgroundColor = "");
+              playerAnswers[type] = value;
+              this.style.backgroundColor = "#cceeff";
+            }
+          }
+          if (playerAnswers.for.length === 3 && playerAnswers.against && playerAnswers.diagram && playerAnswers.conclude) {
+            checkAnswer();
+          }
+        });
+      });
+    }
+
+    // Check the player's answers against the correct ones with feedback coloring
+    function checkAnswer() {
+      const q = questions[current];
+      let score = 0;
+      const feedbackDiv = document.getElementById("feedback");
+      feedbackDiv.innerHTML = "";
+
+      // Check 'For' answers
+      q.forPoints.forEach(correct => {
+        document.querySelectorAll('button[data-type="for"]').forEach(btn => {
+          if (btn.dataset.value === correct) {
+            btn.style.backgroundColor = playerAnswers.for.includes(correct) ? "#a3e4a3" : "#d4f7d4";
+          } else if (playerAnswers.for.includes(btn.dataset.value)) {
+            btn.style.backgroundColor = "#f8b8b8";
+          }
+        });
+      });
+      const forCorrect = q.forPoints.every(p => playerAnswers.for.includes(p)) && playerAnswers.for.length === 3;
+      if (forCorrect) score++;
+      feedbackDiv.innerHTML += `<p>'For' points: ${forCorrect ? "Correct" : "Incorrect"}</p>`;
+
+      // Check 'Against' answer
+      document.querySelectorAll('button[data-type="against"]').forEach(btn => {
+        if (btn.dataset.value === q.against) {
+          btn.style.backgroundColor = btn.dataset.value === playerAnswers.against ? "#a3e4a3" : "#d4f7d4";
+        } else if (btn.dataset.value === playerAnswers.against) {
+          btn.style.backgroundColor = "#f8b8b8";
+        }
+      });
+      const againstCorrect = playerAnswers.against === q.against;
+      if (againstCorrect) score++;
+      feedbackDiv.innerHTML += `<p>'Against' point: ${againstCorrect ? "Correct" : "Incorrect"}</p>`;
+
+      // Check diagram
+      document.querySelectorAll('button[data-type="diagram"]').forEach(btn => {
+        if (btn.dataset.value === q.diagram) {
+          btn.style.backgroundColor = btn.dataset.value === playerAnswers.diagram ? "#a3e4a3" : "#d4f7d4";
+        } else if (btn.dataset.value === playerAnswers.diagram) {
+          btn.style.backgroundColor = "#f8b8b8";
+        }
+      });
+      const diagramCorrect = playerAnswers.diagram === q.diagram;
+      if (diagramCorrect) score++;
+      feedbackDiv.innerHTML += `<p>Diagram: ${diagramCorrect ? "Correct" : "Incorrect"}</p>`;
+
+      // Check conclusion
+      document.querySelectorAll('button[data-type="conclude"]').forEach(btn => {
+        if (btn.dataset.value === q.conclude) {
+          btn.style.backgroundColor = btn.dataset.value === playerAnswers.conclude ? "#a3e4a3" : "#d4f7d4";
+        } else if (btn.dataset.value === playerAnswers.conclude) {
+          btn.style.backgroundColor = "#f8b8b8";
+        }
+      });
+      const concludeCorrect = playerAnswers.conclude === q.conclude;
+      if (concludeCorrect) score++;
+      feedbackDiv.innerHTML += `<p>Conclusion: ${concludeCorrect ? "Correct" : "Incorrect"}</p>`;
+
+      totalScore += score;
+      maxScore += 4;
+      feedbackDiv.innerHTML += `<h4>You got ${score} out of 4 correct for this question.</h4>`;
+      
+      // Disable all option buttons to prevent further changes
+      document.querySelectorAll("#optionsBox button").forEach(btn => {
+        btn.disabled = true;
+      });
+      
+      document.getElementById("nextBtn").style.display = "block";
+    }
+
+    // Move to the next question
+    function nextQuestion() {
+      current++;
+      if (current >= questions.length) {
+        const percent = Math.round((totalScore / maxScore) * 100);
+        document.getElementById("game").innerHTML = `
+          <h2>Game Completed!</h2>
+          <p>Your total score: <strong>${totalScore} / ${maxScore}</strong> (${percent}%)</p>
+          <p>${percent >= 80 ? "Excellent work!" : percent >= 60 ? "Nice effort!" : "Keep practicing!"}</p>
+        `;
+      } else {
+        renderQuestion();
+      }
+    }
+    
+    document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+    window.addEventListener("load", renderQuestion);
+  </script>
+</body>
+</html>
