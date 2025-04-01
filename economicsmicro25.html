@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Economics 25-Mark Essay Planner</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    h2 { color: #003366; }
+    .question-box { margin-bottom: 20px; }
+    .options button {
+      display: block;
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+      text-align: left;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      transition: 0.3s;
+    }
+    .correct {
+      border: 2px dotted green !important;
+      background-color: #eaffea !important;
+    }
+    .incorrect {
+      border: 2px dotted red !important;
+      background-color: #ffecec !important;
+    }
+    .feedback {
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 4px;
+    }
+    .next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+<h2>Economics 25-Mark Question Planner</h2>
+<div id="game">
+  <div class="question-box" id="questionBox"></div>
+  <div class="options" id="optionsBox"></div>
+  <div class="feedback" id="feedback"></div>
+  <button class="next-btn hidden" id="nextBtn">Next Question</button>
+</div>
+<script>
+const questions = [{'question': 'Competition policy and long-run efficiency', 'forPoints': ['Prevents monopoly abuse', 'Encourages dynamic efficiency', 'Deters collusion'], 'against': 'Increased regulation may cause government failure', 'diagram': 'Kinked demand curve (oligopoly)', 'conclude': 'SR: Reduces inefficiency by altering firm behavior. LR: May reduce economies of scale or cause regulatory capture.'}, {'question': 'Labour markets: Monopsony vs Trade Unions', 'forPoints': ['Reduces exploitation', 'Fair wages', 'Increases stability'], 'against': 'Trade unions may raise wages above equilibrium', 'diagram': 'Monopsony with trade union intervention', 'conclude': 'SR: Improves fairness without excessive wage distortion. LR: Balanced power promotes stable wages and efficiency.'}, {'question': 'Privatisation and efficiency', 'forPoints': ['Increased productive efficiency', 'Innovation via dynamic efficiency', 'Reduces X-inefficiency'], 'against': 'Natural monopoly abuse possible', 'diagram': 'Perfect competition vs monopoly', 'conclude': 'SR: Can increase efficiency if competition follows. LR: Without regulation, allocative inefficiency may persist.'}, {'question': 'Broadband as a public good', 'forPoints': ['Merit good aspects', 'Reduces digital inequality', 'Improves labour mobility'], 'against': 'High opportunity cost of provision', 'diagram': 'Public good or positive consumption externalities', 'conclude': 'SR: Boosts access and equity. LR: Efficiency depends on delivery method (e.g. PPP vs direct state control).'}, {'question': 'Government failure and intervention', 'forPoints': ['Information failure', 'Risk of regulatory capture', 'Admin costs'], 'against': 'Corrects key market failures like externalities', 'diagram': 'Government vs market failure diagrams', 'conclude': 'SR: Poorly designed intervention can harm welfare. LR: With review, targeted policy improves outcomes.'}, {'question': 'Reducing inequality: pre-tax vs redistribution', 'forPoints': ['Education and training raise pre-tax income', 'Avoids welfare dependency', 'Improves incentives'], 'against': 'Redistribution via tax and benefits is faster', 'diagram': 'Lorenz curve / Gini before & after', 'conclude': 'SR: Redistribution more immediate. LR: Pre-tax income policies improve equity sustainably.'}, {'question': 'Tech change and perfect competition', 'forPoints': ['Reduces entry barriers', 'Increases contestability', 'Drives down prices'], 'against': 'Network effects and fixed costs may entrench monopolies', 'diagram': 'Perfect competition vs monopoly', 'conclude': 'SR: Disruption lowers prices. LR: Market structure may re-concentrate without regulation.'}, {'question': 'Rational decision-making', 'forPoints': ['Utility maximisation', 'Predictable response to price', 'Classical micro assumptions'], 'against': 'Bounded rationality and cognitive bias', 'diagram': 'Indifference curve or rational consumer choice', 'conclude': 'SR: Rationality useful for models. LR: Behavioural tools needed for real-world relevance.'}, {'question': 'Ownership vs control', 'forPoints': ['Satisficing over profit max', 'Principal-agent conflict', 'Agency costs'], 'against': 'Incentive alignment via performance pay', 'diagram': 'Satisficing (AR=AC); Principal-agent', 'conclude': 'SR: May reduce efficiency. LR: Good governance realigns goals.'}, {'question': 'Regulation and tax of tech monopolies', 'forPoints': ['Reduces monopoly abuse', 'Increases fairness', 'Corrects externalities'], 'against': 'Risk of regulatory failure or innovation loss', 'diagram': 'Monopoly with welfare loss', 'conclude': 'SR: Improves competition and fairness. LR: Overregulation may stifle tech growth.'}, {'question': 'Reducing inequality and welfare', 'forPoints': ['Progressive tax system', 'Welfare safety nets', 'Improves utility of income'], 'against': 'Reduces work incentives if poorly targeted', 'diagram': 'Gini coefficient / tax-benefit system', 'conclude': 'SR: Increases equity and welfare. LR: Policy design must avoid efficiency loss.'}, {'question': 'Is price discrimination always damaging?', 'forPoints': ['Reduces consumer surplus', 'May create inequity', 'Output restrictions'], 'against': 'Can fund innovation and lower-income access', 'diagram': '3rd degree price discrimination', 'conclude': 'SR: Discriminatory pricing may benefit some consumers. LR: Overall effect depends on output and competition.'}, {'question': 'Regulation vs taxation for air pollution', 'forPoints': ['Regulation ensures compliance', 'Avoids underestimation from firms', 'Legal limits provide certainty'], 'against': 'Taxation uses price mechanism; Encourages innovation', 'diagram': 'Negative externalities: regulation vs taxation', 'conclude': 'SR: Regulation enforces quick reduction. LR: Market methods may yield dynamic efficiency and innovation.'}, {'question': 'Wealth vs income inequality', 'forPoints': ['Limits mobility', 'Generates passive income', 'Distorts political power'], 'against': 'Income inequality affects daily living standards and incentives', 'diagram': 'Lorenz curve (wealth vs income)', 'conclude': 'SR: Income inequality has more immediate impact. LR: Wealth inequality worsens over time without intervention.'}, {'question': 'Low profits and inefficiency', 'forPoints': ['Signals lack of cost control', 'X-inefficiency', 'Weak innovation'], 'against': 'May reflect CSR or strategic reinvestment', 'diagram': 'Cost curves; Satisficing model', 'conclude': 'SR: Temporary low profits may not mean failure. LR: Persistently low profits may reflect inefficiency.'}, {'question': 'Regulation in monopolistic competition', 'forPoints': ['Low barriers to entry', 'Contestability keeps firms efficient', 'Non-price competition strong'], 'against': 'Excess capacity and inefficiency may remain', 'diagram': 'Monopolistic competition (SR and LR)', 'conclude': 'SR: Some inefficiency may persist. LR: Entry erodes supernormal profit; regulation may not be needed.'}, {'question': 'Solving poverty via market forces', 'forPoints': ['Flexibility boosts employment', 'Competition lowers prices', 'Entrepreneurship creates jobs'], 'against': 'Market failure in education/healthcare', 'diagram': 'Labour market supply and demand', 'conclude': 'SR: Markets improve access to income. LR: State support needed to address root causes.'}, {'question': 'Taxing unhealthy food/drink', 'forPoints': ['Corrects negative externalities', 'Raises revenue', 'Reduces consumption'], 'against': 'Inelastic demand; regressive effects', 'diagram': 'Negative consumption externalities', 'conclude': 'SR: Taxes reduce demand. LR: Best combined with subsidies and education for health outcomes.'}, {'question': 'Price discrimination and supplier benefit', 'forPoints': ['Raises producer surplus', 'Funds R&D', 'Exploits inelastic consumers'], 'against': 'Some consumers benefit (e.g. students)', 'diagram': '3rd degree price discrimination', 'conclude': 'SR: Mainly benefits producers. LR: May enable lower access prices and innovation.'}, {'question': 'Behavioural vs traditional diet policies', 'forPoints': ['Nudges overcome irrationality', 'Lower cost', 'Subtle and effective'], 'against': 'May be too weak if demand is inelastic', 'diagram': 'Negative externalities; Behavioural nudges', 'conclude': 'SR: Nudges improve welfare cost-effectively. LR: Must be combined with traditional tools for impact.'}, {'question': 'Road pricing and congestion', 'forPoints': ['Internalises external costs', 'Reduces demand at peak', 'Revenue for public transport'], 'against': 'Regressive impact on low-income commuters', 'diagram': 'Negative externality of consumption (congestion)', 'conclude': 'SR: Pricing manages demand. LR: Invested revenue can shift transport behaviour sustainably.'}];
+
+
+let current = 0;
+let playerAnswers = {};
+let totalScore = 0;
+let maxScore = 0;
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  playerAnswers = { for: [], against: "", diagram: "", conclude: "" };
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  document.getElementById("questionBox").innerHTML = `<h3>Q${current + 1}: ${q.question}</h3><p>Select 3 'For' points:</p>`;
+
+  let allFor = [...q.forPoints];
+  while (allFor.length < 5) {
+    const randomQ = questions[Math.floor(Math.random() * questions.length)];
+    const point = randomQ.forPoints[Math.floor(Math.random() * randomQ.forPoints.length)];
+    if (!allFor.includes(point)) allFor.push(point);
+  }
+
+  let againstPool = questions.map(q => q.against);
+  
+    let allAgainst = [q.against];
+    while (allAgainst.length < 5) {
+      const opt = againstPool[Math.floor(Math.random() * againstPool.length)];
+      if (!allAgainst.includes(opt)) allAgainst.push(opt);
+    }
+    allAgainst = shuffle(allAgainst);
+    
+
+  let diagramPool = questions.map(q => q.diagram);
+  
+    let allDiagrams = [q.diagram];
+    while (allDiagrams.length < 5) {
+      const opt = diagramPool[Math.floor(Math.random() * diagramPool.length)];
+      if (!allDiagrams.includes(opt)) allDiagrams.push(opt);
+    }
+    allDiagrams = shuffle(allDiagrams);
+    
+
+  let concludePool = questions.map(q => q.conclude);
+  
+    let allConclude = [q.conclude];
+    while (allConclude.length < 5) {
+      const opt = concludePool[Math.floor(Math.random() * concludePool.length)];
+      if (!allConclude.includes(opt)) allConclude.push(opt);
+    }
+    allConclude = shuffle(allConclude);
+    
+
+  const forButtons = shuffle([...allFor].slice(0, 5))
+    .map(p => `<button data-type="for" data-value="${p}">${p}</button>`).join('');
+  const againstButtons = allAgainst.map(a => `<button data-type="against" data-value="${a}">${a}</button>`).join('');
+  const diagramButtons = allDiagrams.map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`).join('');
+  const concludeButtons = allConclude.map(c => `<button data-type="conclude" data-value="${c}">${c}</button>`).join('');
+
+  document.getElementById("optionsBox").innerHTML =
+    `<div>${forButtons}</div><hr>
+    <p>Select the 'Against' point:</p><div>${againstButtons}</div><hr>
+    <p>Select the correct diagram:</p><div>${diagramButtons}</div><hr>
+    <p>Select the conclusion:</p><div>${concludeButtons}</div>`;
+
+  document.querySelectorAll("#optionsBox button").forEach(btn => {
+    btn.addEventListener("click", function() {
+      const type = this.dataset.type;
+      const value = this.dataset.value;
+
+      if (type === "for") {
+        if (playerAnswers.for.includes(value)) {
+          playerAnswers.for = playerAnswers.for.filter(v => v !== value);
+          this.style.backgroundColor = "";
+        } else if (playerAnswers.for.length < 3) {
+          playerAnswers.for.push(value);
+          this.style.backgroundColor = "#cceeff";
+        }
+      } else {
+        if (playerAnswers[type] === value) {
+          playerAnswers[type] = "";
+          this.style.backgroundColor = "";
+        } else {
+          document.querySelectorAll(`button[data-type="${type}"]`).forEach(b => b.style.backgroundColor = "");
+          playerAnswers[type] = value;
+          this.style.backgroundColor = "#cceeff";
+        }
+      }
+
+      if (playerAnswers.for.length === 3 && playerAnswers.against && playerAnswers.diagram && playerAnswers.conclude) {
+        checkAnswer();
+      }
+    });
+  });
+}
+
+function checkAnswer() {
+  const q = questions[current];
+  let score = 0;
+  let feedback = [];
+
+  const forCorrect = q.forPoints.every(p => playerAnswers.for.includes(p));
+  if (forCorrect) score += 1;
+  if (playerAnswers.against === q.against) score += 1;
+  if (playerAnswers.diagram === q.diagram) score += 1;
+  if (playerAnswers.conclude === q.conclude) score += 1;
+
+  totalScore += score;
+  maxScore += 4;
+
+  feedback.push(`You got ${score}/4 points correct.`);
+  if (!forCorrect) feedback.push(`Correct 'For' points: ${q.forPoints.join(', ')}`);
+  if (playerAnswers.against !== q.against) feedback.push(`Correct 'Against': ${q.against}`);
+  if (playerAnswers.diagram !== q.diagram) feedback.push(`Correct diagram: ${q.diagram}`);
+  if (playerAnswers.conclude !== q.conclude) feedback.push(`Correct conclusion: ${q.conclude}`);
+
+  
+    
+    document.getElementById("feedback").innerHTML = feedback.join('<br>');
+
+    document.querySelectorAll("#optionsBox button").forEach(btn => {
+      const type = btn.dataset.type;
+      const val = btn.dataset.value;
+
+      const isCorrect =
+        (type === "for" && q.forPoints.includes(val)) ||
+        (type === "against" && val === q.against) ||
+        (type === "diagram" && val === q.diagram) ||
+        (type === "conclude" && val === q.conclude);
+
+      const isSelected =
+        (type === "for" && playerAnswers.for.includes(val)) ||
+        (type !== "for" && playerAnswers[type] === val);
+
+      if (isCorrect) {
+        btn.classList.add("correct");
+      }
+      if (isSelected && !isCorrect) {
+        btn.classList.add("incorrect");
+      }
+    });
+    
+
+    document.querySelectorAll("#optionsBox button").forEach(btn => {
+      const type = btn.dataset.type;
+      const val = btn.dataset.value;
+
+      // Correct selections
+      if ((type === "for" && q.forPoints.includes(val)) ||
+          (type === "against" && val === q.against) ||
+          (type === "diagram" && val === q.diagram) ||
+          (type === "conclude" && val === q.conclude)) {
+        btn.classList.add("correct");
+      }
+
+      // Incorrect selections made by user
+      if ((type === "for" && playerAnswers.for.includes(val) && !q.forPoints.includes(val)) ||
+          (type !== "for" && playerAnswers[type] === val && val !== q[type])) {
+        btn.classList.add("incorrect");
+      }
+    });
+    
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    const percent = Math.round((totalScore / maxScore) * 100);
+    document.getElementById("game").innerHTML = `
+      <h3>Well done! You've completed the game.</h3>
+      <p>Your total score: <strong>${totalScore} / ${maxScore}</strong> (${percent}%)</p>
+      <p>${percent >= 80 ? "Excellent work!" : percent >= 60 ? "Nice effort!" : "Keep practicing!"}</p>
+      <button class="next-btn" onclick="location.reload()">Play Again</button>
+    `;
+    return;
+  }
+  renderQuestion();
+}
+
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+renderQuestion();
+
+</script>
+</body>
+</html>
