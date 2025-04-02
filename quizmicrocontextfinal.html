@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQA Economics Quiz</title>
+  <!-- Google Font for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .quiz-container {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .score-container {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 10px;
+      background-color: #4CAF50;
+      border-radius: 5px;
+      width: 0%;
+    }
+    .question {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .option {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .option:hover {
+      background-color: #f0f0f0;
+    }
+    .option.correct {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+    .option.incorrect {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+    .feedback {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .feedback.correct {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .feedback.incorrect {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .next-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    .next-btn:hover {
+      background-color: #2980b9;
+    }
+    /* Home logo button */
+    .home-logo-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+      text-decoration: none;
+      color: #2c3e50;
+      transition: all 0.2s ease;
+    }
+    .home-logo-btn:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+    .home-logo-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Home button with logo -->
+  <a href="index.html" class="home-logo-btn">
+    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
+  </a>
+  <h1>AQA Economics Quiz</h1>
+  <div class="quiz-container">
+    <div class="score-container">Score: <span id="score">0</span></div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn" disabled>Next Question</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Utility function to shuffle an array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Define questions (20 microeconomic questions with contextual explanations)
+      const questions = [
+        {
+          question: "What is the primary purpose of competition policy in markets?",
+          options: [
+            "To guarantee all firms make supernormal profits",
+            "To prevent monopoly abuse and promote efficiency",
+            "To ensure prices never change",
+            "To eliminate all forms of government intervention"
+          ],
+          correctAnswer: "To prevent monopoly abuse and promote efficiency",
+          explanation: "Example: When the EU fined Google €4.34 billion in 2018 for anti-competitive Android practices and the UK blocked Microsoft's acquisition of Activision over cloud gaming concerns in 2023, competition policy was used to maintain dynamic efficiency."
+        },
+        {
+          question: "In a monopsony labor market, what characteristic distinguishes it from perfect competition?",
+          options: [
+            "Many buyers and sellers of labor",
+            "A single buyer of labor with wage‑setting power",
+            "Workers have complete control over wages",
+            "Identical wages across all industries"
+          ],
+          correctAnswer: "A single buyer of labor with wage‑setting power",
+          explanation: "Example: Amazon warehouses in small towns often act as monopsonies. In one case, a warehouse paid $15/hour when the local average was $12—well below the competitive level suggested by economic models."
+        },
+        {
+          question: "What is the most likely outcome when a natural monopoly is privatized without regulation?",
+          options: [
+            "Immediate perfect competition emerges",
+            "Fares rise significantly above inflation while service quality declines",
+            "The monopoly automatically dissolves",
+            "There are guaranteed efficiency gains"
+          ],
+          correctAnswer: "Fares rise significantly above inflation while service quality declines",
+          explanation: "Example: When UK railways were privatized in the 1990s without proper regulation, some routes experienced fares rising 30% above inflation while service quality declined. Regulated privatizations such as Thames Water avoided these issues."
+        },
+        {
+          question: "Which statement best describes the economic rationale for treating broadband as a public good?",
+          options: [
+            "It has zero opportunity cost of provision",
+            "Its benefits extend beyond direct consumers (positive externalities)",
+            "It perfectly fits the non‑excludable and non‑rival definitions",
+            "Private markets always underprovide it due to free rider problems"
+          ],
+          correctAnswer: "Its benefits extend beyond direct consumers (positive externalities)",
+          explanation: "Example: South Korea's heavy broadband investment (achieving 95% coverage) boosted GDP growth by 1.4% annually through telemedicine, remote education, and SME participation; in the UK, the Gigabit Broadband Voucher Scheme subsidizes rural connectivity."
+        },
+        {
+          question: "What is the fundamental difference between wealth and income inequality?",
+          options: [
+            "Wealth measures annual earnings while income measures assets",
+            "Income is a flow variable while wealth is a stock variable",
+            "Only wealth inequality affects living standards",
+            "Governments can only redistribute income, not wealth"
+          ],
+          correctAnswer: "Income is a flow variable while wealth is a stock variable",
+          explanation: "Example: Elon Musk’s case (with over $200B in assets and a $0 salary) illustrates the stock‑flow distinction. In the UK, the top 10% own 43% of wealth despite narrower income differences."
+        },
+        {
+          question: "What is the primary economic justification for government intervention in markets with negative externalities?",
+          options: [
+            "To increase producer surplus",
+            "To internalize the external costs of traffic, pollution, and delays",
+            "To guarantee firms make normal profits",
+            "To eliminate all consumer surplus"
+          ],
+          correctAnswer: "To internalize the external costs of traffic, pollution, and delays",
+          explanation: "Example: London's £15 Congestion Charge forces drivers to bear the social costs of congestion and pollution. Similarly, cigarette taxes help cover healthcare costs, and the EU’s carbon pricing reduced emissions by 21% since 2005."
+        },
+        {
+          question: "In the context of price discrimination, which condition must hold for it to be effective?",
+          options: [
+            "Identical price elasticity of demand across all consumers",
+            "Resale must be prevented between consumer groups",
+            "A perfectly competitive market structure",
+            "Government‑set price ceilings"
+          ],
+          correctAnswer: "Resale must be prevented between consumer groups",
+          explanation: "Example: Student discounts work because resale is prevented—a 40‑year‑old cannot use a student ID to buy discounted tickets for resale. Airlines and Apple use similar measures to maintain pricing differences."
+        },
+        {
+          question: "What best explains the concept of X‑inefficiency in firms?",
+          options: [
+            "Producing at a point inside the production possibility frontier",
+            "Failure to minimize costs at a given output level",
+            "Choosing an inappropriate production technology",
+            "Operating on the wrong scale of production"
+          ],
+          correctAnswer: "Failure to minimize costs at a given output level",
+          explanation: "Example: British Rail pre‑privatization incurred 30% higher staff costs per km than European peers due to bureaucratic slack, while Toyota's 'kaizen' approach enabled its NUMMI plant to be twice as productive as a comparable GM operation."
+        },
+        {
+          question: "Which statement accurately describes the principal‑agent problem?",
+          options: [
+            "Consumers always know more than producers about product quality",
+            "Managers may pursue personal goals rather than shareholder interests",
+            "Government regulators always act in the public interest",
+            "Workers have perfect information about their productivity"
+          ],
+          correctAnswer: "Managers may pursue personal goals rather than shareholder interests",
+          explanation: "Example: Wells Fargo’s 2016 scandal and Boeing’s 737 MAX issues both illustrate how managers (agents) can have incentives that conflict with the interests of shareholders (principals)."
+        },
+        {
+          question: "What is the key characteristic that distinguishes oligopoly from other market structures?",
+          options: [
+            "Many small firms producing identical products",
+            "Interdependence in decision‑making",
+            "Complete freedom of entry and exit",
+            "Perfect information among all market participants"
+          ],
+          correctAnswer: "Interdependence in decision‑making",
+          explanation: "Example: The UK supermarket sector shows interdependence – when Tesco launched 'Price Promise,' competitors quickly adjusted their strategies. Similar patterns occur in aviation and among OPEC members."
+        },
+        {
+          question: "In third‑degree price discrimination, how do firms maximize profits?",
+          options: [
+            "By charging the same price to all customers",
+            "By charging different prices based on demand elasticity",
+            "By offering discounts only on bulk purchases",
+            "By setting prices solely according to production cost"
+          ],
+          correctAnswer: "By charging different prices based on demand elasticity",
+          explanation: "Example: Pharmaceutical companies charge significantly higher prices in one market (e.g., £10,000 for cancer drugs in the UK) compared to another (e.g., £100 in India), reflecting differences in consumers’ price sensitivity."
+        },
+        {
+          question: "What is the most likely effect of a minimum wage set above equilibrium in a competitive labor market?",
+          options: [
+            "Unemployment falls for all workers",
+            "Wages adjust to maintain full employment",
+            "Youth unemployment rises while adult employment grows",
+            "There is no impact on employment levels"
+          ],
+          correctAnswer: "Youth unemployment rises while adult employment grows",
+          explanation: "Example: When the UK introduced the £7.20 National Living Wage in 2016, youth unemployment increased slightly while adult employment grew—demonstrating differential impacts on various groups."
+        },
+        {
+          question: "Which factor would cause the demand curve for a product to shift to the right?",
+          options: [
+            "A decrease in consumer income",
+            "An increase in consumer preference for the product",
+            "A rise in the price of a complementary good",
+            "Improved product substitutes"
+          ],
+          correctAnswer: "An increase in consumer preference for the product",
+          explanation: "Example: When Beyond Meat entered the UK market, Tesco’s beef sales dropped as consumers switched to plant‑based alternatives; similarly, Netflix’s price hikes led to subscriber losses as consumers shifted their preferences."
+        },
+        {
+          question: "What is the key difference between short‑run and long‑run production decisions?",
+          options: [
+            "In the short run, some factors are fixed while in the long run all factors are variable",
+            "The short run involves only variable costs while the long run involves only fixed costs",
+            "Firms do not plan for the long run",
+            "In the long run, firms cannot change production capacity"
+          ],
+          correctAnswer: "In the short run, some factors are fixed while in the long run all factors are variable",
+          explanation: "Example: During COVID, breweries repurposed existing equipment to produce hand sanitizer (a short‑run adjustment), while later building dedicated plants (a long‑run adjustment) demonstrated different planning horizons."
+        },
+        {
+          question: "What does the term 'satisficing' describe in behavioral economics?",
+          options: [
+            "Optimizing to find the absolute best option",
+            "Choosing an option that is 'good enough' rather than perfect",
+            "Always selecting the cheapest alternative",
+            "Following strict, rational decision‑making models"
+          ],
+          correctAnswer: "Choosing an option that is 'good enough' rather than perfect",
+          explanation: "Example: Many shoppers stick with the same cereal brand for years rather than searching for the best deal every time; similarly, small businesses often set a target profit margin (e.g., 10%) instead of continually recalculating the optimal price."
+        },
+        {
+          question: "What is a Pigouvian tax?",
+          options: [
+            "A tax imposed to correct a negative externality",
+            "A subsidy given to firms producing positive externalities",
+            "A tax on luxury goods to redistribute income",
+            "A tariff on imported goods"
+          ],
+          correctAnswer: "A tax imposed to correct a negative externality",
+          explanation: "Example: A carbon tax on fossil fuels forces producers to internalize the environmental damage they cause, thereby encouraging cleaner production methods."
+        },
+        {
+          question: "Which of the following best describes deadweight loss in a market?",
+          options: [
+            "The loss of consumer surplus due to a decrease in supply",
+            "The cost to society from inefficiency when equilibrium is not achieved",
+            "The tax revenue collected by the government",
+            "The increase in producer surplus from market intervention"
+          ],
+          correctAnswer: "The cost to society from inefficiency when equilibrium is not achieved",
+          explanation: "Example: When a tax raises the price of a good, the reduction in quantity sold leads to a loss in total surplus – this lost value is known as deadweight loss."
+        },
+        {
+          question: "What is the primary purpose of a subsidy in microeconomic theory?",
+          options: [
+            "To decrease consumer demand",
+            "To reduce production costs and encourage higher output",
+            "To restrict market entry",
+            "To eliminate externalities"
+          ],
+          correctAnswer: "To reduce production costs and encourage higher output",
+          explanation: "Example: Subsidies to renewable energy companies lower production costs, thereby encouraging increased output and a shift toward cleaner energy alternatives."
+        },
+        {
+          question: "What does price elasticity of demand measure?",
+          options: [
+            "The responsiveness of quantity demanded to a change in price",
+            "The effect of government regulation on market prices",
+            "The change in total revenue due to a change in cost",
+            "The responsiveness of supply to price changes"
+          ],
+          correctAnswer: "The responsiveness of quantity demanded to a change in price",
+          explanation: "Example: If a 10% increase in price leads to a 20% drop in quantity demanded, the elasticity is 2, indicating high sensitivity."
+        },
+        {
+          question: "Which statement best describes consumer surplus?",
+          options: [
+            "The difference between what consumers are willing to pay and what they actually pay",
+            "The extra profit producers earn above their costs",
+            "The total tax revenue collected from consumers",
+            "The difference between total revenue and total cost"
+          ],
+          correctAnswer: "The difference between what consumers are willing to pay and what they actually pay",
+          explanation: "Example: If a consumer is willing to pay $100 for a product but pays only $70, their consumer surplus is $30 – the extra value received from the transaction."
+        }
+      ];
+
+      // Shuffle questions and their options
+      function shuffleQuiz() {
+        shuffleArray(questions);
+        questions.forEach(q => {
+          const correctAnsText = q.correctAnswer;
+          shuffleArray(q.options);
+          q.correct = q.options.findIndex(opt => opt === correctAnsText);
+        });
+      }
+      
+      shuffleQuiz();
+
+      // DOM elements
+      const questionEl = document.getElementById('question');
+      const optionsEl = document.getElementById('options');
+      const feedbackEl = document.getElementById('feedback');
+      const nextBtn = document.getElementById('next-btn');
+      const scoreEl = document.getElementById('score');
+      const progressBar = document.getElementById('progress');
+
+      let currentQuestion = 0;
+      let score = 0;
+
+      // Display current question
+      function showQuestion() {
+        resetState();
+        const question = questions[currentQuestion];
+        questionEl.textContent = question.question;
+        question.options.forEach((option, index) => {
+          const optionEl = document.createElement('div');
+          optionEl.classList.add('option');
+          optionEl.textContent = option;
+          optionEl.addEventListener('click', () => selectOption(index, question.correct));
+          optionsEl.appendChild(optionEl);
+        });
+        // Update progress bar
+        progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+      }
+
+      // Reset state for new question
+      function resetState() {
+        feedbackEl.style.display = 'none';
+        feedbackEl.className = 'feedback';
+        nextBtn.disabled = true;
+        while (optionsEl.firstChild) {
+          optionsEl.removeChild(optionsEl.firstChild);
+        }
+      }
+
+      // Handle option selection and display feedback
+      function selectOption(selectedIndex, correctIndex) {
+        const optionDivs = document.querySelectorAll('.option');
+        optionDivs.forEach((option, index) => {
+          option.classList.remove('correct', 'incorrect');
+          option.style.cursor = 'default';
+          if (index === correctIndex) {
+            option.classList.add('correct');
+          } else if (index === selectedIndex && index !== correctIndex) {
+            option.classList.add('incorrect');
+          }
+        });
+        feedbackEl.textContent = questions[currentQuestion].explanation;
+        feedbackEl.style.display = 'block';
+        if (selectedIndex === correctIndex) {
+          feedbackEl.classList.add('correct');
+          score++;
+          scoreEl.textContent = score;
+        } else {
+          feedbackEl.classList.add('incorrect');
+        }
+        nextBtn.disabled = false;
+      }
+
+      // End quiz and show final score
+      function endQuiz() {
+        questionEl.textContent = `Quiz Complete! Your score: ${score} out of ${questions.length}`;
+        optionsEl.innerHTML = '';
+        feedbackEl.style.display = 'none';
+        nextBtn.style.display = 'none';
+        progressBar.style.width = '100%';
+      }
+
+      // Initialize quiz
+      function initQuiz() {
+        showQuestion();
+        nextBtn.addEventListener('click', () => {
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            showQuestion();
+          } else {
+            endQuiz();
+          }
+        });
+      }
+
+      initQuiz();
+    });
+  </script>
+
+  <script>
+    // Insert home button (logo icon)
+    const homeBtn = document.createElement('a');
+    homeBtn.href = 'index.html';
+    homeBtn.className = 'home-logo-btn';
+    homeBtn.innerHTML = `<img src="icon-192x192.png" alt="Home" class="home-logo-img">`;
+    document.body.prepend(homeBtn);
+  </script>
+</body>
+</html>
