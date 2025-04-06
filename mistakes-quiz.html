@@ -245,59 +245,61 @@
         <button class="btn" onclick="resetQuiz()">Reset Quiz</button>
     </div>
 
-    <script>
-        let score = 0;
-        const totalQuestions = 10;
+   <script>
+    let score = 0;
+    const totalQuestions = 10;
 
-        function checkAnswer(qNum, element, correctness) {
-            const feedback = document.getElementById(`fb${qNum}`);
-            const options = element.parentElement.querySelectorAll('.option');
+    function checkAnswer(qNum, element, correctness) {
+        const feedback = document.getElementById(`fb${qNum}`);
+        const options = element.parentElement.querySelectorAll('.option');
 
-            // Disable all options after selection
+        // Disable all options after selection
+        options.forEach(opt => {
+            opt.style.cursor = 'default';
+            opt.onclick = null;
+        });
+
+        // Highlight correct/incorrect
+        if (correctness === 'correct') {
+            element.classList.add('correct');
+            score++;
+        } else {
+            element.classList.add('incorrect');
+            // Highlight the correct answer
             options.forEach(opt => {
-                opt.style.cursor = 'default';
-                opt.onclick = null;
+                if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes("'correct'")) {
+                    opt.classList.add('correct');
+                }
             });
-
-            // Highlight correct/incorrect
-            if (correctness === 'correct') {
-                element.classList.add('correct');
-                score++;
-            } else {
-                element.classList.add('incorrect');
-                // Highlight the correct answer
-                options.forEach(opt => {
-                    if (opt.onclick && opt.onclick.toString().includes('correct')) {
-                        opt.classList.add('correct');
-                    }
-                });
-            }
-
-            // Show feedback
-            feedback.style.display = 'block';
-            updateScore();
         }
 
-        function updateScore() {
-            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${totalQuestions}`;
-        }
+        // Show feedback
+        feedback.style.display = 'block';
+        updateScore();
+    }
 
-        function resetQuiz() {
-            score = 0;
-            const questions = document.querySelectorAll('.question');
-            questions.forEach(q => {
-                const options = q.querySelectorAll('.option');
-                options.forEach(opt => {
-                    opt.classList.remove('correct', 'incorrect');
-                    opt.style.cursor = 'pointer';
-                    opt.onclick = function() {
-                        checkAnswer(q.id.substring(1), this, this.getAttribute('data-correct'));
-                    };
-                });
-                q.querySelector('.feedback').style.display = 'none';
+    function updateScore() {
+        document.getElementById('scoreDisplay').textContent = `Score: ${score}/${totalQuestions}`;
+    }
+
+    function resetQuiz() {
+        score = 0;
+        const questions = document.querySelectorAll('.question');
+        questions.forEach(q => {
+            const options = q.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.cursor = 'pointer';
+                // Restore original onclick handlers
+                const onclickAttr = opt.getAttribute('onclick');
+                if (onclickAttr) {
+                    opt.onclick = new Function(onclickAttr);
+                }
             });
-            updateScore();
-        }
-    </script>
+            q.querySelector('.feedback').style.display = 'none';
+        });
+        updateScore();
+    }
+</script>
 </body>
 </html>
