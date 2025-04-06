@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Mistakes Spotter Quiz | Econ Revision</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .quiz-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #f8fafc;
+        }
+        .options {
+            margin: 10px 0;
+        }
+        .option {
+            margin: 8px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .option:hover {
+            background: #e8f4fc;
+        }
+        .correct {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .incorrect {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .feedback {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .pro-tip {
+            font-style: italic;
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin-top: 15px;
+        }
+        .score {
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .diagram-img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Common Mistakes Spotter Quiz</h1>
+    <p>Identify and fix <strong>10 classic errors</strong> students make in economics exams. Take careful note of the "Exam Pro Tips".</p>
+    
+    <div class="quiz-container">
+        <!-- Question 1 (Existing) -->
+        <div class="question" id="q1">
+            <h3>Question 1: Spot the Error</h3>
+            <p><em>"A depreciation of the pound will reduce inflation because imports become cheaper."</em></p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(1, this, 'correct')">Error: "Reduce inflation" → Correction: "Cause cost-push inflation"</div>
+                <div class="option" onclick="checkAnswer(1, this, 'incorrect')">Error: "Depreciation" → Correction: "Appreciation"</div>
+            </div>
+            <div class="feedback" id="fb1">
+                <strong>Why?</strong> Depreciation makes imports <em>more expensive</em>, leading to cost-push inflation.<br>
+                <div class="pro-tip">Exam Pro Tip: Always specify the transmission mechanism (e.g., "import prices → production costs → inflation").</div>
+            </div>
+        </div>
+
+        <!-- Question 2 (Existing) -->
+        <div class="question" id="q2">
+            <h3>Question 2: Which is Better?</h3>
+            <p>Compare these definitions of GDP:</p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(2, this, 'incorrect')">A) "GDP measures national output."</div>
+                <div class="option" onclick="checkAnswer(2, this, 'correct')">B) "GDP measures the monetary value of all final goods/services produced in a year within an economy."</div>
+            </div>
+            <div class="feedback" id="fb2">
+                <strong>Why?</strong> Option B specifies <em>monetary value</em>, <em>final goods</em>, and <em>time/geographic scope</em>.<br>
+                <div class="pro-tip">Exam Pro Tip: Definitions should be precise enough to distinguish from similar concepts (e.g., GNP).</div>
+            </div>
+        </div>
+
+        <!-- Question 3 (Existing) -->
+        <div class="question" id="q3">
+            <h3>Question 3: Missing Link</h3>
+            <p>Complete this chain of analysis:<br><em>"The government raises tariffs → ? → Unemployment falls."</em></p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(3, this, 'incorrect')">"→ Exports become cheaper"</div>
+                <div class="option" onclick="checkAnswer(3, this, 'correct')">"→ Import demand falls → Domestic firms gain market share → Increased hiring"</div>
+            </div>
+            <div class="feedback" id="fb3">
+                <strong>Why?</strong> Tariffs protect domestic industries, but don't directly affect export prices.<br>
+                <div class="pro-tip">Exam Pro Tip: Chains should have logical cause-effect links—avoid skipping steps!</div>
+            </div>
+        </div>
+
+        <!-- Question 4: Diagram Error -->
+        <div class="question" id="q4">
+            <h3>Question 4: Diagram Critique</h3>
+            <p>What's wrong with this monopoly diagram?</p>
+            <img src="https://mathemountai.github.io/EconMrLong/Images/monopolyerror.jpg" alt="Monopoly diagram with unlabeled axes" class="diagram-img">
+            <div class="options">
+                <div class="option" onclick="checkAnswer(4, this, 'incorrect')">"The MC curve should be steeper."</div>
+                <div class="option" onclick="checkAnswer(4, this, 'correct')">"Axes are unlabeled (e.g., 'Price (£)', 'Quantity')."</div>
+            </div>
+            <div class="feedback" id="fb4">
+                <strong>Why?</strong> Diagrams lose marks without labeled axes and clear units.<br>
+                <div class="pro-tip">Exam Pro Tip: Always label axes, curves, and equilibrium points (e.g., "P<sub>m</sub>").</div>
+            </div>
+        </div>
+
+        <!-- Question 5: Evaluation Pitfall -->
+        <div class="question" id="q5">
+            <h3>Question 5: Evaluation Error</h3>
+            <p><em>"Using interest rates to control inflation is ineffective because it depends on the situation."</em></p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(5, this, 'correct')">"Too vague—specify which situations (e.g., liquidity trap vs. normal conditions)."</div>
+                <div class="option" onclick="checkAnswer(5, this, 'incorrect')">"Correct—evaluation always requires 'it depends'."</div>
+            </div>
+            <div class="feedback" id="fb5">
+                <strong>Why?</strong> Evaluation needs <em>contextualized</em> conditions, not just a blanket statement.<br>
+                <div class="pro-tip">Exam Pro Tip: Use phrases like "This is less effective if..." or "However, in the long run...".</div>
+            </div>
+        </div>
+
+        <!-- Question 6: Elasticity Misconception -->
+        <div class="question" id="q6">
+            <h3>Question 6: Spot the Error</h3>
+            <p><em>"PED is always negative because price and demand are inversely related."</em></p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(6, this, 'correct')">"PED can be positive for Giffen/Veblen goods."</div>
+                <div class="option" onclick="checkAnswer(6, this, 'incorrect')">"PED is negative only for luxury goods."</div>
+            </div>
+            <div class="feedback" id="fb6">
+                <strong>Why?</strong> Exceptions like Giffen goods (or Veblen effects) break the standard rule.<br>
+                <div class="pro-tip">Exam Pro Tip: When making generalizations, note exceptions (e.g., "usually... but...").</div>
+            </div>
+        </div>
+
+        <!-- Question 7: Policy Confusion -->
+        <div class="question" id="q7">
+            <h3>Question 7: Which is Better?</h3>
+            <p>Compare these policy analyses:</p>
+            <div class="options">
+                <div class="option" onclick="checkAnswer(7, this, 'incorrect')">A) "Expansionary fiscal policy will reduce unemployment."</div>
+                <div class="option" onclick="checkAnswer(7, this, 'correct')">B) "Expansionary fiscal policy may reduce cyclical unemployment, but could crowd out private investment if near full capacity."</div>
+            </div>
+            <div class="feedback" id="fb7">
+                <strong>Why?</strong> Option B considers <em>conditions</em> (cyclical vs. structural) and <em>trade-offs</em> (crowding out).<br>
+                <div class="pro-tip">Exam Pro Tip: Use "may" instead of "will" and contrast short-run vs. long-run effects.</div>
+            </div>
+        </div>
+        <!-- Question 8: Multiplier Misapplication -->
+<div class="question" id="q8">
+    <h3>Question 8: Spot the Error</h3>
+    <p><em>"The multiplier is always 1/(1-MPC), so if MPC=0.8, the multiplier is 5."</em></p>
+    <div class="options">
+        <div class="option" onclick="checkAnswer(8, this, 'correct')">Ignores leakages (taxes/imports). Actual formula: 1/(1-MPC(1-t)+m).</div>
+        <div class="option" onclick="checkAnswer(8, this, 'incorrect')">Correct—MPC alone determines the multiplier.</div>
+    </div>
+    <div class="feedback" id="fb8">
+        <strong>Why?</strong> The basic multiplier assumes no taxes/imports. Real-world models account for leakages.<br>
+        <div class="pro-tip">Exam Pro Tip: Always state assumptions when using formulas (e.g., "Assuming a closed economy...").</div>
+    </div>
+</div>
+
+<!-- Question 9: LRAS Shift Misconception -->
+<div class="question" id="q9">
+    <h3>Question 9: Diagram Critique</h3>
+    <p>What's wrong with this statement?<br><em>"Higher demand shifts LRAS to the right."</em></p>
+    <div class="options">
+        <div class="option" onclick="checkAnswer(9, this, 'correct')">LRAS shifts only from supply-side factors (e.g., technology).</div>
+        <div class="option" onclick="checkAnswer(9, this, 'incorrect')">Correct—demand creates supply (Say's Law).</div>
+    </div>
+    <div class="feedback" id="fb9">
+        <strong>Why?</strong> LRAS reflects productive capacity, not demand. AD changes affect price level, not LRAS.<br>
+        <div class="pro-tip">Exam Pro Tip: Use labels like 'SRAS' vs. 'LRAS' to avoid confusion.</div>
+    </div>
+</div> 
+
+<!-- Question 10: Liquidity Trap -->
+<div class="question" id="q10">
+    <h3>Question 10: Evaluation Error</h3>
+    <p><em>"In a recession, central banks should always cut interest rates to boost aggregate demand."</em></p>
+    <div class="options">
+        <div class="option" onclick="checkAnswer(10, this, 'correct')">In a liquidity trap (near-zero rates), monetary policy becomes ineffective—fiscal policy is needed.</div>
+        <div class="option" onclick="checkAnswer(10, this, 'incorrect')">Lower rates always stimulate demand by making borrowing cheaper.</div>
+    </div>
+    <div class="feedback" id="fb10">
+        <strong>Why?</strong> Near-zero rates limit central bank power (e.g., Japan/EU post-2008). Demand may remain stagnant due to low confidence.<br>
+        <div class="pro-tip">Exam Pro Tip: Distinguish between <em>normal conditions</em> and <em>liquidity traps</em> in evaluation. Cite real-world examples (e.g., Japan's 'Lost Score').</div>
+    </div>
+</div>
+  
+        
+                  
+
+        <div class="score" id="scoreDisplay">Score: 0/10</div>
+        <button class="btn" onclick="resetQuiz()">Reset Quiz</button>
+    </div>
+
+    <script>
+        let score = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(qNum, element, correctness) {
+            const feedback = document.getElementById(`fb${qNum}`);
+            const options = element.parentElement.querySelectorAll('.option');
+
+            // Disable all options after selection
+            options.forEach(opt => {
+                opt.style.cursor = 'default';
+                opt.onclick = null;
+            });
+
+            // Highlight correct/incorrect
+            if (correctness === 'correct') {
+                element.classList.add('correct');
+                score++;
+            } else {
+                element.classList.add('incorrect');
+                // Highlight the correct answer
+                options.forEach(opt => {
+                    if (opt.onclick && opt.onclick.toString().includes('correct')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            // Show feedback
+            feedback.style.display = 'block';
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${totalQuestions}`;
+        }
+
+        function resetQuiz() {
+            score = 0;
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => {
+                const options = q.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                    opt.style.cursor = 'pointer';
+                    opt.onclick = function() {
+                        checkAnswer(q.id.substring(1), this, this.getAttribute('data-correct'));
+                    };
+                });
+                q.querySelector('.feedback').style.display = 'none';
+            });
+            updateScore();
+        }
+    </script>
+</body>
+</html>
