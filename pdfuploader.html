@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload PDF Essay</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    #uploadSection {
+      margin-top: 20px;
+    }
+    input[type="file"] {
+      padding: 10px;
+    }
+    .instruction {
+      font-size: 16px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Submit Your Essay</h2>
+
+  <div class="instruction">Select a PDF file to upload</div>
+
+  <div id="uploadSection">
+    <input type="file" id="pdfUpload" accept="application/pdf">
+  </div>
+
+  <script>
+    function extractTextAndRedirect(file) {
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        const typedArray = new Uint8Array(this.result);
+
+        pdfjsLib.getDocument(typedArray).promise.then(async function (pdf) {
+          let fullText = '';
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ');
+            fullText += pageText + '\n';
+          }
+
+          sessionStorage.setItem('uploadedEssay', fullText);
+          window.location.href = 'newessayanalyser2.html';
+        });
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    document.getElementById('pdfUpload').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        extractTextAndRedirect(file);
+      } else {
+        alert('Please select a valid PDF file.');
+      }
+    });
+  </script>
+  <script>
+  // 1. Create and insert home button
+  const homeBtn = document.createElement('a');
+  homeBtn.href = 'index.html';
+  homeBtn.className = 'home-logo-btn';
+  homeBtn.innerHTML = `
+    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
+  `;
+  
+  // 2. Add to page (top-left corner by default)
+  document.body.prepend(homeBtn);
+  
+  // 3. Auto-close sidebar on mobile if exists
+  homeBtn.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && window.innerWidth <= 992) {
+      sidebar.classList.remove('open');
+    }
+  });
+
+  // 4. Auto-add CSS styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .home-logo-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+      text-decoration: none;
+      color: #2c3e50;
+      transition: all 0.2s ease;
+    }
+    .home-logo-btn:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+    .home-logo-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+
+</html>
