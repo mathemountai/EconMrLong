@@ -4,25 +4,18 @@
   <meta charset="UTF-8">
   <title>Economics Essay Planning Game</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-    h2 { color: #003366; }
-    .question-box { margin-bottom: 20px; }
-    .options button { display: block; margin: 5px 0; padding: 8px; width: 100%; }
-    .feedback { font-weight: bold; margin-top: 10px; }
-    .next-btn { 
-      margin-top: 20px; 
-      padding: 10px 20px;
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      display: none; /* Initially hidden */
-    }
+    body{font-family:sans-serif;max-width:800px;margin:auto;padding:20px}
+    h2{color:#003366}
+    .question-box{margin-bottom:20px}
+    .options button{display:block;margin:5px 0;padding:8px;width:100%}
+    .feedback{font-weight:bold;margin-top:10px}
+    .next-btn{margin-top:20px;padding:10px 20px;background:#003366;color:#fff;border:none;border-radius:4px;cursor:pointer;display:none}
+    .home-logo-btn{position:fixed;top:15px;left:15px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,0.9);border-radius:50px;box-shadow:0 2px 5px rgba(0,0,0,0.2);z-index:1000;text-decoration:none;color:#2c3e50;transition:all 0.2s ease}
+    .home-logo-btn:hover{transform:scale(1.05);background:white}
+    .home-logo-img{width:30px;height:30px;border-radius:4px}
   </style>
 </head>
 <body>
-
 <h2>Economics 25-Mark Question Planner</h2>
 <div id="game">
   <div class="question-box" id="questionBox"></div>
@@ -32,431 +25,281 @@
 </div>
 
 <script>
+window.addEventListener('DOMContentLoaded', () => {
+
+
 const questions = [
   {
-    "question": "Supply-side policies for UK growth?",
-    "forPoints": [
-      "LRAS shift ",
-      "Lower natural rate of unemployment ",
-      "Attract FDI"
-    ],
+    "question": "Supply-side policies for UK growth: Evaluate the view that supply-side policies are the most effective way of improving the performance of the UK economy.",
+    "forPoints": ["LRAS shift", "Lower natural rate of unemployment", "Attract FDI"],
     "against": "May worsen inequality",
     "diagram": "PPF",
     "conclude": "Effective if paired with training SR: costs (austerity)"
   },
   {
-    "question": "Pound depreciation impact",
-    "forPoints": [
-      "Export boost ",
-      "Tourism growth ",
-      "Import substitution"
-    ],
+    "question": "Pound depreciation impact: Assess the likely impact of a significant fall in the value of the pound sterling on the performance of the UK economy. ",
+    "forPoints": ["Export boost", "Tourism growth", "Import substitution"],
     "against": "Imported inflation",
     "diagram": "AD/AS (cost-push)",
     "conclude": "Benefit (X-M) SR: J-curve effect (SRAS↑) LR: Competitiveness"
   },
   {
-    "question": "Economic growth benefits?",
-    "forPoints": [
-      "Higher living standards ",
-      "Tax revenue↑ ",
-      "Employment↑"
-    ],
+    "question": "To what extent is economic growth beneficial for the UK economy?",
+    "forPoints": ["Higher living standards", "Tax revenue↑", "Employment↑"],
     "against": "Environmental damage",
     "diagram": "LRAS",
     "conclude": "Beneficial if sustainable SR: Consumption↑. LR: Climate costs"
   },
   {
-    "question": "Full employment as main goal?",
-    "forPoints": [
-      "Maximize PPF ",
-      "Social benefits ",
-      "Fiscal benefit, Budget deficit↓ "
-  ],
+    "question": "Evaluate the view that achieving full employment should be the main objective of UK government policy.",
+    "forPoints": ["Maximize PPF", "Social benefits", "Fiscal benefit, Budget deficit↓"],
     "against": "Demand-pull inflation risk",
     "diagram": "Phillips Curve",
     "conclude": "Secondary to price stability SR: AD↑. LR: Structural bottlenecks"
   },
   {
-    "question": "Interest rate rise impact",
-    "forPoints": [
-      "Inflation control ",
-      "Strengthen £ ",
-      "Encourage saving"
-    ],
+    "question": "Interest rate rise impact: Assess the likely impact of a significant increase in interest rates on the performance of the UK economy.",
+    "forPoints": ["Inflation control", "Strengthen £", "Encourage saving"],
     "against": "Investment decline",
     "diagram": "AD/AS",
     "conclude": "Necessary if inflation > target SR: AD↓. LR: Stability"
   },
   {
-    "question": "Fiscal policy for inequality?",
-    "forPoints": [
-      "Progressive taxes ",
-      "Welfare payments ",
-      "Public services"
-    ],
+    "question": "Fiscal policy for inequality: To what extent is fiscal policy the most effective way of reducing income inequality in the UK?",
+    "forPoints": ["Progressive taxes", "Welfare payments", "Public services"],
     "against": "Work disincentives",
     "diagram": "Lorenz Curve",
     "conclude": "Effective but costly SR: Redistribution. LR: Dependency"
   },
   {
-    "question": "Monetary policy for AD?",
-    "forPoints": [
-      "Quick transmission ",
-      "BoE independence ",
-      "Flexible rates"
-    ],
+    "question": "Monetary policy for AD: Evaluate the view that monetary policy is the most effective tool for managing aggregate demand in the UK economy.",
+    "forPoints": ["Quick transmission", "BoE independence", "Flexible rates"],
     "against": "Liquidity trap risk",
     "diagram": "AD/AS + LRAS",
     "conclude": "Effective unless zero lower bound SR: Consumption↑. LR: excess borrowing, price bubbles"
   },
   {
-    "question": "Globalisation impact",
-    "forPoints": [
-      "Lower prices ",
-      "Specialisation ",
-      "FDI benefits"
-    ],
+    "question": "Globalisation impact: Assess the impact of globalization on the UK economy. ",
+    "forPoints": ["Lower prices", "Specialisation", "FDI benefits"],
     "against": "Structural unemployment, deindustrialisation",
     "diagram": "Trade diagram",
     "conclude": "Net benefit,  consumer surplus, trade levels higher  SR: Job losses. LR: Efficiency↑"
   },
   {
-    "question": "Budget deficit problems?",
-    "forPoints": [
-      "Crowding out ",
-      "Debt burden ",
-      "Interest costs"
-    ],
+    "question": "Budget deficit problems: To what extent do budget deficits have a negative effect on the UK economy?",
+    "forPoints": ["Crowding out", "Debt burden", "Interest costs"],
     "against": "Recession necessity",
     "diagram": "AD/AS output gap",
     "conclude": "Problematic if >3% GDP SR: Stimulus. LR: Debt servicing"
   },
   {
-    "question": "Supply-side policies for unemployment",
-    "forPoints": [
-      "Reduce structural ",
-      "Skills matching ",
-      "Mobility↑"
-    ],
+    "question": "Supply-side policies for unemployment: Evaluate the effectiveness of supply-side policies in reducing unemployment in the UK.",
+    "forPoints": ["Reduce structural", "Skills matching", "Mobility↑"],
     "against": "Time lags",
     "diagram": "LRAS",
     "conclude": "Best for long-term SR: Costs. LR: Productivity↑"
   },
   {
-    "question": "Ageing population impact",
-    "forPoints": [
-      "Pension costs↑ ",
-      "Labour shortages ",
-      "Healthcare demand↑"
-    ],
+    "question": "Assess the impact of an ageing population on the UK economy.",
+    "forPoints": ["Pension costs↑", "Labour shortages", "Healthcare demand↑"],
     "against": "Silver economy",
     "diagram": "LRAS",
     "conclude": "Requires reform SR: Fiscal drag. LR: Automation"
   },
   {
-    "question": "Current account deficit?",
-    "forPoints": [
-      "FDI covers ",
-      "Consumer Surplus↑ ",
-      "Strong £ signal"
-    ],
+    "question": "Current account deficit: To what extent is a current account deficit a problem for the UK economy? ",
+    "forPoints": ["FDI covers", "Consumer Surplus↑", "Strong £ signal"],
     "against": "X<M leakage, budget deficit",
     "diagram": "AD/AS",
     "conclude": "Manageable if FDI↑ SR: Sustainable. LR: Vulnerability"
   },
   {
-    "question": "Productivity as growth key?",
-    "forPoints": [
-      "Wages↑ ",
-      "Competitiveness ",
-      "Inflation control"
-    ],
+    "question": "Evaluate the view that increasing productivity is the key to improving the performance of the UK economy.",
+    "forPoints": ["Wages↑", "Competitiveness", "Inflation control"],
     "against": "Job displacement",
     "diagram": "PPF",
     "conclude": "Necessary not sufficient SR: Unemployment. LR: Living standards↑"
   },
   {
-    "question": "Government spending impact",
-    "forPoints": [
-      "AD stimulus ",
-      "Multiplier ",
-      "Public goods"
-    ],
+    "question": "Assess the likely impact of a significant increase in government spending on the UK economy.",
+    "forPoints": ["AD stimulus", "Multiplier", "Public goods"],
     "against": "Crowding out",
     "diagram": "AD/AS",
     "conclude": "Effective in recessions SR: Growth↑. LR: Debt↑"
   },
   {
-    "question": "Inequality vs growth",
-    "forPoints": [
-      "Talent waste ",
-      "Social unrest ",
-      "AD constraint"
-    ],
+    "question": "To what extent does inequality pose a challenge to economic growth in the UK?",
+    "forPoints": ["Talent waste", "Social unrest", "AD constraint"],
     "against": "Incentive effect",
     "diagram": "Lorenz Curve",
     "conclude": "Harms inclusive growth SR: Poverty↓. LR: Innovation?"
   },
   {
-    "question": "FDI in developing nations",
-    "forPoints": [
-      "Tech transfer ",
-      "Jobs ",
-      "Infrastructure"
-    ],
+    "question": "Evaluate the impact of foreign direct investment on developing economies.",
+    "forPoints": ["Tech transfer", "Jobs", "Infrastructure"],
     "against": "Exploitation",
     "diagram": "PPF",
     "conclude": "Benefits with regulation SR: Sweatshops. LR: Industrialization"
   },
   {
-    "question": "Fiscal policy effectiveness",
-    "forPoints": [
-      "Targeted ",
-      "Automatic stabilizers ",
-      "Direct AD"
-    ],
+    "question": "Assess the effectiveness of fiscal policy in achieving macroeconomic objectives in the UK.",
+    "forPoints": ["Targeted", "Automatic stabilizers", "Direct AD"],
     "against": "Time lags",
     "diagram": "AD/AS",
     "conclude": "Crisis tool SR: Quick. LR: Rigidities"
   },
   {
-    "question": "Growth vs environment",
-    "forPoints": [
-      "Pollution ",
-      "Resource depletion ",
-      "Climate costs"
-    ],
+    "question": "To what extent does economic growth lead to environmental degradation?",
+    "forPoints": ["Pollution", "Resource depletion", "Climate costs"],
     "against": "Green growth",
     "diagram": "Negative externality",
     "conclude": "Must decouple SR: Damage. LR: Tech fixes"
   },
   {
-    "question": "Corporation tax changes",
-    "forPoints": [
-      "FDI↑ ",
-      "Investment↑ ",
-      "Growth↑"
-    ],
+    "question": "Evaluate the impact of changes in corporation tax rates on business investment and economic growth.",
+    "forPoints": ["FDI↑", "Investment↑", "Growth↑"],
     "against": "Revenue loss",
     "diagram": "Laffer Curve",
     "conclude": "Optimal 18-21% SR: Buybacks. LR: Capacity↑"
   },
   {
-    "question": "Monetary policy for inflation",
-    "forPoints": [
-      "Rate transmission ",
-      "Quick ",
-      "Demand control"
-    ],
+    "question": "Assess the effectiveness of monetary policy in controlling inflation in the UK.",
+    "forPoints": ["Rate transmission", "Quick", "Demand control"],
     "against": "Cost-push limits",
     "diagram": "AD/AS",
     "conclude": "Works unless supply shock SR: AD↓. LR: Stability"
   },
   {
-    "question": "Inequality vs mobility",
-    "forPoints": [
-      "Education gaps ",
-      "Poverty traps ",
-      "Opportunity loss"
-    ],
+    "question": "To what extent does income inequality affect social mobility in the UK?",
+    "forPoints": ["Education gaps", "Poverty traps", "Opportunity loss"],
     "against": "Meritocracy",
     "diagram": "Lorenz Curve",
     "conclude": "Significant barrier SR: Welfare. LR: Talent loss"
   }
 ];
 
-const againstPool = ["Liquidity trap risk", "Demand-pull inflation risk", "Meritocracy", "Environmental damage", "Cost-push limits"];
-const concludePool = ["Secondary to price stability SR: AD↑. LR: Structural bottlenecks", "Effective unless zero lower bound SR: Consumption↑. LR: Debt bubbles", "Must decouple SR: Damage. LR: Tech fixes", "Necessary not sufficient SR: Unemployment. LR: Living standards↑", "Significant barrier SR: Welfare. LR: Talent loss"];
 
 
-let current = 0;
-let playerAnswers = {};
-let totalScore = 0;
-let maxScore = 0;
 
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
 
-function renderQuestion() {
-  const q = questions[current];
-  playerAnswers = { for: [], against: "", diagram: "", conclude: "" };
-  document.getElementById("feedback").textContent = "";
-  document.getElementById("nextBtn").style.display = "none";
+const againstPool=["Liquidity trap risk","Demand-pull inflation risk","Meritocracy","Environmental damage","Cost-push limits"];
+const concludePool=["Secondary to price stability SR: AD↑. LR: Structural bottlenecks","Effective unless zero lower bound SR: Consumption↑. LR: Debt bubbles","Must decouple SR: Damage. LR: Tech fixes","Necessary not sufficient SR: Unemployment. LR: Living standards↑","Significant barrier SR: Welfare. LR: Talent loss"];
+const baseDiagrams=["Laffer Curve","AD/AS Demand","SRAS","AD/AS (cost-push)","Negative externality"];
 
-  document.getElementById("questionBox").innerHTML = `<h3>Q${current + 1}: ${q.question}</h3><p>Select 3 'For' points:</p>`;
+let current=0,playerAnswers={},totalScore=0,maxScore=0;
 
-  let allFor = [...q.forPoints];
-  while (allFor.length < 5) {
-    const randomQ = questions[Math.floor(Math.random() * questions.length)];
-    const point = randomQ.forPoints[Math.floor(Math.random() * randomQ.forPoints.length)];
-    if (!allFor.includes(point)) allFor.push(point);
+const shuffle=a=>a.sort(()=>Math.random()-.5);
+
+function renderQuestion(){
+  const q=questions[current];
+  playerAnswers={for:[],against:"",diagram:"",conclude:""};
+  document.getElementById("feedback").textContent="";
+  document.getElementById("nextBtn").style.display="none";
+  document.getElementById("questionBox").innerHTML=`<h3>Q${current+1}: ${q.question}</h3><p>Select 3 'For' points:</p>`;
+
+  let allFor=[...q.forPoints];
+  while(allFor.length<5){
+    const randQ=questions[Math.floor(Math.random()*questions.length)];
+    const p=randQ.forPoints[Math.floor(Math.random()*randQ.forPoints.length)];
+    if(!allFor.includes(p)) allFor.push(p);
   }
 
-  const forButtons = shuffle(allFor.map(p => `<button data-type="for" data-value="${p}">${p}</button>`)).join('');
-  const againstButtons = shuffle([...new Set([q.against, ...againstPool])].slice(0,5)
-    .map(a => `<button data-type="against" data-value="${a}">${a}</button>`)).join('');
-  const diagramButtons = shuffle([...new Set([q.diagram, ...["Laffer Curve", "AD/AS Demand", "SRAS", "AD/AS (cost-push)", "Negative externality"]])].slice(0,5).map(d => `<button data-type="diagram" data-value="${d}">${d}</button>`)).join('');
-  const concludeButtons = shuffle([...new Set([q.conclude, ...concludePool])].slice(0,5)
-    .map(c => `<button data-type="conclude" data-value="${c}">${c}</button>`)).join('');
+  const forButtons=shuffle(allFor).map(p=>`<button data-type="for" data-value="${p}">${p}</button>`).join('');
+  const againstButtons=shuffle([...new Set([q.against,...againstPool])].slice(0,5)).map(a=>`<button data-type="against" data-value="${a}">${a}</button>`).join('');
+  const diagramButtons=shuffle([...new Set([q.diagram,...baseDiagrams])].slice(0,5)).map(d=>`<button data-type="diagram" data-value="${d}">${d}</button>`).join('');
+  const concludeButtons=shuffle([...new Set([q.conclude,...concludePool])].slice(0,5)).map(c=>`<button data-type="conclude" data-value="${c}">${c}</button>`).join('');
 
-  document.getElementById("optionsBox").innerHTML =
+  document.getElementById("optionsBox").innerHTML=
     `<div>${forButtons}</div><hr>
     <p>Select the 'Against' point:</p><div>${againstButtons}</div><hr>
     <p>Select the correct diagram:</p><div>${diagramButtons}</div><hr>
     <p>Select the conclusion:</p><div>${concludeButtons}</div>`;
 
-  document.querySelectorAll("#optionsBox button").forEach(btn => {
-    btn.addEventListener("click", function() {
-      const type = this.dataset.type;
-      const value = this.dataset.value;
-
-      if (type === "for") {
-        if (playerAnswers.for.includes(value)) {
-          playerAnswers.for = playerAnswers.for.filter(v => v !== value);
-          this.style.backgroundColor = "";
-        } else if (playerAnswers.for.length < 3) {
-          playerAnswers.for.push(value);
-          this.style.backgroundColor = "#cceeff";
+  document.querySelectorAll("#optionsBox button").forEach(btn=>{
+    btn.addEventListener("click",function(){
+      const type=this.dataset.type,val=this.dataset.value;
+      if(type==="for"){
+        if(playerAnswers.for.includes(val)){
+          playerAnswers.for=playerAnswers.for.filter(v=>v!==val);
+          this.style.backgroundColor="";
+        }else if(playerAnswers.for.length<3){
+          playerAnswers.for.push(val);
+          this.style.backgroundColor="#cceeff";
         }
-      } else {
-        if (playerAnswers[type] === value) {
-          playerAnswers[type] = "";
-          this.style.backgroundColor = "";
-        } else {
-          const prevSelected = document.querySelector(`button[data-type="${type}"][style*="background-color"]`);
-          if (prevSelected) prevSelected.style.backgroundColor = "";
-          playerAnswers[type] = value;
-          this.style.backgroundColor = "#cceeff";
+      }else{
+        const prev=document.querySelector(`button[data-type="${type}"][style*="background-color"]`);
+        if(prev) prev.style.backgroundColor="";
+        if(playerAnswers[type]===val){
+          playerAnswers[type]="";
+          this.style.backgroundColor="";
+        }else{
+          playerAnswers[type]=val;
+          this.style.backgroundColor="#cceeff";
         }
       }
-
-      if (playerAnswers.for.length === 3 && 
-          playerAnswers.against && 
-          playerAnswers.diagram && 
-          playerAnswers.conclude) {
-        checkAnswer();
-      }
+      if(playerAnswers.for.length===3&&playerAnswers.against&&playerAnswers.diagram&&playerAnswers.conclude) checkAnswer();
     });
   });
 }
 
-function checkAnswer() {
-  const q = questions[current];
-  let score = 0;
+function checkAnswer(){
+  const q=questions[current];
+  let score=0;
+  const forCorrect=q.forPoints.every(p=>playerAnswers.for.includes(p))&&playerAnswers.for.length===3;
 
-  const forCorrect = q.forPoints.every(p => playerAnswers.for.includes(p)) && playerAnswers.for.length === 3;
-
-  document.querySelectorAll("#optionsBox button").forEach(btn => {
-    const type = btn.dataset.type;
-    const val = btn.dataset.value;
-
-    if (type === "for") {
-      if (q.forPoints.includes(val)) {
-        if (playerAnswers.for.includes(val)) {
-          btn.style.backgroundColor = "#b6e7a6";
-        } else {
-          btn.style.border = "2px dashed green";
-        }
-      } else if (playerAnswers.for.includes(val)) {
-        btn.style.backgroundColor = "#f8b6b6";
-      }
-    } else {
-      const correctValue = q[type];
-      if (val === correctValue) {
-        if (playerAnswers[type] === val) {
-          btn.style.backgroundColor = "#b6e7a6";
-        } else {
-          btn.style.border = "2px dashed green";
-        }
-      } else if (playerAnswers[type] === val) {
-        btn.style.backgroundColor = "#f8b6b6";
-      }
+  document.querySelectorAll("#optionsBox button").forEach(btn=>{
+    const type=btn.dataset.type,val=btn.dataset.value;
+    const correct=q[type];
+    if(type==="for"){
+      if(q.forPoints.includes(val)){
+        btn.style.backgroundColor=playerAnswers.for.includes(val)?"#b6e7a6":"";
+        if(!playerAnswers.for.includes(val)) btn.style.border="2px dashed green";
+      }else if(playerAnswers.for.includes(val)) btn.style.backgroundColor="#f8b6b6";
+    }else{
+      if(val===correct){
+        btn.style.backgroundColor=playerAnswers[type]===val?"#b6e7a6":"";
+        if(playerAnswers[type]!==val) btn.style.border="2px dashed green";
+      }else if(playerAnswers[type]===val) btn.style.backgroundColor="#f8b6b6";
     }
   });
 
-  if (forCorrect) score += 1;
-  if (playerAnswers.against === q.against) score += 1;
-  if (playerAnswers.diagram === q.diagram) score += 1;
-  if (playerAnswers.conclude === q.conclude) score += 1;
+  if(forCorrect) score++;
+  if(playerAnswers.against===q.against) score++;
+  if(playerAnswers.diagram===q.diagram) score++;
+  if(playerAnswers.conclude===q.conclude) score++;
 
-  totalScore += score;
-  maxScore += 4;
-
-  document.getElementById("feedback").textContent = `You got ${score}/4 correct.`;
-  document.getElementById("nextBtn").style.display = "block";
+  totalScore+=score;
+  maxScore+=4;
+  document.getElementById("feedback").textContent=`You got ${score}/4 correct.`;
+  document.getElementById("nextBtn").style.display="block";
 }
 
-function nextQuestion() {
+function nextQuestion(){
   current++;
-  if (current >= questions.length) {
-    const percent = Math.round((totalScore / maxScore) * 100);
-    document.getElementById("game").innerHTML = `
-      <h3>Well done! You've completed the game.</h3>
-      <p>Your total score: <strong>${totalScore} / ${maxScore}</strong> (${percent}%)</p>
-      <p>${percent >= 80 ? "Excellent work!" : percent >= 60 ? "Nice effort!" : "Keep practicing!"}</p>
-    `;
+  if(current>=questions.length){
+    const percent=Math.round((totalScore/maxScore)*100);
+    document.getElementById("game").innerHTML=
+      `<h3>Well done! You've completed the game.</h3>
+       <p>Your total score: <strong>${totalScore} / ${maxScore}</strong> (${percent}%)</p>
+       <p>${percent>=80?"Excellent work!":percent>=60?"Nice effort!":"Keep practicing!"}</p>`;
     return;
   }
   renderQuestion();
 }
 
-// Initialize
-document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+document.getElementById("nextBtn").addEventListener("click",nextQuestion);
 renderQuestion();
-</script>
-<script>
-  // 1. Create and insert home button
-  const homeBtn = document.createElement('a');
-  homeBtn.href = 'index.html';
-  homeBtn.className = 'home-logo-btn';
-  homeBtn.innerHTML = `
-    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
-  `;
-  
-  // 2. Add to page (top-left corner by default)
-  document.body.prepend(homeBtn);
-  
-  // 3. Auto-close sidebar on mobile if exists
-  homeBtn.addEventListener('click', () => {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar && window.innerWidth <= 992) {
-      sidebar.classList.remove('open');
-    }
-  });
 
-  // 4. Auto-add CSS styles
-  const style = document.createElement('style');
-  style.textContent = `
-    .home-logo-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 50px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      z-index: 1000;
-      text-decoration: none;
-      color: #2c3e50;
-      transition: all 0.2s ease;
-    }
-    .home-logo-btn:hover {
-      transform: scale(1.05);
-      background: white;
-    }
-    .home-logo-img {
-      width: 30px;
-      height: 30px;
-      border-radius: 4px;
-    }
-  `;
-  document.head.appendChild(style);
+// Insert home button after page idle
+requestIdleCallback(() => {
+  const btn=document.createElement("a");
+  btn.href="index.html";
+  btn.className="home-logo-btn";
+  btn.innerHTML=`<img src="icon-192x192.png" loading="lazy" alt="Home" class="home-logo-img">`;
+  btn.addEventListener("click",()=>{const s=document.getElementById("sidebar");if(s&&window.innerWidth<=992)s.classList.remove("open")});
+  document.body.prepend(btn);
+});
+});
 </script>
-  
 </body>
 </html>
