@@ -1,261 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess Who I Am - Famous Economists</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        #clues {
-            margin: 20px 0;
-            font-size: 18px;
-            text-align: left;
-        }
-        .clue {
-            margin: 10px 0;
-            padding: 10px;
-            background: #e3e3e3;
-            border-radius: 5px;
-        }
-        input, button {
-            font-size: 16px;
-            padding: 10px;
-            margin-top: 10px;
-            width: 80%;
-            max-width: 400px;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #restart {
-            margin-top: 30px;
-            background: #dc3545;
-        }
-        #restart:hover {
-            background: #b32d3a;
-        }
-        #economistImage {
-            display: none;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
-        }
-        .feedback {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #007bff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guess Who I Am - Famous Economists</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    #clues {
+      margin: 20px 0;
+      font-size: 18px;
+      text-align: left;
+    }
+    .clue {
+      margin: 10px 0;
+      padding: 10px;
+      background: #e3e3e3;
+      border-radius: 5px;
+    }
+    input, button {
+      font-size: 16px;
+      padding: 10px;
+      margin-top: 10px;
+      width: 80%;
+      max-width: 400px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #restart {
+      margin-top: 30px;
+      background: #dc3545;
+    }
+    #restart:hover {
+      background: #b32d3a;
+    }
+    #economistImage {
+      display: none;
+      margin: 20px auto 0;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      display: block;
+    }
+    #economistName {
+      display: none;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .feedback {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Guess Who I Am</h1>
-        <p>I am an economist. Can you guess my surname?</p>
-        <div id="clues"></div>
-        <input type="text" id="guess" placeholder="Enter economist's name">
-        <button onclick="checkGuess()">Submit Guess</button>
-        <button onclick="showNextClue()">Get Next Clue</button>
-        <button id="restart" onclick="restartGame()">Restart</button>
-        <br>
-        <div id="feedback" class="feedback"></div>
-        <img id="economistImage" src="" alt="Economist Image">
-    </div>
+  <div class="container">
+    <h1>Guess Who I Am</h1>
+    <p>I am an economist. Can you guess my surname?</p>
+    <div id="clues"></div>
+    <input type="text" id="guess" placeholder="Enter economist's name">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <button onclick="showNextClue()">Get Next Clue</button>
+    <button id="restart" onclick="restartGame()">Restart</button>
+    <div id="feedback" class="feedback"></div>
+    <p id="economistName"></p>
+    <img id="economistImage" src="" alt="Economist Image">
+  </div>
 
-    <script>
-        const economists = [
-            { name: 'Smith', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0540.jpg', clues: [
-                'Known for pioneering work on capitalism and the "invisible hand."',
-                'The most famous book is "The Wealth of Nations" (1776).',
-                'Father of modern economics and classical liberalism.',
-                'Advocated for limited government intervention.',
-                'Pioneered ideas of specialization and trade benefits.',
-                'Also wrote "The Theory of Moral Sentiments."',
-                'Influenced economic systems in the U.S. and Great Britain.',
-                'Worked alongside David Hume in the Scottish Enlightenment.',
-                'Emphasized self-interest in market efficiency.',
-                'Studied division of labor to improve productivity.'
-            ]},
-            { name: 'Ricardo', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0541.jpg', clues: [
-                'Best known for the theory of comparative advantage.',
-                'Wrote "On the Principles of Political Economy and Taxation" (1817).',
-                'Argued trade benefits nations when they specialize.',
-                'Introduced the concept of economic rent.',
-                'Criticized Britain’s "Corn Laws" and supported free trade.',
-                'Influenced later economists like Marx and Keynes.',
-                'Developed the "Ricardian Model" of wages.',
-                'Applied mathematical analysis to economics.',
-                'Shaped modern trade and labor theories.',
-                'Made his fortune in bond trading before turning to economics.'
-            ]},
-            { name: 'Keynes', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0538.jpg', clues: [
-                'Revolutionized economics with ideas on government intervention in recessions.',
-                'His key book, "The General Theory of Employment, Interest, and Money" (1936), transformed macroeconomics.',
-                'Played a major role in establishing the IMF and World Bank.',
-                'His ideas led to Keynesian economics, which dominated post-war policies.',
-                'Believed that demand, not just supply, drives economic activity.',
-                'Famous for saying, "In the long run, we are all dead."',
-                'Challenged classical economics, leading to modern macroeconomic policies.',
-                'Helped design post-World War II economic recovery strategies.',
-                'Advocated deficit spending to counter recessions.',
-                'Argued that government spending boosts demand.'
-            ]},
-            { name: 'Friedman', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0539.jpg', clues: [
-                'A major figure in the Chicago School of Economics, advocating free-market capitalism.',
-                'Wrote "Capitalism and Freedom" (1962), a defense of minimal government intervention.',
-                'Argued that controlling the money supply is key to managing inflation.',
-                'Won the Nobel Prize in Economics in 1976.',
-                'Famously said, "Inflation is always and everywhere a monetary phenomenon."',
-                'Advocated for school choice and the use of school vouchers.',
-                'Developed the permanent income hypothesis.',
-                'Theories influenced deregulation movements in the 1980s and 1990s.',
-                'Advised U.S. President Ronald Reagan on economic policies.',
-                'Strongly opposed Keynesian economic policies.'
-            ]},
-            { name: 'Ostrom', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0542.jpg', clues: [
-                'First woman to win the Nobel Prize in Economics, awarded in 2009.',
-                'Studied how communities manage shared resources without government intervention.',
-                'Wrote "Governing the Commons" (1990), a landmark work on collective resource management.',
-                'Developed principles for successful community resource management.',
-                'Work influenced environmental economics and policy-making.',
-                'Showed that local communities often create their own successful governance systems.',
-                'Proved that decentralized decision-making can be more effective than state control.',
-                'Studied the role of institutions in resource sustainability.',
-                'Research had applications in fisheries, forests, and water management.',
-                'Challenged the traditional "Tragedy of the Commons" theory.'
-            ]},
-            { name: 'Hayek', image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0547.jpg', clues: [
-                'A leader of the Austrian School of Economics and defender of free markets.',
-                'Wrote "The Road to Serfdom" (1944), warning against central economic planning.',
-                'Believed that free markets best allocate resources efficiently.',
-                'Developed the theory of spontaneous order in markets.',
-                'Criticized socialism as a threat to individual freedom.',
-                'Won the Nobel Prize in Economics in 1974.',
-                'Famous for saying, "The more the state plans, the more difficult planning becomes for the individual."',
-                'Influenced leaders like Margaret Thatcher and Ronald Reagan.',
-                'Argued that economies are too complex for central planning to succeed.',
-                'Advocated for economic and political freedom as interdependent.'
-            ]}
-        ];
+  <script>
+    const economists = [
+      {
+        name: 'Smith',
+        fullName: 'Adam Smith',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0540.jpg',
+        clues: [
+          'Known for pioneering work on capitalism and the "invisible hand."',
+          'The most famous book is "The Wealth of Nations" (1776).',
+          'Father of modern economics and classical liberalism.',
+          'Advocated for limited government intervention.',
+          'Pioneered ideas of specialization and trade benefits.',
+          'Also wrote "The Theory of Moral Sentiments."',
+          'Influenced economic systems in the U.S. and Great Britain.',
+          'Worked alongside David Hume in the Scottish Enlightenment.',
+          'Emphasized self-interest in market efficiency.',
+          'Studied division of labor to improve productivity.'
+        ]
+      },
+      {
+        name: 'Ricardo',
+        fullName: 'David Ricardo',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0541.jpg',
+        clues: [
+          'Best known for the theory of comparative advantage.',
+          'Wrote "On the Principles of Political Economy and Taxation" (1817).',
+          'Argued trade benefits nations when they specialize.',
+          'Introduced the concept of economic rent.',
+          'Criticized Britain’s "Corn Laws" and supported free trade.',
+          'Influenced later economists like Marx and Keynes.',
+          'Developed the "Ricardian Model" of wages.',
+          'Applied mathematical analysis to economics.',
+          'Shaped modern trade and labor theories.',
+          'Made his fortune in bond trading before turning to economics.'
+        ]
+      },
+      {
+        name: 'Keynes',
+        fullName: 'John Maynard Keynes',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0538.jpg',
+        clues: [
+          'Revolutionized economics with ideas on government intervention in recessions.',
+          'His key book, "The General Theory of Employment, Interest, and Money" (1936), transformed macroeconomics.',
+          'Played a major role in establishing the IMF and World Bank.',
+          'His ideas led to Keynesian economics, which dominated post-war policies.',
+          'Believed that demand, not just supply, drives economic activity.',
+          'Famous for saying, "In the long run, we are all dead."',
+          'Challenged classical economics, leading to modern macroeconomic policies.',
+          'Helped design post-World War II economic recovery strategies.',
+          'Advocated deficit spending to counter recessions.',
+          'Argued that government spending boosts demand.'
+        ]
+      },
+      {
+        name: 'Friedman',
+        fullName: 'Milton Friedman',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0539.jpg',
+        clues: [
+          'A major figure in the Chicago School of Economics, advocating free-market capitalism.',
+          'Wrote "Capitalism and Freedom" (1962), a defense of minimal government intervention.',
+          'Argued that controlling the money supply is key to managing inflation.',
+          'Won the Nobel Prize in Economics in 1976.',
+          'Famously said, "Inflation is always and everywhere a monetary phenomenon."',
+          'Advocated for school choice and the use of school vouchers.',
+          'Developed the permanent income hypothesis.',
+          'Theories influenced deregulation movements in the 1980s and 1990s.',
+          'Advised U.S. President Ronald Reagan on economic policies.',
+          'Strongly opposed Keynesian economic policies.'
+        ]
+      },
+      {
+        name: 'Ostrom',
+        fullName: 'Elinor Ostrom',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0542.jpg',
+        clues: [
+          'First woman to win the Nobel Prize in Economics, awarded in 2009.',
+          'Studied how communities manage shared resources without government intervention.',
+          'Wrote "Governing the Commons" (1990), a landmark work on collective resource management.',
+          'Developed principles for successful community resource management.',
+          'Work influenced environmental economics and policy-making.',
+          'Showed that local communities often create their own successful governance systems.',
+          'Proved that decentralized decision-making can be more effective than state control.',
+          'Studied the role of institutions in resource sustainability.',
+          'Research had applications in fisheries, forests, and water management.',
+          'Challenged the traditional "Tragedy of the Commons" theory.'
+        ]
+      },
+      {
+        name: 'Hayek',
+        fullName: 'Friedrich Hayek',
+        image: 'https://mathemountai.github.io/EconMrLong/Guesswho/Images/IMG_0547.jpg',
+        clues: [
+          'A leader of the Austrian School of Economics and defender of free markets.',
+          'Wrote "The Road to Serfdom" (1944), warning against central economic planning.',
+          'Believed that free markets best allocate resources efficiently.',
+          'Developed the theory of spontaneous order in markets.',
+          'Criticized socialism as a threat to individual freedom.',
+          'Won the Nobel Prize in Economics in 1974.',
+          'Famous for saying, "The more the state plans, the more difficult planning becomes for the individual."',
+          'Influenced leaders like Margaret Thatcher and Ronald Reagan.',
+          'Argued that economies are too complex for central planning to succeed.',
+          'Advocated for economic and political freedom as interdependent.'
+        ]
+      }
+    ];
 
-        let selectedEconomist, clueIndex;
+    let selectedEconomist, clueIndex;
 
-        function startGame() {
-            selectedEconomist = economists[Math.floor(Math.random() * economists.length)];
-            clueIndex = 0;
-            document.getElementById("clues").innerHTML = "";
-            document.getElementById("guess").value = "";
-            document.getElementById("economistImage").style.display = "none";
-            document.getElementById("feedback").innerText = ""; // Clear previous feedback
-            showNextClue();
-        }
-
-        function showNextClue() {
-            if (clueIndex < selectedEconomist.clues.length) {
-                const clueDiv = document.createElement("div");
-                clueDiv.className = "clue";
-                clueDiv.innerText = selectedEconomist.clues[clueIndex];
-                document.getElementById("clues").appendChild(clueDiv);
-                clueIndex++;
-            } else {
-                alert("No more clues! Make your guess.");
-            }
-        }
-
-        function checkGuess() {
-            const guess = document.getElementById("guess").value.trim().toLowerCase();
-            if (guess === selectedEconomist.name.toLowerCase()) {
-                document.getElementById("economistImage").src = selectedEconomist.image;
-                document.getElementById("economistImage").style.display = "block";
-                document.getElementById("feedback").innerText = "Correct! You guessed the economist.";
-            } else {
-                document.getElementById("feedback").innerText = "Incorrect, try again.";
-            }
-            document.getElementById("guess").value = ""; // Clear the input field
-        }
-
-        function restartGame() {
-            startGame();
-        }
-
-        startGame();
-    </script>
-
-    <!-- Paste this once before </body> -->
-<script>
-  // 1. Create and insert home button
-  const homeBtn = document.createElement('a');
-  homeBtn.href = 'https://mathemountai.github.io/EconMrLong/index.html';
-  homeBtn.className = 'home-logo-btn';
-  homeBtn.innerHTML = `
-    <img src="icon-192x192.png" alt="Home" class="home-logo-img">
-  `;
-  
-  // 2. Add to page (top-left corner by default)
-  document.body.prepend(homeBtn);
-  
-  // 3. Auto-close sidebar on mobile if exists
-  homeBtn.addEventListener('click', () => {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar && window.innerWidth <= 992) {
-      sidebar.classList.remove('open');
+    function startGame() {
+      selectedEconomist = economists[Math.floor(Math.random() * economists.length)];
+      clueIndex = 0;
+      document.getElementById("clues").innerHTML = "";
+      document.getElementById("guess").value = "";
+      document.getElementById("economistImage").style.display = "none";
+      document.getElementById("economistName").style.display = "none";
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("guess").disabled = false;
+      document.querySelector("button[onclick='checkGuess()']").disabled = false;
+      showNextClue();
     }
-  });
 
-  // 4. Auto-add CSS styles
-  const style = document.createElement('style');
-  style.textContent = `
-    .home-logo-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 50px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      z-index: 1000;
-      text-decoration: none;
-      color: #2c3e50;
-      transition: all 0.2s ease;
+    function showNextClue() {
+      if (clueIndex < selectedEconomist.clues.length) {
+        const clueDiv = document.createElement("div");
+        clueDiv.className = "clue";
+        clueDiv.innerText = selectedEconomist.clues[clueIndex];
+        document.getElementById("clues").appendChild(clueDiv);
+        clueIndex++;
+      } else {
+        alert("No more clues! The answer will now be revealed.");
+        document.getElementById("economistImage").src = selectedEconomist.image;
+        document.getElementById("economistImage").style.display = "block";
+        document.getElementById("economistName").innerText = selectedEconomist.fullName;
+        document.getElementById("economistName").style.display = "block";
+        document.getElementById("feedback").innerText = `The economist was: ${selectedEconomist.fullName}`;
+        document.getElementById("guess").disabled = true;
+        document.querySelector("button[onclick='checkGuess()']").disabled = true;
+      }
     }
-    .home-logo-btn:hover {
-      transform: scale(1.05);
-      background: white;
+
+    function checkGuess() {
+      const guess = document.getElementById("guess").value.trim().toLowerCase();
+      if (guess === selectedEconomist.name.toLowerCase()) {
+        document.getElementById("economistImage").src = selectedEconomist.image;
+        document.getElementById("economistImage").style.display = "block";
+        document.getElementById("economistName").innerText = selectedEconomist.fullName;
+        document.getElementById("economistName").style.display = "block";
+        document.getElementById("feedback").innerText = "Correct! You guessed " + selectedEconomist.fullName + ".";
+        document.getElementById("guess").disabled = true;
+        document.querySelector("button[onclick='checkGuess()']").disabled = true;
+      } else {
+        document.getElementById("feedback").innerText = "Incorrect, try again.";
+      }
+      document.getElementById("guess").value = "";
     }
-    .home-logo-img {
-      width: 30px;
-      height: 30px;
-      border-radius: 4px;
+
+    function restartGame() {
+      startGame();
     }
-  `;
-  document.head.appendChild(style);
-</script>
+
+    startGame();
+  </script>
 </body>
 </html>
