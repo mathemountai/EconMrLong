@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AQA Business Studies Revision Game</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			line-height: 1.6;
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f5f5f5;
+			color: #333;
+		}
+		h1 {
+			color: #2c3e50;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		.game-container {
+			background-color: white;
+			border-radius: 8px;
+			padding: 25px;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+			margin-bottom: 20px;
+		}
+		.question-display {
+			background-color: #e8f4f8;
+			padding: 15px;
+			border-left: 5px solid #3498db;
+			margin-bottom: 20px;
+			border-radius: 4px;
+		}
+		.source {
+			font-style: italic;
+			color: #7f8c8d;
+			margin-top: 5px;
+		}
+		.controls {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+			flex-wrap: wrap;
+		}
+		button {
+			background-color: #3498db;
+			color: white;
+			border: none;
+			padding: 10px 15px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			transition: background-color 0.3s;
+			margin: 5px;
+		}
+		button:hover {
+			background-color: #2980b9;
+		}
+		button:disabled {
+			background-color: #bdc3c7;
+			cursor: not-allowed;
+		}
+		.timer {
+			font-weight: bold;
+			color: #e74c3c;
+			margin: 5px;
+		}
+		.progress {
+			margin-top: 20px;
+			background-color: #ecf0f1;
+			height: 10px;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		.progress-bar {
+			height: 100%;
+			background-color: #2ecc71;
+			width: 0%;
+			transition: width 0.3s;
+		}
+		.hint-box, .example-box {
+			background-color: #fffde7;
+			padding: 15px;
+			border-left: 5px solid #fbc02d;
+			margin-top: 20px;
+			border-radius: 4px;
+			display: none;
+		}
+		.example-box {
+			background-color: #e8f5e9;
+			border-left: 5px solid #4caf50;
+		}
+		.structure-guide {
+			margin-top: 30px;
+			background-color: #f9f9f9;
+			padding: 15px;
+			border-radius: 4px;
+			border: 1px solid #ddd;
+		}
+		.structure-guide h3 {
+			margin-top: 0;
+			color: #2c3e50;
+		}
+		textarea {
+			width: 100%;
+			height: 150px;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			margin-top: 10px;
+			font-family: inherit;
+			resize: vertical;
+		}
+		.score-display {
+			text-align: center;
+			font-size: 18px;
+			margin: 20px 0;
+			font-weight: bold;
+		}
+		.hidden {
+			display: none;
+		}
+		.game-mode-selector {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		.mode-btn {
+			margin: 0 10px;
+			padding: 12px 25px;
+			font-size: 18px;
+		}
+		.feedback-box {
+			margin-top: 20px;
+			padding: 15px;
+			border-radius: 4px;
+			display: none;
+		}
+		.positive-feedback {
+			background-color: #e8f5e9;
+			border-left: 5px solid #4caf50;
+		}
+		.improvement-feedback {
+			background-color: #ffebee;
+			border-left: 5px solid #f44336;
+		}
+		.model-answer {
+			background-color: #e3f2fd;
+			border-left: 5px solid #2196f3;
+			margin-top: 20px;
+			padding: 15px;
+			border-radius: 4px;
+			display: none;
+		}
+		.key-term {
+			background-color: #fff9c4;
+			padding: 2px 5px;
+			border-radius: 3px;
+			font-weight: bold;
+		}
+		.topic-tag {
+			display: inline-block;
+			background-color: #bbdefb;
+			padding: 3px 8px;
+			border-radius: 12px;
+			font-size: 12px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>AQA A-Level Business 25-Mark Question Revision Game</h1>
+	
+	<div class="game-mode-selector">
+		<button class="mode-btn" onclick="startGame('timed')">Timed Challenge</button>
+		<button class="mode-btn" onclick="startGame('practice')">Practice Mode</button>
+		<button class="mode-btn" onclick="startGame('case-study')">Case Study Focus</button>
+	</div>
+	
+	<div id="game-area" class="hidden">
+		<div class="score-display">
+			Questions Completed: <span id="score">0</span>/<span id="total-questions">10</span>
+			<div id="topic-tags"></div>
+		</div>
+		
+		<div class="progress">
+			<div class="progress-bar" id="progress-bar"></div>
+		</div>
+		
+		<div class="game-container">
+			<div class="question-display">
+				<h2 id="question-text">Question will appear here</h2>
+				<div class="source" id="question-source"></div>
+			</div>
+			
+			<div class="structure-guide">
+				<h3>Structure Guide (PEEL Framework)</h3>
+				<p><strong>P</strong>oint - Make your argument</p>
+				<p><strong>E</strong>vidence - Provide examples/facts</p>
+				<p><strong>E</strong>xplain - Link to the question</p>
+				<p><strong>L</strong>ink - Back to the main question</p>
+			</div>
+			
+			<textarea id="answer-input" placeholder="Type your answer here following the PEEL structure..."></textarea>
+			
+			<div class="controls">
+				<button id="hint-btn" onclick="showHint()">Show Hint</button>
+				<button id="example-btn" onclick="showExample()">Show Contextual Example</button>
+				<div class="timer">Time: <span id="time-display">05:00</span></div>
+				<button id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+				<button id="next-btn" onclick="nextQuestion()" class="hidden">Next Question</button>
+			</div>
+			
+			<div class="hint-box" id="hint-box">
+				<h3>Hint</h3>
+				<p id="hint-text">Hint will appear here</p>
+			</div>
+			
+			<div class="example-box" id="example-box">
+				<h3>Contextual Example</h3>
+				<p id="example-text">Example will appear here</p>
+			</div>
+			
+			<div class="feedback-box" id="feedback-box">
+				<h3>Feedback</h3>
+				<p id="feedback-text"></p>
+			</div>
+			
+			<div class="model-answer" id="model-answer">
+				<h3>Model Answer Structure</h3>
+				<p id="model-answer-text"></p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="results-screen" class="hidden">
+		<h2>Game Complete!</h2>
+		<p>You answered <span id="final-score">0</span> out of <span id="final-total">10</span> questions.</p>
+		<div id="performance-comment"></div>
+		<h3>Topics to Review:</h3>
+		<div id="weak-areas"></div>
+		<button onclick="resetGame()">Play Again</button>
+	</div>
+	
+	<script>
+// AQA Specification-Aligned Question Bank
+const questions = [
+	{
+		text: "Analyse how an understanding of the product life cycle could help the managers of a multi-product business achieve steady sales growth.",
+		source: "AQA Paper 1 (2018) - Adapted",
+		hint: "Consider: 1) Timing marketing strategies for each stage 2) Using extension strategies 3) Portfolio management (BCG Matrix). Remember to evaluate limitations.",
+		example: "Unilever manages 400+ brands using PLC theory - they divest declining products (e.g. sold Flora margarine) while investing in growth products (e.g. Dove Men+Care).",
+		topics: ["Marketing", "Product Life Cycle", "Growth Strategies"],
+		modelAnswer: "Introduction: Define PLC and steady growth. Analysis: 1) Introduction stage - heavy promotion needed (e.g. Apple spends 6% revenue on marketing new products). 2) Growth stage - capacity investment (Tesla Gigafactories). 3) Maturity - extension strategies (Coca-Cola Zero). Evaluation: PLC less useful for fashions/fads (e.g. fidget spinners had 6-month cycle) or during economic shocks (COVID disrupted normal cycles). Conclusion: Valuable framework but must be combined with market research.",
+		aqaSpec: "3.5.2 Product life cycle"
+	},
+	{
+		text: "Evaluate whether training is the most effective way for a retailer to improve workforce performance.",
+		source: "AQA Paper 1 (2019) - Adapted",
+		hint: "Consider: 1) Types of training (induction, on-the-job) 2) Alternative methods (recruitment, motivation) 3) Cost-benefit analysis.",
+		example: "Tesco's 'Skills Quarters' provide role-specific training, improving checkout speed by 15%. However, Aldi achieves similar results through higher pay (20% above industry average) attracting already-skilled workers.",
+		topics: ["Human Resources", "Training", "Workforce Performance"],
+		modelAnswer: "Introduction: Define workforce performance metrics. Analysis: 1) Benefits of training - improves productivity (Tesco example), motivation (Hertzberg's motivators). 2) Limitations - costs (Sainsbury's spent £34m on digital skills training), time. Evaluation: More effective for complex roles (tech retail) than simple tasks. Alternatives like performance pay (John Lewis bonus) may work better. Conclusion: Important but not always most cost-effective solution.",
+		aqaSpec: "2.4.2 Training"
+	},
+	{
+		text: "Assess the view that ethical behaviour is now essential for public limited companies.",
+		source: "AQA Paper 1 (2017) - Adapted",
+		hint: "Consider: 1) Stakeholder expectations 2) Legal requirements 3) Financial implications 4) Competitive advantage.",
+		example: "Primark's Ethical Trade Team audits factories, preventing reputational damage. Conversely, Boohoo's 2020 supply chain scandal wiped £1bn off market value.",
+		topics: ["Business Ethics", "Corporate Social Responsibility", "Stakeholders"],
+		modelAnswer: "Introduction: Define business ethics. Analysis: 1) Essential because: stakeholder pressure (84% consumers prefer ethical brands - Mintel 2022), legal compliance (Modern Slavery Act), talent attraction. 2) Not essential because: profit focus (VW emissions scandal still profitable), varies by industry. Evaluation: Increasingly vital for consumer-facing PLCs but implementation costs may outweigh benefits for B2B firms. Conclusion: Context-dependent but trend suggests growing importance.",
+		aqaSpec: "3.6.1 Business ethics"
+	},
+	{
+		text: "Evaluate the potential benefits to a business of introducing flexible working for all employees.",
+		source: "AQA Paper 1 (2022) - Adapted",
+		hint: "Consider: 1) Types of flexible working 2) Impact on productivity 3) Effect on costs 4) Implementation challenges.",
+		example: "HSBC's flexible policy increased productivity by 12% (2021 data), while Twitter's mandated office return saw 10% staff attrition.",
+		topics: ["Human Resources", "Flexible Working", "Motivation"],
+		modelAnswer: "Introduction: Define flexible working (remote, compressed hours etc). Analysis: 1) Benefits - productivity (HSBC), motivation (Maslow's work-life balance), talent retention. 2) Drawbacks - coordination costs, monitoring challenges. Evaluation: Most effective for knowledge workers; less suitable for retail/manufacturing. Technology enables but doesn't guarantee success. Conclusion: Net benefit likely but requires cultural adaptation.",
+		aqaSpec: "2.4.3 Motivation"
+	},
+	{
+		text: "Analyse how improvements in operational efficiency could help a business facing overseas competition.",
+		source: "AQA Paper 2 (2023) - Adapted",
+		hint: "Consider: 1) Lean production 2) Technology 3) Supply chain management 4) Economies of scale.",
+		example: "UK steel industry invested £300m in electric arc furnaces (60% energy saving), helping compete with Chinese imports despite 25% cheaper labour costs there.",
+		topics: ["Operations", "Competitiveness", "Globalisation"],
+		modelAnswer: "Introduction: Define operational efficiency. Analysis: 1) Lean techniques (JIT at Toyota UK reduced inventory 30%). 2) Automation (Dyson's Singapore plant has 80% robot workforce). 3) Supplier rationalisation (M&S cut suppliers from 300 to 100). Evaluation: Limited by minimum efficient scale - SMEs may struggle. Conclusion: Vital for manufacturing sectors facing low-cost competition.",
+		aqaSpec: "3.3.3 Improving operational efficiency"
+	},
+	{
+		text: "Evaluate the potential benefits to a business of using franchising as a method of international growth.",
+		source: "AQA Paper 2 (2021) - Adapted",
+		hint: "Consider: 1) Risk vs control 2) Market knowledge 3) Speed of expansion 4) Brand consistency.",
+		example: "Dominos has 12,530 franchises globally (93% of stores) enabling rapid growth, while Pret abandoned US franchising due to quality control issues.",
+		topics: ["Business Growth", "Franchising", "International Business"],
+		modelAnswer: "Introduction: Define franchising. Analysis: 1) Benefits - local knowledge (McDonald's halal menus in UAE), capital efficiency (subway charges $15k franchise fee). 2) Drawbacks - profit sharing (typically 8-12%), quality risks (Pret example). Evaluation: Best for standardized offerings; less suitable for complex/luxury goods. Conclusion: Highly effective for certain business models.",
+		aqaSpec: "3.7.2 Methods of international growth"
+	},
+	{
+		text: "Assess the importance of a strong corporate culture when managing change in a large business.",
+		source: "AQA Paper 2 (2022) - Adapted",
+		hint: "Consider: 1) Types of culture 2) Change models 3) Leadership styles 4) Communication.",
+		example: "Microsoft's cultural shift under Nadella ('growth mindset') enabled successful cloud transition, while Boeing's safety culture failures contributed to 737 MAX crises.",
+		topics: ["Organisational Culture", "Change Management", "Leadership"],
+		modelAnswer: "Introduction: Define corporate culture. Analysis: 1) Importance - reduces resistance (Kotter's 8-step model), aligns behaviour. 2) Limitations - can't overcome structural issues (e.g. Nokia's culture couldn't compensate for smartphone disruption). Evaluation: Most crucial during strategic pivots; less for incremental change. Conclusion: Necessary but not sufficient for successful change.",
+		aqaSpec: "3.8.3 Managing organisational culture"
+	},
+	{
+		text: "Evaluate whether price should be the main element of the marketing mix when launching in competitive markets.",
+		source: "AQA Paper 1 (2021) - Adapted",
+		hint: "Consider: 1) Pricing strategies 2) Market conditions 3) Product differentiation 4) Long-term implications.",
+		example: "Ryanair uses price-led strategy (70% seats sold at <£40), while BrewDog competes on premium positioning despite craft beer price wars.",
+		topics: ["Marketing Mix", "Pricing Strategies", "Competitive Markets"],
+		modelAnswer: "Introduction: Define marketing mix. Analysis: 1) Price advantages - penetrates markets (Xiaomi undercut Apple by 60%), volume growth. 2) Drawbacks - price wars (UK supermarkets have 1-3% margins), brand damage. Evaluation: Depends on PED - elastic markets (groceries) respond better than inelastic (luxury). Conclusion: Often important but rarely sustainable as sole focus.",
+		aqaSpec: "3.5.3 Price and pricing strategies"
+	},
+	{
+		text: "Analyse how cash flow problems could limit business growth, and evaluate whether cost reduction is better than revenue growth for improvement.",
+		source: "AQA Paper 1 (2023) - Adapted",
+		hint: "Consider: 1) Cash flow cycle 2) Working capital 3) Short vs long-term solutions 4) Trade-offs.",
+		example: "Carillion focused on revenue growth (bidding low-margin contracts) leading to collapse, while Tesco's 2015 cost-cutting (£250m savings) restored cash flow for reinvestment.",
+		topics: ["Finance", "Cash Flow", "Business Growth"],
+		modelAnswer: "Introduction: Define cash flow problems. Analysis: 1) Growth limits - can't fund CAPEX (Amazon's early years), working capital needs. 2) Cost benefits - quick impact (M&S closed 100 stores). 3) Revenue benefits - sustainable (Apple's services grew margins to 72%). Evaluation: Cost cuts risk capability; revenue takes time. Conclusion: Balance needed - 'good costs' for growth vs 'bad costs'.",
+		aqaSpec: "1.5.3 Cash flow management"
+	},
+	{
+		text: "Evaluate whether digital marketing is the most effective way to increase market share globally.",
+		source: "AQA Paper 2 (2020) - Adapted",
+		hint: "Consider: 1) Digital vs traditional 2) Market characteristics 3) Measurement 4) Integration.",
+		example: "Gymshark used 100% digital (Instagram influencers) to reach £500m sales, while Dyson still spends 30% budget on TV ads for global reach.",
+		topics: ["Digital Marketing", "Global Marketing", "Market Share"],
+		modelAnswer: "Introduction: Define digital marketing. Analysis: 1) Advantages - targeting (Facebook ads convert 9.2% vs 1.7% traditional), measurable. 2) Limitations - ad fatigue (CPCs rose 41% 2020-22), less effective for older demographics. Evaluation: Most effective for digitally native products; industrial B2B may need trade shows. Conclusion: Dominant but not universal solution.",
+		aqaSpec: "3.5.4 Digital marketing"
+	}
+];
+
+	// Game variables
+		let currentQuestionIndex = 0;
+		let score = 0;
+		let timer;
+		let timeLeft = 300; // 5 minutes in seconds
+		let gameMode = '';
+		let weakTopics = {};
+		let selectedQuestions = [];
+
+		// DOM elements
+		const questionText = document.getElementById('question-text');
+		const questionSource = document.getElementById('question-source');
+		const hintBox = document.getElementById('hint-box');
+		const hintText = document.getElementById('hint-text');
+		const exampleBox = document.getElementById('example-box');
+		const exampleText = document.getElementById('example-text');
+		const feedbackBox = document.getElementById('feedback-box');
+		const feedbackText = document.getElementById('feedback-text');
+		const modelAnswer = document.getElementById('model-answer');
+		const modelAnswerText = document.getElementById('model-answer-text');
+		const answerInput = document.getElementById('answer-input');
+		const timeDisplay = document.getElementById('time-display');
+		const scoreDisplay = document.getElementById('score');
+		const totalQuestionsDisplay = document.getElementById('total-questions');
+		const progressBar = document.getElementById('progress-bar');
+		const topicTags = document.getElementById('topic-tags');
+		const gameArea = document.getElementById('game-area');
+		const resultsScreen = document.getElementById('results-screen');
+		const finalScore = document.getElementById('final-score');
+		const finalTotal = document.getElementById('final-total');
+		const performanceComment = document.getElementById('performance-comment');
+		const weakAreas = document.getElementById('weak-areas');
+		const submitBtn = document.getElementById('submit-btn');
+		const nextBtn = document.getElementById('next-btn');
+		const exampleBtn = document.getElementById('example-btn');
+		const hintBtn = document.getElementById('hint-btn');
+
+		// Start game function
+		function startGame(mode) {
+			gameMode = mode;
+			currentQuestionIndex = 0;
+			score = 0;
+			weakTopics = {};
+			
+			// Select questions based on mode
+			if (mode === 'case-study') {
+				// Focus on questions with strong case studies
+				selectedQuestions = questions.filter(q => q.example && q.example.length > 100);
+			} else {
+				// Use all questions for other modes
+				selectedQuestions = [...questions];
+			}
+			
+			// Shuffle questions
+			selectedQuestions = shuffleArray(selectedQuestions);
+			
+			// Set timer based on mode
+			if (mode === 'timed') {
+				timeLeft = 300; // 5 minutes
+				startTimer();
+			} else {
+				timeLeft = 0;
+				updateTimeDisplay();
+			}
+			
+			// Update UI
+			scoreDisplay.textContent = score;
+			totalQuestionsDisplay.textContent = selectedQuestions.length;
+			updateProgressBar();
+			
+			// Show first question
+			showQuestion();
+			
+			// Switch to game area
+			document.querySelector('.game-mode-selector').classList.add('hidden');
+			gameArea.classList.remove('hidden');
+			resultsScreen.classList.add('hidden');
+		}
+
+		// Shuffle array function
+		function shuffleArray(array) {
+			const newArray = [...array];
+			for (let i = newArray.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+			}
+			return newArray;
+		}
+
+		// Show current question
+		function showQuestion() {
+			if (currentQuestionIndex >= selectedQuestions.length) {
+				endGame();
+				return;
+			}
+			
+			const question = selectedQuestions[currentQuestionIndex];
+			questionText.textContent = question.text;
+			questionSource.textContent = question.source;
+			hintText.textContent = question.hint;
+			exampleText.textContent = question.example;
+			modelAnswerText.textContent = question.modelAnswer;
+			
+			// Clear boxes
+			hintBox.style.display = 'none';
+			exampleBox.style.display = 'none';
+			feedbackBox.style.display = 'none';
+			modelAnswer.style.display = 'none';
+			answerInput.value = '';
+			
+			// Update topic tags
+			topicTags.innerHTML = '';
+			question.topics.forEach(topic => {
+				const tag = document.createElement('span');
+				tag.className = 'topic-tag';
+				tag.textContent = topic;
+				topicTags.appendChild(tag);
+			});
+			
+			// Update buttons
+			submitBtn.classList.remove('hidden');
+			nextBtn.classList.add('hidden');
+		}
+
+		// Timer functions
+		function startTimer() {
+			clearInterval(timer);
+			timer = setInterval(() => {
+				timeLeft--;
+				updateTimeDisplay();
+				
+				if (timeLeft <= 0) {
+					clearInterval(timer);
+					endGame();
+				}
+			}, 1000);
+		}
+
+		function updateTimeDisplay() {
+			const minutes = Math.floor(timeLeft / 60);
+			const seconds = timeLeft % 60;
+			timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+			
+			// Change color when time is running low
+			if (timeLeft < 60) {
+				timeDisplay.style.color = '#e74c3c';
+			} else {
+				timeDisplay.style.color = '';
+			}
+		}
+
+		// Show hint
+		function showHint() {
+			hintBox.style.display = 'block';
+			hintBtn.disabled = true;
+		}
+
+		// Show example
+		function showExample() {
+			exampleBox.style.display = 'block';
+			exampleBtn.disabled = true;
+		}
+
+		// Submit answer
+		function submitAnswer() {
+			const answer = answerInput.value.trim();
+			if (answer.length === 0) {
+				alert('Please write an answer before submitting.');
+				return;
+			}
+			
+			// Analyze answer (simple version)
+			const analysis = analyzeAnswer(answer, selectedQuestions[currentQuestionIndex]);
+			
+			// Show feedback
+			feedbackText.innerHTML = analysis.feedback;
+			feedbackBox.className = 'feedback-box';
+			feedbackBox.classList.add(analysis.isGood ? 'positive-feedback' : 'improvement-feedback');
+			feedbackBox.style.display = 'block';
+			
+			// Show model answer
+			modelAnswer.style.display = 'block';
+			
+			// Update score
+			if (analysis.isGood) {
+				score++;
+				scoreDisplay.textContent = score;
+			} else {
+				// Track weak topics
+				selectedQuestions[currentQuestionIndex].topics.forEach(topic => {
+					weakTopics[topic] = (weakTopics[topic] || 0) + 1;
+				});
+			}
+			
+			// Update buttons
+			submitBtn.classList.add('hidden');
+			nextBtn.classList.remove('hidden');
+		}
+
+		// Simple answer analysis
+		function analyzeAnswer(answer, question) {
+			const analysis = {
+				isGood: false,
+				feedback: ''
+			};
+			
+			// Check for key elements
+			const hasStructure = answer.match(/introduction|conclusion|evaluate|analysis/gi);
+			const hasExamples = answer.match(/example|e\.g|for instance|case study/gi);
+			const hasTheory = answer.match(/theory|model|framework|PESTLE|SWOT|Ansoff/gi);
+			const hasEvaluation = answer.match(/however|on the other hand|limitation|but/gi);
+			
+			// Build feedback
+			let feedback = '';
+			
+			if (hasStructure) {
+				feedback += '<p>✅ Good job including a clear structure in your answer.</p>';
+			} else {
+				feedback += '<p>❌ Try to structure your answer more clearly with an introduction, analysis, and conclusion.</p>';
+			}
+			
+			if (hasExamples) {
+				feedback += '<p>✅ Well done for using contextual examples to support your points.</p>';
+			} else {
+				feedback += `<p>❌ Try to include specific examples like "${question.example.split('.')[0]}..." to strengthen your answer.</p>`;
+			}
+			
+			if (hasTheory) {
+				feedback += '<p>✅ Excellent use of business theories and models.</p>';
+			} else {
+				feedback += '<p>❌ Consider referencing relevant business theories (e.g., SWOT, Porter\'s Five Forces).</p>';
+			}
+			
+			if (hasEvaluation) {
+				feedback += '<p>✅ Great balanced evaluation with consideration of different perspectives.</p>';
+			} else {
+				feedback += '<p>❌ Remember to evaluate both sides of the argument for higher marks.</p>';
+			}
+			
+			// Check length (very rough estimate)
+			const wordCount = answer.split(/\s+/).length;
+			if (wordCount < 100) {
+				feedback += '<p>❌ Your answer seems quite short - aim to develop your points more fully.</p>';
+			} else if (wordCount > 300) {
+				feedback += '<p>⚠️ Your answer is quite long - make sure you\'re being concise and focused.</p>';
+			} else {
+				feedback += '<p>✅ Good length for a 25-mark question response.</p>';
+			}
+			
+			// Determine if answer is good
+			const positiveCount = (feedback.match(/✅/g) || []).length;
+			const negativeCount = (feedback.match(/❌/g) || []).length;
+			
+			analysis.isGood = positiveCount > negativeCount;
+			analysis.feedback = feedback;
+			
+			return analysis;
+		}
+
+		// Next question
+		function nextQuestion() {
+			currentQuestionIndex++;
+			updateProgressBar();
+			showQuestion();
+			
+			// Re-enable buttons
+			hintBtn.disabled = false;
+			exampleBtn.disabled = false;
+		}
+
+		// Update progress bar
+		function updateProgressBar() {
+			const progress = (currentQuestionIndex / selectedQuestions.length) * 100;
+			progressBar.style.width = `${progress}%`;
+		}
+
+		// End game
+		function endGame() {
+			clearInterval(timer);
+			
+			// Calculate results
+			finalScore.textContent = score;
+			finalTotal.textContent = selectedQuestions.length;
+			
+			const percentage = Math.round((score / selectedQuestions.length) * 100);
+			let comment = '';
+			
+			if (percentage >= 80) {
+				comment = 'Excellent work! You clearly have a strong understanding of these business concepts.';
+			} else if (percentage >= 60) {
+				comment = 'Good job! You\'re on the right track but could benefit from some additional revision.';
+			} else {
+				comment = 'Keep practicing! Focus on the areas below to improve your performance.';
+			}
+			
+			performanceComment.textContent = comment;
+			
+			// Show weak areas
+			weakAreas.innerHTML = '';
+			if (Object.keys(weakTopics).length > 0) {
+				const sortedTopics = Object.entries(weakTopics).sort((a, b) => b[1] - a[1]);
+				
+				sortedTopics.slice(0, 3).forEach(([topic, count]) => {
+					const topicEl = document.createElement('div');
+					topicEl.innerHTML = `<span class="key-term">${topic}</span> (appeared in ${count} question${count > 1 ? 's' : ''})`;
+					weakAreas.appendChild(topicEl);
+				});
+			} else if (score > 0) {
+				weakAreas.innerHTML = '<p>No specific weak areas identified - great job!</p>';
+			} else {
+				weakAreas.innerHTML = '<p>Try reviewing all the model answers to improve.</p>';
+			}
+			
+			// Switch to results screen
+			gameArea.classList.add('hidden');
+			resultsScreen.classList.remove('hidden');
+		}
+
+		// Reset game
+		function resetGame() {
+			document.querySelector('.game-mode-selector').classList.remove('hidden');
+			resultsScreen.classList.add('hidden');
+		}
+
+		// Initialize
+		updateTimeDisplay();
+	</script>
+</body>
+</html>
