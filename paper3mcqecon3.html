@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQA A-Level Economics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .quiz-container {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .question {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+            padding-left: 30px;
+        }
+        .option:hover {
+            background-color: #eaf2f8;
+        }
+        .option.selected {
+            background-color: #d4e6f1;
+            border-left: 3px solid #3498db;
+        }
+        .option.correct {
+            background-color: #d5f5e3;
+            border-left: 3px solid #2ecc71;
+        }
+        .option.incorrect {
+            background-color: #fadbd8;
+            border-left: 3px solid #e74c3c;
+        }
+        .option::before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .explanation {
+            background-color: #fef9e7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: none;
+        }
+        .quiz-title {
+            background-color: #eaf2f8;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0 10px 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .results {
+            display: none;
+            background-color: #e8f8f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        .score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        .feedback {
+            margin-top: 15px;
+        }
+        .question-feedback {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .correct-feedback {
+            background-color: #e8f8f5;
+            border-left: 3px solid #2ecc71;
+        }
+        .incorrect-feedback {
+            background-color: #fdebd0;
+            border-left: 3px solid #e67e22;
+        }
+        .hidden {
+            display: none;
+        }
+        .quiz-navigation {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .quiz-navigation button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AQA A-Level Economics Quiz</h1>
+    <p>Test your knowledge with these questions from past AQA A-Level Economics papers.</p>
+    
+    <div class="quiz-navigation">
+        <button id="prevQuiz">Previous Quiz</button>
+        <span id="quizCounter">Quiz 1 of 5</span>
+        <button id="nextQuiz">Next Quiz</button>
+    </div>
+
+    <!-- Quiz 1 -->
+    <div class="quiz-container" id="quiz1">
+        <div class="quiz-title">
+            <h2>Economics Quiz 1</h2>
+        </div>
+        
+        <div id="quiz1-questions">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="submit-btn" data-quiz="1">Submit Quiz 1</button>
+            <button class="reset-btn" data-quiz="1">Reset Quiz 1</button>
+        </div>
+        
+        <div class="results" id="results1">
+            <h3>Quiz 1 Results</h3>
+            <p>Your score: <span class="score">0</span>/<span class="total">10</span></p>
+            <p class="percentage">0%</p>
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Quiz 2 -->
+    <div class="quiz-container hidden" id="quiz2">
+        <div class="quiz-title">
+            <h2>Economics Quiz 2</h2>
+        </div>
+        
+        <div id="quiz2-questions">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="submit-btn" data-quiz="2">Submit Quiz 2</button>
+            <button class="reset-btn" data-quiz="2">Reset Quiz 2</button>
+        </div>
+        
+        <div class="results" id="results2">
+            <h3>Quiz 2 Results</h3>
+            <p>Your score: <span class="score">0</span>/<span class="total">10</span></p>
+            <p class="percentage">0%</p>
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Quiz 3 -->
+    <div class="quiz-container hidden" id="quiz3">
+        <div class="quiz-title">
+            <h2>Economics Quiz 3</h2>
+        </div>
+        
+        <div id="quiz3-questions">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="submit-btn" data-quiz="3">Submit Quiz 3</button>
+            <button class="reset-btn" data-quiz="3">Reset Quiz 3</button>
+        </div>
+        
+        <div class="results" id="results3">
+            <h3>Quiz 3 Results</h3>
+            <p>Your score: <span class="score">0</span>/<span class="total">10</span></p>
+            <p class="percentage">0%</p>
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Quiz 4 -->
+    <div class="quiz-container hidden" id="quiz4">
+        <div class="quiz-title">
+            <h2>Economics Quiz 4</h2>
+        </div>
+        
+        <div id="quiz4-questions">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="submit-btn" data-quiz="4">Submit Quiz 4</button>
+            <button class="reset-btn" data-quiz="4">Reset Quiz 4</button>
+        </div>
+        
+        <div class="results" id="results4">
+            <h3>Quiz 4 Results</h3>
+            <p>Your score: <span class="score">0</span>/<span class="total">10</span></p>
+            <p class="percentage">0%</p>
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Quiz 5 -->
+    <div class="quiz-container hidden" id="quiz5">
+        <div class="quiz-title">
+            <h2>Economics Quiz 5</h2>
+        </div>
+        
+        <div id="quiz5-questions">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="submit-btn" data-quiz="5">Submit Quiz 5</button>
+            <button class="reset-btn" data-quiz="5">Reset Quiz 5</button>
+        </div>
+        
+        <div class="results" id="results5">
+            <h3>Quiz 5 Results</h3>
+            <p>Your score: <span class="score">0</span>/<span class="total">10</span></p>
+            <p class="percentage">0%</p>
+            <div class="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // All questions data
+        const allQuestions = [
+            {
+                question: "The average university graduate can expect to earn more over their working life than the average school leaver. This is most likely explained by:",
+                options: [
+                    "Discrimination in the labour markets for non-graduates.",
+                    "The higher marginal revenue productivity of graduates.",
+                    "The higher price elasticity of demand for graduates.",
+                    "The relatively low elasticity of supply of non-graduates."
+                ],
+                correct: 1, // Index of correct answer
+                explanation: "Graduates typically possess higher skills and education levels, leading to greater productivity and, consequently, higher earnings."
+            },
+            {
+                question: "Which one of the following statements regarding supply-side policies is correct? Supply-side policies:",
+                options: [
+                    "Can have microeconomic as well as macroeconomic effects on the economy.",
+                    "Can increase the potential output of an economy but not its trend rate of growth.",
+                    "Cannot be used to correct market failures and improve the operation of markets.",
+                    "Do not affect competitiveness or the current account of the balance of payments."
+                ],
+                correct: 0,
+                explanation: "Supply-side policies aim to improve the efficiency and productivity of markets, impacting both microeconomic factors (like individual industries) and macroeconomic factors (like overall economic growth)."
+            },
+            {
+                question: "In a market where the marginal social benefit (MSB) exceeds the marginal private benefit (MPB), and the marginal social cost (MSC) equals the marginal private cost (MPC), the good in question likely exhibits:",
+                options: [
+                    "Negative externalities in production.",
+                    "Negative externalities in consumption.",
+                    "Positive externalities in consumption.",
+                    "Positive externalities in production."
+                ],
+                correct: 2,
+                explanation: "When MSB exceeds MPB, it indicates that the consumption of the good provides additional benefits to society not accounted for by the consumer, characteristic of positive consumption externalities."
+            },
+            {
+                question: "Which one of the following changes in macroeconomic performance is most likely to involve a trade-off between government policy objectives in the short run?",
+                options: [
+                    "Economic growth increases and the deficit on the balance of payments on current account is eliminated.",
+                    "Inflation declines to match its target rate and the government's budget position moves into balance.",
+                    "The distribution of income becomes more equal as economic growth increases.",
+                    "The government's budget deficit increases as the rate of unemployment is reduced."
+                ],
+                correct: 3,
+                explanation: "Reducing unemployment often requires increased government spending or tax cuts, which can lead to a higher budget deficit, illustrating a trade-off between lowering unemployment and maintaining fiscal balance."
+            },
+            {
+                question: `
+  <p>Table 1 contains data for GDP per capita and the Human Development Index (HDI) for four countries in a given year.</p>
+  <table style="border-collapse: collapse; width: 100%; text-align: center; font-family: Arial, sans-serif;">
+    <caption style="font-weight: bold; margin-bottom: 10px;">Table 1</caption>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px;"></th>
+      <th style="border: 1px solid black; padding: 8px;">GDP per capita ($)</th>
+      <th style="border: 1px solid black; padding: 8px;">HDI</th>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">Country 1</td>
+      <td style="border: 1px solid black; padding: 8px;">32 860</td>
+      <td style="border: 1px solid black; padding: 8px;">0.45</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">Country 2</td>
+      <td style="border: 1px solid black; padding: 8px;">29 440</td>
+      <td style="border: 1px solid black; padding: 8px;">0.77</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">Country 3</td>
+      <td style="border: 1px solid black; padding: 8px;">23 230</td>
+      <td style="border: 1px solid black; padding: 8px;">0.51</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">Country 4</td>
+      <td style="border: 1px solid black; padding: 8px;">22 650</td>
+      <td style="border: 1px solid black; padding: 8px;">0.92</td>
+    </tr>
+  </table>
+  <p>Which one of the following statements is most consistent with the data?</p>
+`,
+                options: [
+                    "Country 1 has the highest living standards of the four countries.",
+                    "Country 2 has a higher rate of growth than countries 3 and 4.",
+                    "Country 3 is the least developed of the four countries.",
+                    "Country 4 has the highest life expectancy and literacy rates."
+                ],
+                correct: 3,
+                explanation: "A higher HDI value typically reflects better outcomes in health (life expectancy) and education (literacy rates), suggesting that Country 4 likely has the highest life expectancy and literacy rates among the four."
+            },
+            {
+                question: "In an economy producing capital and consumer goods, moving from one point to another along the production possibility curve represents:",
+                options: [
+                    "An increase in unemployment.",
+                    "Economic growth.",
+                    "The opportunity cost of producing more capital goods in terms of consumer goods forgone.",
+                    "A decrease in the productive capacity of the economy."
+                ],
+                correct: 2,
+                explanation: "Moving along the PPC illustrates the trade-off between two goods; increasing the production of one requires sacrificing some of the other, highlighting the concept of opportunity cost."
+            },
+            {
+                question: "The data that follow is an extract from a balance sheet for a bank. Based on this information, what is the bank's leverage ratio? Reserves £10bn, Loans £40bn, Deposits £40bn, Equity £10bn",
+                options: [
+                    "5:1",
+                    "4:1",
+                    "1:5",
+                    "1:4"
+                ],
+                correct: 0,
+                explanation: "The leverage ratio is calculated as Total Assets divided by Equity. Here, Total Assets = Reserves + Loans = £10bn + £40bn = £50bn. Therefore, the leverage ratio is £50bn / £10bn = 5:1."
+            },
+            {
+                question: "If the UK experiences a significant appreciation of its currency, which of the following is the most likely short-term effect on the UK's current account balance?",
+                options: [
+                    "An improvement, due to cheaper imports.",
+                    "An improvement, due to more expensive exports.",
+                    "A deterioration, due to cheaper imports and more expensive exports.",
+                    "No effect, as exchange rates do not influence the current account."
+                ],
+                correct: 2,
+                explanation: "An appreciation makes exports more expensive and imports cheaper, likely leading to a worsening (deterioration) of the current account balance as exports decrease and imports increase."
+            },
+            {
+                question: "Which of the following is considered a conventional monetary policy tool used by central banks to influence the economy?",
+                options: [
+                    "Quantitative easing.",
+                    "Setting reserve requirements.",
+                    "Open market operations.",
+                    "Implementing capital controls."
+                ],
+                correct: 2,
+                explanation: "Open market operations, involving the buying and selling of government securities, are a conventional tool used by central banks to regulate the money supply and influence interest rates."
+            },
+            {
+                question: "Cost-push inflation is typically caused by:",
+                options: [
+                    "An increase in consumer demand.",
+                    "A decrease in production costs.",
+                    "An increase in wages and raw material prices.",
+                    "An increase in the money supply."
+                ],
+                correct: 2,
+                explanation: "Cost-push inflation occurs when rising costs of production, such as higher wages and raw material prices, lead firms to increase prices to maintain profit margins."
+            },
+            {
+                question: "Which of the following is a defining characteristic of a public good?",
+                options: [
+                    "Excludability.",
+                    "Rivalry.",
+                    "Non-excludability.",
+                    "Price elasticity."
+                ],
+                correct: 2,
+                explanation: "Public goods are non-excludable, meaning individuals cannot be prevented from using them, and non-rivalrous, meaning one person's use does not reduce availability to others."
+            },
+            {
+                question: "An increase in government spending without a corresponding increase in taxes is likely to:",
+                options: [
+                    "Decrease the budget deficit.",
+                    "Increase the budget deficit.",
+                    "Have no effect on the budget deficit.",
+                    "Balance the budget."
+                ],
+                correct: 1,
+                explanation: "Increasing government spending without raising taxes will increase the budget deficit, as expenditures surpass revenues."
+            },
+            {
+                question: "Economics is considered a social science because:",
+                options: [
+                    "All economic hypotheses are based on value judgments.",
+                    "Economic policies can only be based on positive analysis.",
+                    "It involves the study of human behaviour and economic decision-making.",
+                    "Quantitative data cannot be used to test economic theories."
+                ],
+                correct: 2,
+                explanation: "Economics studies human behaviour and decision-making, focusing on how scarce resources are allocated, which classifies it as a social science."
+            },
+            {
+                question: "All other things being equal, the demand for labour is more likely to be wage elastic if:",
+                options: [
+                    "It is difficult to substitute capital for labour.",
+                    "The cost of labour is a low percentage of total costs.",
+                    "The final product has a high price elasticity of demand.",
+                    "The supply curve for labour is wage elastic."
+                ],
+                correct: 2,
+                explanation: "When the final product has a high price elasticity of demand, firms are more sensitive to wage changes, making labour demand more wage elastic."
+            },
+            {
+                question: "Examine the below data for the rates of growth of nominal and real GDP and the rate of inflation for an economy in a given year. Which one of the following combinations shows the correct relationship between the three variables?",
+                options: [
+                    "real growth –2% | nominal growth 0% | inflation +2%",
+                    "real growth +4% | nominal growth +3% | inflation –1%",
+                    "real growth +5% | nominal growth +5% | inflation +1%",
+                    "real growth –5% | nominal growth –2% | inflation –3%"
+                ],
+                correct: 0,
+                explanation: "Nominal GDP growth equals real GDP growth plus inflation. In option A, –2% real growth plus 2% inflation equals 0% nominal growth, which is consistent with the identity."
+            },
+            {
+                question: "In the context of aggregate demand (AD) and aggregate supply (AS) curves, when aggregate demand shifts from AD1 to AD2:",
+                options: [
+                    "Cyclical unemployment is likely to be eliminated.",
+                    "The rate of economic growth is equal to (Y3 – Y1).",
+                    "The economy is producing at Y1, indicating a positive output gap.",
+                    "The economy is producing at Y2, indicating no unemployment."
+                ],
+                correct: 0,
+                explanation: "An increase in AD can reduce cyclical unemployment by boosting production and employment levels."
+            },
+            {
+                question: "In an economy, over the last decade, each of the top five decile groups has experienced a fall in their share of total income, while the bottom five decile groups have experienced a substantial increase. It can be concluded that the distribution of income is most likely to have become:",
+                options: [
+                    "More equal.",
+                    "More equal but less equitable.",
+                    "More equitable.",
+                    "More equitable but less equal."
+                ],
+                correct: 0,
+                explanation: "A shift in income share towards lower deciles suggests a move towards a more equal income distribution."
+            },
+            {
+                question: "In an economy, the marginal propensity to consume (MPC) is 0.6. All other things being equal, which one of the following statements is correct?",
+                options: [
+                    "A £5 billion reduction in the economy's national income will result in a £3 billion fall in consumption.",
+                    "If injections into the circular flow of income equal £20 billion, national income will equal £32 billion.",
+                    "If injections into the circular flow of income rise by £10 billion, national income will rise by £6 billion.",
+                    "When the economy's national income equals £100 billion, consumption will equal £60 billion."
+                ],
+                correct: 0,
+                explanation: "With an MPC of 0.6, a decrease in national income leads to a proportional decrease in consumption; thus, a £5 billion reduction results in a £3 billion fall in consumption (0.6 × £5 billion)."
+            },
+            {
+                question: "Which one of the following combinations shows the essential characteristics of a customs union? |Internal trade barriers | Customs Union | Common currency ",
+                options: [
+                    "Yes | No | Yes",
+                    "No | Yes | No",
+                    "Yes | Yes | No",
+                    "No | No | Yes"
+                ],
+                correct: 1,
+                explanation: "A customs union eliminates internal trade barriers and adopts common external tariffs but does not necessarily involve a common currency."
+            },
+            {
+                question: "In the context of a profit-maximising firm in a monopolistically competitive industry, which one of the following applies to the firm's equilibrium position?",
+                options: [
+                    "Price equals marginal cost.",
+                    "Price equals average total cost.",
+                    "Marginal cost equals average total cost.",
+                    "Marginal cost equals average variable cost."
+                ],
+                correct: 1,
+                explanation: "In long-run equilibrium, firms in monopolistic competition set price equal to average total cost, earning normal profit."
+            },
+            {
+                question: "Which one of the following is a characteristic of a perfectly competitive market?",
+                options: [
+                    "Firms are price makers.",
+                    "There are significant barriers to entry and exit.",
+                    "Products are homogeneous.",
+                    "Firms engage in non-price competition."
+                ],
+                correct: 2,
+                explanation: "In perfect competition, all firms produce identical (homogeneous) products, leading to no differentiation."
+            },
+            {
+                question: "A deficit in the current account of the balance of payments implies that:",
+                options: [
+                    "The value of imports of goods and services exceeds the value of exports.",
+                    "The country's currency is appreciating.",
+                    "There is a surplus in the financial account.",
+                    "Government spending exceeds tax revenue."
+                ],
+                correct: 0,
+                explanation: "A current account deficit occurs when a country imports more goods and services than it exports."
+            },
+            {
+                question: "If the price elasticity of demand for a product is -0.5, this means that:",
+                options: [
+                    "Demand is perfectly inelastic.",
+                    "The product is a necessity.",
+                    "A 10% increase in price will lead to a 5% decrease in quantity demanded.",
+                    "The product has many close substitutes."
+                ],
+                correct: 2,
+                explanation: "A price elasticity of -0.5 indicates inelastic demand; quantity demanded changes by a smaller percentage than the price change."
+            },
+            {
+                question: "Which one of the following is an example of expansionary fiscal policy?",
+                options: [
+                    "Increasing interest rates.",
+                    "Reducing government spending.",
+                    "Decreasing taxation.",
+                    "Selling government bonds."
+                ],
+                correct: 2,
+                explanation: "Lowering taxes increases consumers' disposable income, boosting consumption and aggregate demand."
+            },
+            {
+                question: "In a floating exchange rate system, the value of a currency is determined by:",
+                options: [
+                    "Government intervention.",
+                    "The International Monetary Fund (IMF).",
+                    "Market forces of supply and demand.",
+                    "A fixed rate set against another major currency."
+                ],
+                correct: 2,
+                explanation: "In a floating system, currency values fluctuate based on supply and demand in the foreign exchange market."
+            },
+            {
+                question: "Structural unemployment is best described as unemployment arising from:",
+                options: [
+                    "Seasonal variations in demand.",
+                    "A downturn in the business cycle.",
+                    "Mismatches between workers' skills and job requirements.",
+                    "Workers voluntarily leaving their jobs."
+                ],
+                correct: 2,
+                explanation: "Structural unemployment occurs when workers' skills do not match available jobs, often due to technological changes or shifts in the economy."
+            },
+            {
+                question: "Which one of the following is a characteristic of a public good?",
+                options: [
+                    "Excludability.",
+                    "Rivalry.",
+                    "Non-excludability.",
+                    "Produced by the private sector."
+                ],
+                correct: 2,
+                explanation: "Public goods are non-excludable, meaning individuals cannot be prevented from using them, and non-rivalrous, meaning one person's use does not reduce availability to others."
+            },
+            {
+                question: "Which of the following is a tool of monetary policy?",
+                options: [
+                    "Government spending.",
+                    "Taxation.",
+                    "Open market operations.",
+                    "Regulation of monopolies."
+                ],
+                correct: 2,
+                explanation: "Open market operations involve the buying and selling of government securities to influence the money supply and interest rates."
+            },
+            {
+                question: "Which fiscal policy measure is most likely to decrease national output from Y1 to Y2, as illustrated by a leftward shift of the aggregate demand curve?",
+                options: [
+                    "Increasing infrastructure spending",
+                    "Raising interest rates",
+                    "Increasing income tax rates",
+                    "Reducing the budget deficit"
+                ],
+                correct: 2,
+                explanation: "Higher income tax rates reduce consumers' disposable income, leading to decreased consumption and a leftward shift in aggregate demand, thereby reducing national output."
+            },
+            {
+                question: "How can extending property rights help mitigate market failure?",
+                options: [
+                    "By ensuring public goods are privately owned",
+                    "By allowing owners to seek compensation for negative externalities",
+                    "By eliminating all forms of government intervention",
+                    "By redistributing income more equitably"
+                ],
+                correct: 1,
+                explanation: "Extending property rights enables owners to charge for the use of their resources or seek compensation for damages, internalizing externalities and reducing market failure."
+            },
+            {
+                question: "If a firm lowers the price of its product and total revenue decreases, what can be inferred about the price elasticity of demand?",
+                options: [
+                    "Demand is price elastic",
+                    "Demand is price inelastic",
+                    "Demand has unit elasticity",
+                    "Demand is perfectly elastic"
+                ],
+                correct: 1,
+                explanation: "When demand is price inelastic, a decrease in price leads to a proportionally smaller increase in quantity demanded, resulting in a decrease in total revenue."
+            },
+            {
+                question: "A firm charging different prices to different customers for the same product is engaging in:",
+                options: [
+                    "Predatory pricing",
+                    "Price discrimination",
+                    "Limit pricing",
+                    "Cost-plus pricing"
+                ],
+                correct: 1,
+                explanation: "Price discrimination involves charging different prices to different customers for the same product, based on their willingness to pay, without differences in production costs."
+            },
+            {
+                question: "In which market structure is a firm considered a price taker and earns normal profit in the long run?",
+                options: [
+                    "Monopoly",
+                    "Oligopoly",
+                    "Perfect competition",
+                    "Monopolistic competition"
+                ],
+                correct: 2,
+                explanation: "In perfect competition, firms are price takers due to the presence of many sellers offering identical products, leading to normal profit in the long run as any supernormal profits attract new entrants."
+            },
+            {
+                question: "What is the primary effect of a government subsidy on the market for a good?",
+                options: [
+                    "Increase in supply, leading to a lower equilibrium price",
+                    "Decrease in demand, leading to a lower equilibrium quantity",
+                    "Increase in demand, leading to a higher equilibrium price",
+                    "Decrease in supply, leading to a higher equilibrium price"
+                ],
+                correct: 0,
+                explanation: "A subsidy lowers production costs for producers, increasing supply. This shift typically results in a lower equilibrium price and a higher equilibrium quantity."
+            },
+            {
+                question: "Which of the following is a characteristic of a positive economic statement?",
+                options: [
+                    "It includes value judgments.",
+                    "It is based on opinions.",
+                    "It can be tested and validated.",
+                    "It prescribes what ought to be."
+                ],
+                correct: 2,
+                explanation: "Positive statements are objective and fact-based, allowing them to be tested and validated."
+            },
+            {
+                question: "Which of the following is an example of a 'nudge' to promote healthier eating habits?",
+                options: [
+                    "Banning the sale of sugary drinks.",
+                    "Imposing taxes on junk food.",
+                    "Placing healthier foods at eye level in stores.",
+                    "Providing subsidies for gym memberships."
+                ],
+                correct: 2,
+                explanation: "A 'nudge' subtly guides choices without restricting options, such as strategically placing healthier foods to encourage better choices."
+            },
+            {
+                question: "On a production possibility frontier (PPF), moving from point A to point B results in producing more capital goods but fewer consumer goods. What does this movement represent?",
+                options: [
+                    "A decrease in opportunity cost.",
+                    "An increase in opportunity cost.",
+                    "Efficient resource utilization.",
+                    "Economic growth."
+                ],
+                correct: 1,
+                explanation: "Producing more capital goods at the expense of consumer goods illustrates the opportunity cost of forgone consumer goods."
+            },
+            {
+    question: `
+        <p>"Given the following data for a basket of goods that make up a simplified price index, what is the overall price index?"</p>
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Good</th>
+                    <th>Price Index</th>
+                    <th>Weighting</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>X</td>
+                    <td>105</td>
+                    <td>0.2</td>
+                </tr>
+                <tr>
+                    <td>Y</td>
+                    <td>110</td>
+                    <td>0.5</td>
+                </tr>
+                <tr>
+                    <td>Z</td>
+                    <td>102</td>
+                    <td>0.3</td>
+                </tr>
+            </tbody>
+        </table>
+    `,
+    options: [
+        "106.1",
+        "108.5",
+        "103.7",
+        "107.0"
+    ],
+    correct: 0,
+    explanation: "The overall price index is calculated by multiplying each good's price index by its weight and summing the results: (0.2×105) + (0.5×110) + (0.3×102) = 106.1."
+    },   
+    {
+                question: "Why are PPP exchange rates preferred over market exchange rates for comparing living standards between countries?",
+            options: [
+                    "They reflect short-term currency fluctuations.",
+                    "They account for differences in price levels between countries.",
+                    "They are influenced by speculative trading.",
+                    "They are set by international agreements."
+                ],
+            correct: 1,
+            explanation: "PPP (purchasing power parity) exchange rates adjust for variations in price levels, providing a more accurate comparison of real purchasing power across countries."
+            },
+            {
+                question: "Which one of the following applies to merit goods?",
+                options: [
+                    "Their marginal private benefit is greater than their marginal social benefit.",
+                    "They are likely to be underprovided by the market.",
+                    "They can only be supplied by the government.",
+                    "They have the characteristics of non-excludability and non-rivalry."
+                ],
+                correct: 1,
+                explanation: "Merit goods are often underprovided by the market because individuals may undervalue their benefits, leading to underconsumption without government intervention."
+            },
+            {
+                question: "At the start of the financial year, an economy's national debt stands at £1000 billion. Over the course of the year, the government plans to spend an extra £100 billion and borrow an extra £40 billion. If the government achieves its spending and borrowing targets, by the end of the financial year the national debt will have increased by:",
+                options: [
+                    "4%",
+                    "10%",
+                    "14%",
+                    "40%"
+                ],
+                correct: 0,
+                explanation: "An additional £40 billion borrowing increases the national debt from £1000 billion to £1040 billion, representing a 4% increase."
+            },
+            {
+                question: "Consider a PPF curve for an economy that produces consumer goods and capital goods. The economy is initially operating at point X within its frontier. If the economy now moves to point Y on its frontier, it will:",
+                options: [
+                    "Achieve both productive and allocative efficiency.",
+                    "Benefit from improved economies of scale in the production of both goods.",
+                    "Increase its underlying trend rate of growth.",
+                    "Obtain more consumer goods and capital goods at zero opportunity cost."
+                ],
+                correct: 0,
+                explanation: "Moving from inside the PPF (point X) to a point on the PPF (point Y) indicates that the economy is utilizing all its resources efficiently, achieving productive efficiency. Allocative efficiency depends on whether the mix of goods produced matches consumer preferences."
+            },
+            {
+                question: "All other things being equal, an increase in the ratio of capital to labour resulting from an increase in investment is most likely to lead to a:",
+                options: [
+                    "Decline in labour productivity.",
+                    "Fall in the size of the labour force.",
+                    "Negative demand-side shock to the economy.",
+                    "Supply-side improvement."
+                ],
+                correct: 3,
+                explanation: "An increased capital-labour ratio typically enhances labour productivity, leading to supply-side improvements in the economy."
+            },
+            {
+                question: "Which one of the following provides a reason for government intervention in a market?",
+                options: [
+                    "Firms in an oligopolistic market may limit price competition.",
+                    "Market failures can only be corrected by using regulations.",
+                    "Monopolistically competitive firms earn abnormal profits in the long run.",
+                    "Public goods are excludable and rival."
+                ],
+                correct: 0,
+                explanation: "In oligopolistic markets, firms may engage in anti-competitive practices, such as price-fixing, justifying government intervention to promote competition and protect consumers."
+            },
+            {
+                question: "In 2018, several central banks around the world have implemented a policy of quantitative easing (QE). All other things being equal, which one of the following combinations is most likely to be the result of this policy?",
+                options: [
+                    "Decrease bank liquidity | Bond prices fall | Interest rates rise",
+                    "Increase bank liquidity | Bond prices fall | Interest rates rise",
+                    "Decrease bank liquidity | Bond prices rise | Interest rates Fall",
+                    "Increase bank liquidity | Bond prices rise | Interest rates Fall"
+                ],
+                correct: 3,
+                explanation: "QE increases bank liquidity by purchasing financial assets, which raises bond prices and lowers long-term interest rates."
+            },
+            {
+                question: "The price of good Y, a substitute for good X, rises from 75p to £1. As a result, the quantity demanded for good X rises from 3 million units to 5 million units per month. What is the value of the cross elasticity of demand for good X with respect to good Y?",
+                options: [
+                    "+0.5",
+                    "–0.5",
+                    "+2.0",
+                    "–2.0"
+                ],
+                correct: 2,
+                explanation: "Cross elasticity of demand = (% change in quantity demanded of X) / (% change in price of Y) = [(5-3)/3] / [(1-0.75)/0.75] = (2/3) / (0.25/0.75) = 2.0."
+            },
+            {
+                question: "The short-run Phillips curve suggests that:",
+                options: [
+                    "There is a stable, inverse relationship between inflation and unemployment.",
+                    "Inflation and unemployment are unrelated in the short run.",
+                    "High inflation is associated with high unemployment in the short run.",
+                    "Supply-side policies have no effect on unemployment."
+                ],
+                correct: 0,
+                explanation: "The short-run Phillips curve illustrates an inverse relationship between inflation and unemployment, suggesting that lower unemployment can be achieved at the cost of higher inflation, and vice versa."
+            },
+            {
+                question: "Imposing a tariff on imported goods is most likely to:",
+                options: [
+                    "Decrease domestic production of the good.",
+                    "Lower the domestic price of the good.",
+                    "Increase government revenue.",
+                    "Improve the terms of trade for the importing country."
+                ],
+                correct: 2,
+                explanation: "Tariffs are taxes on imports; they raise government revenue and increase the domestic price of the imported goods, potentially protecting domestic industries."
+            },
+            {
+                question: "The equation of exchange, MV = PQ, can be used to illustrate the relationship between money supply and economic activity. If the velocity of money (V) and real output (Q) remain constant, what is the most likely effect of an increase in the money supply (M)?",
+                options: [
+                    "A decrease in the price level (P)",
+                    "An increase in the price level (P)",
+                    "A fall in real output (Q)",
+                    "A fall in the velocity of money (V)"
+                ],
+                correct: 1,
+                explanation: "Holding velocity (V) and output (Q) constant, an increase in money supply (M) leads to a proportional increase in the price level (P). This is consistent with the Quantity Theory of Money."
+            },
+            {
+                question: "In response to a sharp fall in the pound's exchange rate post-Brexit, the UK's current account deficit widened before later narrowing. Which of the following best explains this?",
+                options: [
+                    "UK export volumes fell due to global recession, delaying any benefit from the weaker pound",
+                    "The price elasticity of demand for UK exports and imports was inelastic in the short run",
+                    "The UK improved its terms of trade due to cheaper imports",
+                    "The Bank of England raised interest rates, offsetting the exchange rate effect"
+                ],
+                correct: 1,
+                explanation: "The J-Curve suggests that after depreciation, import values rise before quantity adjustments occur. If PED is inelastic, quantity demanded doesn't respond quickly to new prices, so the current account worsens initially. Only over time does elasticity lead to improved trade volumes and a stronger current account."
+            },
+            {
+                question: "Following a depreciation of the pound, the UK's current account balance initially worsens before improving over time. This pattern is best explained by:",
+                options: [
+                    "The Marshall-Lerner condition failing in the long run",
+                    "A fall in the marginal propensity to import",
+                    "The J-Curve effect, due to time lags in price and quantity adjustments",
+                    "An increase in the terms of trade"
+                ],
+                correct: 2,
+                explanation: "After a depreciation, import prices rise immediately, worsening the current account before export volumes rise and import volumes fall. Over time, the balance improves — forming a J-shaped path on a graph."
+            },
+            {
+                question: "In 2023, several low-income countries received increased foreign aid to fund infrastructure projects, but many saw only modest growth. Which of the following best explains this outcome according to limitations of the Harrod-Domar model?",
+                options: [
+                    "The marginal propensity to save was too high, reducing consumer demand",
+                    "Capital investment increased, but complementary factors like skilled labour were insufficient",
+                    "Higher investment led to inflation, reducing real GDP",
+                    "Increasing returns to scale did not occur"
+                ],
+                correct: 1,
+                explanation: "The Harrod-Domar model assumes that capital investment alone drives growth. However, if an economy lacks skilled labour, good governance, or institutional strength, the effectiveness of that investment is limited — highlighting a major criticism of the model."
+            }
+        ];
+
+        // Shuffle function (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Shuffle questions and create 5 quizzes
+        const shuffledQuestions = shuffleArray([...allQuestions]);
+        const quizzes = [];
+        for (let i = 0; i < 5; i++) {
+            const startIdx = i * 10;
+            const endIdx = startIdx + 10;
+            quizzes.push(shuffledQuestions.slice(startIdx, endIdx));
+        }
+
+        // Function to create a quiz with shuffled answers
+        function createQuiz(quizNumber, questions) {
+            const quizContainer = document.getElementById(`quiz${quizNumber}-questions`);
+            quizContainer.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                // Create an array of option indices and shuffle them
+                const optionIndices = q.options.map((_, i) => i);
+                const shuffledIndices = shuffleArray(optionIndices);
+                
+                // Find the new position of the correct answer
+                const newCorrectIndex = shuffledIndices.indexOf(parseInt(q.correct));
+                
+                // Create shuffled options
+                const shuffledOptions = shuffledIndices.map(i => q.options[i]);
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.dataset.correct = newCorrectIndex;
+                questionDiv.innerHTML = `
+                    <p><strong>Q${index + 1}.</strong> ${q.question}</p>
+                    <div class="options">
+                        ${shuffledOptions.map((opt, optIndex) => `
+                            <div class="option" data-value="${optIndex}">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation">
+                        <p><strong>Explanation:</strong> ${q.explanation}</p>
+                    </div>
+                    <div class="question-feedback"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+            
+            // Add event listeners to options
+            quizContainer.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const question = this.closest('.question');
+                    question.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // Initialize quizzes
+        quizzes.forEach((quiz, index) => {
+            createQuiz(index + 1, quiz);
+        });
+
+        // Quiz navigation
+        let currentQuiz = 1;
+        document.getElementById('quizCounter').textContent = `Quiz ${currentQuiz} of 5`;
+        
+        document.getElementById('nextQuiz').addEventListener('click', function() {
+            if (currentQuiz < 5) {
+                document.getElementById(`quiz${currentQuiz}`).classList.add('hidden');
+                currentQuiz++;
+                document.getElementById(`quiz${currentQuiz}`).classList.remove('hidden');
+                document.getElementById('quizCounter').textContent = `Quiz ${currentQuiz} of 5`;
+            }
+        });
+        
+        document.getElementById('prevQuiz').addEventListener('click', function() {
+            if (currentQuiz > 1) {
+                document.getElementById(`quiz${currentQuiz}`).classList.add('hidden');
+                currentQuiz--;
+                document.getElementById(`quiz${currentQuiz}`).classList.remove('hidden');
+                document.getElementById('quizCounter').textContent = `Quiz ${currentQuiz} of 5`;
+            }
+        });
+
+        // Submit button functionality
+        document.querySelectorAll('.submit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const quizNum = this.dataset.quiz;
+                const questions = document.querySelectorAll(`#quiz${quizNum} .question`);
+                let score = 0;
+                let answeredQuestions = 0;
+                
+                questions.forEach(question => {
+                    const selectedOption = question.querySelector('.option.selected');
+                    const correctAnswer = question.dataset.correct;
+                    const explanation = question.querySelector('.explanation');
+                    const feedback = question.querySelector('.question-feedback');
+                    
+                    if (selectedOption) {
+                        answeredQuestions++;
+                        const selectedValue = selectedOption.dataset.value;
+                        
+                        if (selectedValue === correctAnswer) {
+                            score++;
+                            selectedOption.classList.add('correct');
+                            feedback.textContent = "Correct! " + explanation.querySelector('p').textContent;
+                            feedback.className = "question-feedback correct-feedback";
+                        } else {
+                            selectedOption.classList.add('incorrect');
+                            // Highlight correct answer
+                            question.querySelectorAll('.option').forEach(opt => {
+                                if (opt.dataset.value === correctAnswer) {
+                                    opt.classList.add('correct');
+                                }
+                            });
+                            feedback.textContent = "Incorrect. " + explanation.querySelector('p').textContent;
+                            feedback.className = "question-feedback incorrect-feedback";
+                        }
+                        
+                        feedback.style.display = 'block';
+                        explanation.style.display = 'block';
+                    }
+                });
+                
+                // Calculate percentage
+                const percentage = Math.round((score / questions.length) * 100);
+                
+                // Show results
+                const results = document.getElementById(`results${quizNum}`);
+                results.querySelector('.score').textContent = score;
+                results.querySelector('.total').textContent = questions.length;
+                results.querySelector('.percentage').textContent = percentage + "%";
+                
+                // Provide feedback based on score
+                const feedback = results.querySelector('.feedback');
+                if (percentage >= 80) {
+                    feedback.textContent = "Excellent work! You have a strong understanding of these economics concepts.";
+                } else if (percentage >= 60) {
+                    feedback.textContent = "Good job! You have a solid foundation but could review some areas.";
+                } else if (percentage >= 40) {
+                    feedback.textContent = "Keep practicing! Review the explanations and try again.";
+                } else {
+                    feedback.textContent = "Don't worry! Economics takes practice. Review the material and try the quiz again.";
+                }
+                
+                results.style.display = 'block';
+                
+                // Show how many questions were answered
+                if (answeredQuestions < questions.length) {
+                    feedback.textContent += ` You answered ${answeredQuestions} out of ${questions.length} questions.`;
+                }
+            });
+        });
+
+        // Reset button functionality
+        document.querySelectorAll('.reset-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const quizNum = this.dataset.quiz;
+                const questions = document.querySelectorAll(`#quiz${quizNum} .question`);
+                
+                questions.forEach(question => {
+                    question.querySelectorAll('.option').forEach(option => {
+                        option.classList.remove('selected', 'correct', 'incorrect');
+                    });
+                    question.querySelector('.explanation').style.display = 'none';
+                    question.querySelector('.question-feedback').style.display = 'none';
+                });
+                
+                document.getElementById(`results${quizNum}`).style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
