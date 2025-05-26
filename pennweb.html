@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PWT Macroeconomic Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body { font-family: Arial; margin: 2em; background: #f9f9f9; }
+    #country-select { width: 300px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h2>Select a Country:</h2>
+  <select id="country-select"></select>
+  <div id="plots"></div>
+
+  <script>
+    let data, countries = [];
+
+    async function loadData() {
+      const response = await fetch('pwt1001.json');
+      data = await response.json();
+      
+      // Detect country column
+      const possible_country_cols = ['country', 'countryname', 'country_name', 'Country Name', 'countrycode'];
+      let countryCol = Object.keys(data[0]).find(col => possible_country_cols.includes(col)) || Object.keys(data[0])[1];
+
+      // Get unique countries
+      countries = [...new Set(data.map(d => d[countryCol]))].sort();
+      const dropdown = document.getElementById('country-select');
+      countries.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = opt.textContent = c;
+        dropdown.appendChild(opt);
+      });
+
+      dropdown.addEventListener('change', () => plotCountry(dropdown.value, countryCol));
+      plotCountry(countries[0], countryCol); // initial plot
+    }
+
+    function plotCountry(country, countryCol) {
+      const filtered = data.filter(d => d[countryCol] === country);
+      if (!filtered.length) {
+        document.getElementById('plots').innerHTML = 'No data for this country.';
+        return;
+      }
+
+      const yearCol = 'year';
+      const indicators = [
+        ['rgdpna', 'Real GDP (NA)', 'Millions 2017 USD'],
+        ['pop', 'Population', 'Millions'],
+        ['emp', 'Employment', 'Millions'],
+        ['avh', 'Avg Hours Worked', 'Hours'],
+        ['hc', 'Human Capital Index', 'Index']
+      ];
+
+      const plots = indicators.map(([key, label, unit]) => {
+        const x = filtered.map(d => d[yearCol]);
+        const y = filtered.map(d => d[key]);
+        return {
+          x, y, type: 'scatter', mode: 'lines', name: label,
+          hovertemplate: '%{y:.2f} ' + unit + '<br>%{x}<extra>' + label + '</extra>'
+        };
+      });
+
+      Plotly.newPlot('plots', plots, {
+        title: `Key Indicators for ${country}`,
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Value' },
+        legend: { orientation: 'h' }
+      });
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
