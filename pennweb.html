@@ -47,28 +47,42 @@
 
       const yearCol = 'year';
       const indicators = [
-        ['rgdpna', 'Real GDP (NA)', 'Millions 2017 USD'],
-        ['pop', 'Population', 'Millions'],
-        ['emp', 'Employment', 'Millions'],
-        ['avh', 'Avg Hours Worked', 'Hours'],
-        ['hc', 'Human Capital Index', 'Index']
+        {key: 'rgdpna', label: 'Real GDP (NA)', unit: 'Millions 2017 USD', yaxis: 'y1'},
+        {key: 'pop', label: 'Population', unit: 'Millions', yaxis: 'y1'},
+        {key: 'emp', label: 'Employment', unit: 'Millions', yaxis: 'y1'},
+        {key: 'avh', label: 'Avg Hours Worked', unit: 'Hours', yaxis: 'y2'},
+        {key: 'hc', label: 'Human Capital Index', unit: 'Index', yaxis: 'y2'}
       ];
 
-      const plots = indicators.map(([key, label, unit]) => {
+      const plots = indicators.map(indicator => {
         const x = filtered.map(d => d[yearCol]);
-        const y = filtered.map(d => d[key]);
+        const y = filtered.map(d => d[indicator.key]);
         return {
-          x, y, type: 'scatter', mode: 'lines', name: label,
-          hovertemplate: '%{y:.2f} ' + unit + '<br>%{x}<extra>' + label + '</extra>'
+          x, y, type: 'scatter', mode: 'lines', name: indicator.label,
+          hovertemplate: '%{y:.2f} ' + indicator.unit + '<br>%{x}<extra>' + indicator.label + '</extra>',
+          yaxis: indicator.yaxis
         };
       });
 
-      Plotly.newPlot('plots', plots, {
+      const layout = {
         title: `Key Indicators for ${country}`,
         xaxis: { title: 'Year' },
-        yaxis: { title: 'Value' },
+        yaxis: { 
+          title: 'Millions / Millions 2017 USD', 
+          titlefont: {color: '#1f77b4'},
+          tickfont: {color: '#1f77b4'}
+        },
+        yaxis2: {
+          title: 'Hours / Index',
+          titlefont: {color: '#ff7f0e'},
+          tickfont: {color: '#ff7f0e'},
+          overlaying: 'y',
+          side: 'right'
+        },
         legend: { orientation: 'h' }
-      });
+      };
+
+      Plotly.newPlot('plots', plots, layout);
     }
 
     loadData();
