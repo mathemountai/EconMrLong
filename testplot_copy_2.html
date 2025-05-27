@@ -160,7 +160,7 @@ function createTraces(countries, indicator) {
       name: country,
       mode: 'lines+markers',
       type: 'scatter',
-      line: { shape: 'spline', width: 2 },
+      line: { shape: 'linear', width: 2 },
       marker: { size: 6 },
       hovertemplate: `%{y:${indicator.format}}<extra>${country} (%{x})</extra>`
     };
